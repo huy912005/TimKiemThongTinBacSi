@@ -178,9 +178,7 @@ CREATE TABLE TimKiem (
     TuKhoaTK NVARCHAR(255),
     ThoiGianTK DATETIME,
     ViTriTimKiem NVARCHAR(255),
-    IdBacSi INT,
     IdBenhNhan INT,
-    FOREIGN KEY (IdBacSi) REFERENCES BacSi(IdBacSi),
     FOREIGN KEY (IdBenhNhan) REFERENCES BenhNhan(IdBenhNhan)
 );
 CREATE TABLE BaoCao (

@@ -1,14 +1,14 @@
 ﻿--Kiem tra xem database đa ton ti hay chưa, ton tai th? xóa
 USE master;
-IF EXISTS (SELECT name FROM sys.databases WHERE name = 'TimKiemBacSi')
+IF EXISTS (SELECT name FROM sys.databases WHERE name = 'TimKiemThongTinBacSi')
 BEGIN
-    ALTER DATABASE TimKiemBacSi SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-    DROP DATABASE TimKiemBacSi;
+    ALTER DATABASE TimKiemThongTinBacSi SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE TimKiemThongTinBacSi;
 END;
---tao database TimKiemBacSi
-CREATE DATABASE TimKiemBacSi
+--tao database TimKiemThongTinBacSi
+CREATE DATABASE TimKiemThongTinBacSi
 GO
-USE TimKiemBacSi
+USE TimKiemThongTinBacSi
 -- TỈNH THÀNH
 CREATE TABLE TinhThanh (
     IdTinhThanh INT IDENTITY PRIMARY KEY,
@@ -61,7 +61,11 @@ CREATE TABLE BacSi (
     MoTa NVARCHAR(MAX),
     AnhDaiDien NVARCHAR(255),
     NoiLamViec NVARCHAR(255),
-    CCCD VARCHAR(20)
+    CCCD VARCHAR(20),
+    IdBenhVien INT,
+    IdPhuongXa INT,
+    FOREIGN KEY (IdPhuongXa) REFERENCES PhuongXa(IdPhuongXa),
+    FOREIGN KEY (IdBenhVien) REFERENCES BenhVien(IdBenhVien)
 );
 CREATE TABLE BenhNhan (
     IdBenhNhan INT IDENTITY PRIMARY KEY,
@@ -73,7 +77,11 @@ CREATE TABLE BenhNhan (
     GioiTinh NVARCHAR(10),
     NgayDangKy DATE,
     DiaDiem NVARCHAR(255),
-    CCCD VARCHAR(20) NULL
+    CCCD VARCHAR(20) NULL,
+    IdBenhVien INT,
+    IdPhuongXa INT,
+    FOREIGN KEY (IdPhuongXa) REFERENCES PhuongXa(IdPhuongXa),
+    FOREIGN KEY (IdBenhVien) REFERENCES BenhVien(IdBenhVien)
 );
 CREATE TABLE CanBoHanhChinh (
     IdCanBo INT IDENTITY PRIMARY KEY,
@@ -85,7 +93,11 @@ CREATE TABLE CanBoHanhChinh (
     GioiTinh NVARCHAR(10),
     ChucVu NVARCHAR(100),
     NoiLamViec NVARCHAR(255),
-    CCCD VARCHAR(20)
+    CCCD VARCHAR(20),
+    IdBenhVien INT,
+    IdPhuongXa INT,
+    FOREIGN KEY (IdPhuongXa) REFERENCES PhuongXa(IdPhuongXa),
+    FOREIGN KEY (IdBenhVien) REFERENCES BenhVien(IdBenhVien)
 );
 ------------------------------------------------------CHUYÊN KHOA-------------------------------------
 CREATE TABLE ChuyenKhoa (
@@ -117,7 +129,9 @@ CREATE TABLE ThongBao (
     TieuDe NVARCHAR(255),
     NoiDung NVARCHAR(MAX),
     NgayGui DATETIME,
-    LoaiThongBao NVARCHAR(100)
+    LoaiThongBao NVARCHAR(100),
+    IdCanBo INT,
+    FOREIGN KEY (IdCanBo) REFERENCES CanBoHanhChinh(IdCanBo)
 );
 
 CREATE TABLE ThongBao_BacSi (
@@ -160,13 +174,15 @@ CREATE TABLE DanhGia (
     FOREIGN KEY (IdBacSi) REFERENCES BacSi(IdBacSi),
     FOREIGN KEY (IdBenhNhan) REFERENCES BenhNhan(IdBenhNhan)
 );
-------------------------------------------------------LỊCH SỬ – THỐNG KÊ – BÁO CÁO-------------------------------------
-CREATE TABLE LichSuTimKiem (
+------------------------------------------------------TÌM KIẾM – THỐNG KÊ – BÁO CÁO-------------------------------------
+CREATE TABLE TimKiem (
     IdTimKiem INT IDENTITY PRIMARY KEY,
     TuKhoaTK NVARCHAR(255),
     ThoiGianTK DATETIME,
     ViTriTimKiem NVARCHAR(255),
+    IdBacSi INT,
     IdBenhNhan INT,
+    FOREIGN KEY (IdBacSi) REFERENCES BacSi(IdBacSi),
     FOREIGN KEY (IdBenhNhan) REFERENCES BenhNhan(IdBenhNhan)
 );
 
@@ -179,12 +195,25 @@ CREATE TABLE ThongKe (
     LuotXemHoSo INT,
     LuotYeuThich INT,
     TopTuKhoaTimKiem NVARCHAR(255),
-    PhamTramTimKiemLoc FLOAT
+    PhamTramTimKiemLoc FLOAT,
+    IdBacSi INT,
+    IdCanBo INT,
+    FOREIGN KEY (IdCanBo) REFERENCES CanBoHanhChinh(IdCanBo),
+    FOREIGN KEY (IdBacSi) REFERENCES BacSi(IdBacSi)
 );
-
 CREATE TABLE BaoCao (
     IdBaoCao INT IDENTITY PRIMARY KEY,
     NoiDung NVARCHAR(MAX),
     LoaiBaoCao NVARCHAR(100),
-    NgayTaoBaoCao DATE
+    NgayTaoBaoCao DATE,
+    IdCanBo INT,
+    IdBacSi INT,
+    IdeBenhNhan Int,
+    FOREIGN KEY (IdBacSi) REFERENCES BacSi(IdBacSi),
+    FOREIGN KEY (IdCanBo) REFERENCES CanBoHanhChinh(IdCanBo),
+    FOREIGN KEY (IdeBenhNhan) REFERENCES BenhNhan(IdBenhNhan)
 );
+-------------------------------------------------------------CONSTRAINT---------------------------------------------------------------
+
+
+

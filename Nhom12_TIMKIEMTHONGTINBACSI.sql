@@ -593,3 +593,36 @@ SELECT IdBacSi, HoTen, TrangThai FROM BacSi;
 --1. TG_GioiHanDiemDanhGia: Kiểm tra dữ liệu khi Bệnh nhân đánh giá bác sĩ. Đảm bảo số sao (Rating) phải nằm trong khoảng từ 1 đến 5.
 GO
 CREATE OR ALTER TRIGGER TG_GioiHanDiemDanhGia
+ON DANHGIA
+FOR INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS(SELECT 1 FROM inserted WHERE DiemDanhGia<1 OR DiemDanhGia>5)
+    BEGIN
+        PRINT 'Điểm đánh giá phải nằm trong khoảng từ 1 đến 5 sao'
+        ROLLBACK TRANSACTION;
+    END
+END
+---demo insert 6 sao
+INSERT INTO DanhGia (DiemDanhGia, NoiDung, NgayDanhGia, IdBacSi, IdBenhNhan) 
+VALUES (6, N'Quá tốt', GETDATE(), 1, 1);
+--2. TG_KiemTraTuoiHanhNghe: Kiểm tra ngày sinh của Bác sĩ khi thêm mới. 
+--Đảm bảo bác sĩ phải đủ tuổi lao động hoặc tuổi hành nghề (ví dụ trên 24 tuổi) mới được lưu vào hệ thống.
+GO
+CREATE OR ALTER TRIGGER TG_KiemTraTuoiHanhNghe
+ON BACSI
+FOR INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS(SELECT 1 FROM inserted WHERE DATEDIFF(YEAR,NGaySinh,GETDATE())<24)
+    BEGIN
+        PRINT'Bác sĩ phải từ 24 tuổi trở lên mới đủ điều kiện'
+        ROLLBACK TRANSACTION;
+    END
+END
+--- demo thêm bác sĩ sinh năm 2010
+INSERT INTO BacSi (SoDienThoai, HoTen, NgaySinh, IdBenhVien, IdPhuongXa) 
+VALUES ('0905123456', N'Bác sĩ Trẻ', '2010-01-01', 1, 1);
+DELETE 
+FROM BACSI
+WHERE HoTen=N'Bác sĩ Trẻ'

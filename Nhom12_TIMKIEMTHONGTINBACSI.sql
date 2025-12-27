@@ -647,6 +647,120 @@ BEGIN
     RETURN NULLIF(@diachi, N'');
 END
 GO
+-- 10. fn_TinhTyLePhanHoi: Tính % số thông báo đã xem trên tổng số thông báo nhận được (cho Bệnh nhân)
+GO
+CREATE FUNCTION fn_TinhTyLePhanHoi(@idBenhNhan INT)
+RETURNS DECIMAL(5,2)
+AS
+BEGIN
+    DECLARE @TongSo INT, @SoDaXem INT, @TyLe DECIMAL(5,2)
+    
+    SELECT @TongSo = COUNT(*) FROM ThongBao_BenhNhan WHERE IdBenhNhan = @idBenhNhan
+    SELECT @SoDaXem = COUNT(*) FROM ThongBao_BenhNhan WHERE IdBenhNhan = @idBenhNhan AND TrangThaiXem = N'Đã xem'
+    
+    IF @TongSo = 0 SET @TyLe = 0
+    ELSE SET @TyLe = (CAST(@SoDaXem AS DECIMAL(5,2)) / @TongSo) * 100
+    
+    RETURN @TyLe
+END
+GO
+	-- Kiểm tra cho Bệnh nhân Id = 1 (Dương Công Tiến)
+	-- Trong phần INSERT của bạn, Tiến có 1 thông báo và đã xem -> Kết quả kỳ vọng: 100.00
+	/*SELECT 
+		HoTen, 
+		dbo.fn_TinhTyLePhanHoi(IdBenhNhan) AS TyLePhanHoi_PhanTram
+	FROM BenhNhan
+	WHERE IdBenhNhan = 1;
+
+	-- Kiểm tra cho Bệnh nhân Id = 2 (Hoàng Lệ Thu)
+	-- Thu có 1 thông báo nhưng NULL NgayXem -> Kết quả kỳ vọng: 0.00
+	SELECT 
+		HoTen, 
+		dbo.fn_TinhTyLePhanHoi(IdBenhNhan) AS TyLePhanHoi_PhanTram
+	FROM BenhNhan
+	WHERE IdBenhNhan = 2;*/
+
+-- 11. fn_LayDanhSachBacSiTheoPhuong: Trả về bảng danh sách bác sĩ tại 1 IdPhuongXa
+GO
+CREATE FUNCTION fn_LayDanhSachBacSiTheoPhuong(@idPhuongXa INT)
+RETURNS TABLE
+AS
+RETURN (
+    SELECT IdBacSi, HoTen, SoDienThoai, BangCap
+    FROM BacSi
+    WHERE IdPhuongXa = @idPhuongXa
+)
+GO
+	-- Lấy bác sĩ ở Phường Hải Châu I (IdPhuongXa = 1)
+	-- Kết quả kỳ vọng: Bác sĩ Phạm Minh Huy
+	/*SELECT * FROM dbo.fn_LayDanhSachBacSiTheoPhuong(1);
+
+	-- Thử với một ID không có bác sĩ nào (ví dụ: 99) -> Kết quả kỳ vọng: Bảng trống
+	SELECT * FROM dbo.fn_LayDanhSachBacSiTheoPhuong(99);*/
+
+-- 12. fn_KiemTraCCCD: Kiểm tra độ dài và định dạng số CCCD (12 số)
+GO
+CREATE FUNCTION fn_KiemTraCCCD(@cccd VARCHAR(20))
+RETURNS NVARCHAR(50)
+AS
+BEGIN
+    IF LEN(@cccd) = 12 AND @cccd NOT LIKE '%[^0-9]%'
+        RETURN N'Hợp lệ'
+    RETURN N'Không hợp lệ'
+END
+GO
+	/*SELECT 
+		'049205002552' AS SoNhapVao, dbo.fn_KiemTraCCCD('049205002552') AS KetQua -- Đúng 12 số
+	UNION ALL
+	SELECT 
+		'12345' AS SoNhapVao, dbo.fn_KiemTraCCCD('12345') AS KetQua -- Sai (thiếu độ dài)
+	UNION ALL
+	SELECT 
+		'04920500255A' AS SoNhapVao, dbo.fn_KiemTraCCCD('04920500255A') AS KetQua; -- Sai (chứa chữ)*/
+
+-- 13. fn_LocTuKhoaNhayCam: Kiểm tra nội dung DanhGia có chứa từ cấm không
+GO
+CREATE FUNCTION fn_LocTuKhoaNhayCam(@noiDung NVARCHAR(MAX))
+RETURNS NVARCHAR(50)
+AS
+BEGIN
+    -- Bạn có thể thêm nhiều từ cấm vào đây
+    IF @noiDung LIKE N'%tệ%' OR @noiDung LIKE N'%dở%' OR @noiDung LIKE N'%lừa đảo%'
+        RETURN N'Vi phạm'
+    RETURN N'Hợp lệ'
+END
+GO
+	/*SELECT 
+		N'Bác sĩ rất tận tâm' AS NoiDung, dbo.fn_LocTuKhoaNhayCam(N'Bác sĩ rất tận tâm') AS KiemTra
+	UNION ALL
+	SELECT
+N'Dịch vụ quá tệ và lừa đảo' AS NoiDung, dbo.fn_LocTuKhoaNhayCam(N'Dịch vụ quá tệ và lừa đảo') AS KiemTra;*/
+
+-- 14. fn_DemSoCaKhamTrongNgay: Đếm tổng số ca làm việc của 1 bệnh viện trong ngày
+GO
+CREATE FUNCTION fn_DemSoCaKhamTrongNgay(@idBenhVien INT, @ngay DATE)
+RETURNS INT
+AS
+BEGIN
+    DECLARE @soCa INT
+    SELECT @soCa = COUNT(l.IdLichLamViec)
+    FROM LichLamViec l
+    JOIN BacSi b ON l.IdBacSi = b.IdBacSi
+    WHERE b.IdBenhVien = @idBenhVien AND l.NgayLamViec = @ngay
+    RETURN ISNULL(@soCa, 0)
+END
+GO
+	-- Kiểm tra Bệnh viện Đà Nẵng (Id = 1) vào ngày 2024-12-30
+	-- Kết quả kỳ vọng: 1 (vì có bác sĩ Phạm Minh Huy trực P101)
+	/*SELECT 
+		TenBenhVien, 
+		dbo.fn_DemSoCaKhamTrongNgay(IdBenhVien, '2024-12-30') AS SoCaTrucTrongNgay
+	FROM BenhVien
+	WHERE IdBenhVien = 1;
+
+	-- Thử ngày không có lịch khám -> Kết quả kỳ vọng: 0
+	SELECT dbo.fn_DemSoCaKhamTrongNgay(1, '1900-01-01') AS SoCaTrucTrongNgay;*/
+
 --15. fn_LayGioBatDau: Trích xuất giờ bắt đầu từ chuỗi KhungGio (ví dụ: "08:00 - 10:00").
 GO
 CREATE FUNCTION fn_LayGioBatDau(@khungGio NVARCHAR(50))

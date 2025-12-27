@@ -942,10 +942,157 @@ BEGIN
         RETURN;
     END
 
-    THROW 50303, N'LoaiNguoiDung không hợp lệ. Dùng: BACSI | BENHNHAN | CANBO.', 1;
+    ;THROW 50303, N'LoaiNguoiDung không hợp lệ. Dùng: BACSI | BENHNHAN | CANBO.', 1;
 END
 GO
 
+-- 10. pr_ImportDanhSachPhuongXa: Thêm hàng loạt dữ liệu địa chính từ bảng tạm
+GO
+CREATE OR ALTER PROC pr_ImportDanhSachPhuongXa
+AS
+BEGIN
+    -- Kiểm tra nếu bảng tạm tồn tại trong phiên làm việc hiện tại
+    IF OBJECT_ID('tempdb..#TmpPhuongXa') IS NOT NULL
+    BEGIN
+        INSERT INTO PhuongXa (TenPhuongXa, IdTinhThanh)
+        SELECT t.TenPhuong, t.IdTinh
+        FROM #TmpPhuongXa t
+        WHERE NOT EXISTS (
+            SELECT 1 FROM PhuongXa p 
+            WHERE p.TenPhuongXa = t.TenPhuong AND p.IdTinhThanh = t.IdTinh
+        );
+        PRINT N'Đã nhập dữ liệu thành công.';
+    END
+    ELSE
+    BEGIN
+        PRINT N'Lỗi: Không tìm thấy bảng tạm #TmpPhuongXa.';
+    END
+END;
+GO
+	-- TEST CÂU 10:
+	/*CREATE TABLE #TmpPhuongXa (TenPhuong NVARCHAR(100), IdTinh INT);
+	INSERT INTO #TmpPhuongXa VALUES (N'Phường Mỹ Khê', 1), (N'Phường An Khê', 1);
+	EXEC pr_ImportDanhSachPhuongXa;
+	SELECT * FROM PhuongXa WHERE TenPhuongXa IN (N'Phường Mỹ Khê', N'Phường An Khê');
+	DROP TABLE #TmpPhuongXa;
+	GO*/
+
+
+-- 11. pr_DuyetDanhGia: Cán bộ hành chính kiểm tra đánh giá (Xử lý trực tiếp không dùng Function)
+GO
+CREATE OR ALTER PROC pr_DuyetDanhGia
+    @IdDanhGia INT,
+    @IdCanBo INT
+AS
+BEGIN
+    DECLARE @NoiDung NVARCHAR(MAX);
+    SELECT @NoiDung = NoiDung FROM DanhGia WHERE IdDanhGia = @IdDanhGia;
+
+    -- Kiểm tra từ khóa nhạy cảm trực tiếp bằng LIKE
+    IF @NoiDung LIKE N'%tệ%' OR @NoiDung LIKE N'%dở%' OR @NoiDung LIKE N'%lừa đảo%' OR @NoiDung LIKE N'%kém%'
+    BEGIN
+        PRINT N'Đánh giá ID ' + CAST(@IdDanhGia AS NVARCHAR) + N' vi phạm quy tắc. KHÔNG DUYỆT!';
+    END
+    ELSE
+    BEGIN
+        PRINT N'Đánh giá hợp lệ. Cán bộ ID ' + CAST(@IdCanBo AS NVARCHAR) + N' đã xác nhận.';
+    END
+END;
+GO
+	-- TEST CÂU 11:
+	-- 1. Test nội dung sạch
+	/*EXEC pr_DuyetDanhGia @IdDanhGia = 1, @IdCanBo = 1;
+	-- 2. Test nội dung nhạy cảm
+	INSERT INTO DanhGia (DiemDanhGia, NoiDung, NgayDanhGia, IdBacSi, IdBenhNhan) 
+	VALUES (1, N'Bác sĩ lừa đảo khách hàng', GETDATE(), 1, 1);
+	DECLARE @IdTest11 INT = SCOPE_IDENTITY();
+	EXEC pr_DuyetDanhGia @IdDanhGia = @IdTest11, @IdCanBo = 1;
+	GO*/
+
+
+-- 12. pr_SuaThongTinBenhVien: Cập nhật Hotline/Email của bệnh viện
+GO
+CREATE OR ALTER PROC pr_SuaThongTinBenhVien
+    @IdBenhVien INT,
+    @Hotline VARCHAR(20),
+    @Email VARCHAR(100)
+AS
+BEGIN
+    UPDATE BenhVien
+    SET HotLine = @Hotline, Email = @Email
+    WHERE IdBenhVien = @IdBenhVien;
+
+    IF @@ROWCOUNT > 0
+        PRINT N'Cập nhật thông tin bệnh viện ' + CAST(@IdBenhVien AS NVARCHAR) + N' thành công.';
+    ELSE
+        PRINT N'Lỗi: Không tìm thấy ID bệnh viện này.';
+END;
+GO
+	-- TEST CÂU 12:
+	/*EXEC pr_SuaThongTinBenhVien @IdBenhVien = 1, @Hotline = '0988777666', @Email = 'danang_hospital@gmail.com';
+	SELECT IdBenhVien, TenBenhVien, HotLine, Email FROM BenhVien WHERE IdBenhVien = 1;
+	GO*/
+
+
+-- 13. pr_ChuyenCongTacBacSi: Thay đổi IdBenhVien và dọn dẹp lịch làm việc
+GO
+CREATE OR ALTER PROC pr_ChuyenCongTacBacSi
+    @IdBacSi INT,
+    @IdBenhVienMoi INT
+AS
+BEGIN
+    BEGIN TRANSACTION;
+    BEGIN TRY
+        -- Đổi cơ sở công tác
+        UPDATE BacSi SET IdBenhVien = @IdBenhVienMoi WHERE IdBacSi = @IdBacSi;
+
+        -- Xóa lịch trực tại cơ sở cũ từ hôm nay trở đi (vì phòng cũ không còn hiệu lực)
+        DELETE FROM LichLamViec 
+        WHERE IdBacSi = @IdBacSi AND NgayLamViec >= CAST(GETDATE() AS DATE);
+
+        COMMIT TRANSACTION;
+        PRINT N'Bác sĩ ID ' + CAST(@IdBacSi AS NVARCHAR) + N' đã chuyển viện.';
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        PRINT N'Lỗi hệ thống: Không thể chuyển công tác.';
+    END CATCH
+END;
+GO
+	-- TEST CÂU 13:
+	-- Chuyển bác sĩ 2 sang bệnh viện 1
+	/*EXEC pr_ChuyenCongTacBacSi @IdBacSi = 2, @IdBenhVienMoi = 1;
+	SELECT HoTen, IdBenhVien FROM BacSi WHERE IdBacSi = 2;
+	GO*/
+
+
+-- 14. pr_TaoBaoCaoDinhKy: Tổng hợp số liệu vào bảng BaoCao
+GO
+CREATE OR ALTER PROC pr_TaoBaoCaoDinhKy
+    @IdCanBo INT
+AS
+BEGIN
+    DECLARE @SlBacSi INT, @SlBenhNhan INT;
+    
+    SELECT @SlBacSi = COUNT(*) FROM BacSi;
+    SELECT @SlBenhNhan = COUNT(*) FROM BenhNhan;
+    
+    INSERT INTO BaoCao (NoiDung, LoaiBaoCao, NgayTaoBaoCao, IdCanBo)
+    VALUES (
+        N'Thống kê định kỳ: ' + CAST(@SlBacSi AS NVARCHAR) + N' bác sĩ, ' + 
+        CAST(@SlBenhNhan AS NVARCHAR) + N' bệnh nhân.', 
+        N'Tổng hợp', 
+        GETDATE(), 
+        @IdCanBo
+    );
+
+    PRINT N'Báo cáo đã được khởi tạo.';
+END;
+GO
+	-- TEST CÂU 14:
+	/*EXEC pr_TaoBaoCaoDinhKy @IdCanBo = 1;
+	SELECT TOP 1 * FROM BaoCao ORDER BY IdBaoCao DESC;
+	GO*/
 
 -------------------------------------------------------------TRIGGER---------------------------------------------------------------
 --3. TG_CapNhatTrangThaiLich: Khi một lịch khám (Appointment) được tạo thành công, trigger này tự động cập nhật trạng thái khung giờ đó của bác sĩ từ "Trống" sang "Đã đặt" để người sau không tìm thấy khung giờ đó nữa.

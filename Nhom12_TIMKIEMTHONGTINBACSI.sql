@@ -215,6 +215,17 @@ ALTER TABLE BenhVien
 	ADD CONSTRAINT CK_BENHVIEN_SDT
 		CHECK(HotLine LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'OR
 				HotLine LIKE'[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]')
+--------------------------------ADD FIELD-------------
+-- Thêm cột TrangThai cho bảng BacSi
+ALTER TABLE BacSi 
+ADD TrangThai INT DEFAULT 1;
+-- Thêm cột TrangThai cho bảng BenhNhan
+ALTER TABLE BenhNhan 
+ADD TrangThai INT DEFAULT 1;
+GO
+UPDATE BacSi SET TrangThai = 1;
+UPDATE BenhNhan SET TrangThai = 1;
+GO
 --------------------------------EMAIL-------------
 --bang benh nhan
 ALTER TABLE BENHNHAN
@@ -516,9 +527,66 @@ END
 GO
 EXEC pr_LayHoSoChiTietBacSi 1;
 --17. pr_GuiMailNhacLich: Trích xuất danh sách email bác sĩ có lịch vào ngày mai.
-
+GO
+CREATE OR ALTER PROC pr_GuiMailNhacLich
+AS
+BEGIN
+    DECLARE @ngayMai DATE = CAST(DATEADD(DAY,1,GETDATE()) AS DATE)
+    IF NOT EXISTS(SELECT 1 FROM LichLamViec WHERE NgayLamViec=@ngayMai)
+    BEGIN
+        PRINT N'Không có bác sĩ nào làm việc vào ngày mai '+CAST(@ngayMai as NVARCHAR(10))+')'
+        RETURN
+    END
+    SELECT b.IdBacSi,b.HoTen,b.Email,p.TenPhong,p.Tang,@ngayMai as NgayNhacLich
+    FROM BacSi b
+    JOIN LichLamViec l ON b.IdBacSi = l.IdBacSi
+    JOIN Phong p ON l.IdPhong = p.IdPhong
+    WHERE l.NgayLamViec = @NgayMai AND l.TrangThai = N'Sẵn sàng'
+END
+GO
+EXEC pr_GuiMailNhacLich;
 --18. pr_PhanQuyenCanBo: Cập nhật chức vụ và quyền hạn cho Cán bộ.
-
+GO
+CREATE OR ALTER PROC pr_PhanQuyenCanBo
+    @idCanBo INT,
+    @chucVuMoi NVARCHAR(50)
+AS
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM CanBoHanhChinh WHERE @idCanBo=IdCanBo)
+    BEGIN 
+        PRINT'Không tồn tại cán bộ trong danh sách!'
+        RETURN
+    END
+    UPDATE CanBoHanhChinh
+    SET ChucVu=@chucVuMoi
+    WHERE @idCanBo=IdCanBo
+END
+EXEC pr_PhanQuyenCanBo 1, N'Trưởng phòng Nhân sự'
+SELECT * FROM CanBoHanhChinh
 --19. pr_KhoaTaiKhoan: Khóa người dùng nếu có quá nhiều báo cáo vi phạm.
-
+GO
+CREATE OR ALTER PROC pr_KhoaTaiKhoan
+AS
+BEGIN
+    UPDATE BACSI
+    SET TrangThai=0
+    WHERE IdBacSi IN (
+        SELECT IdBacSi
+        FROM BaoCao 
+        GROUP BY IdBacSi
+        HAVING COUNT(IdBaoCao) >= 3
+    )
+    UPDATE BenhNhan
+    SET TrangThai=0
+    WHERE IdBenhNhan IN(
+        SELECT IdeBenhNhan
+        FROM BaoCao 
+        GROUP BY IdeBenhNhan
+        HAVING COUNT(IdBaoCao) >= 3
+    )
+    PRINT N'Hệ thống đã khóa các tài khoản vi phạm nhiều hơn 3 lần bị báo cáo!.'
+END
+GO
+EXEC pr_KhoaTaiKhoan;
+SELECT IdBacSi, HoTen, TrangThai FROM BacSi;
 -------------------------------------------------------------TRIGGER---------------------------------------------------------------

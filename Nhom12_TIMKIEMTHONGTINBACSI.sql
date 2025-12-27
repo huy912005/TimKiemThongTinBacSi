@@ -1,4 +1,4 @@
-﻿--Kiem tra xem database đa ton ti hay chưa, ton tai th? xóa
+--Kiem tra xem database đa ton ti hay chưa, ton tai th? xóa
 USE master;
 IF EXISTS (SELECT name FROM sys.databases WHERE name = 'TimKiemThongTinBacSi')
 BEGIN
@@ -215,6 +215,17 @@ ALTER TABLE BenhVien
 	ADD CONSTRAINT CK_BENHVIEN_SDT
 		CHECK(HotLine LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'OR
 				HotLine LIKE'[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]')
+--------------------------------ADD FIELD-------------
+-- Thêm cột TrangThai cho bảng BacSi
+ALTER TABLE BacSi 
+ADD TrangThai INT DEFAULT 1;
+-- Thêm cột TrangThai cho bảng BenhNhan
+ALTER TABLE BenhNhan 
+ADD TrangThai INT DEFAULT 1;
+GO
+UPDATE BacSi SET TrangThai = 1;
+UPDATE BenhNhan SET TrangThai = 1;
+GO
 --------------------------------EMAIL-------------
 --bang benh nhan
 ALTER TABLE BENHNHAN
@@ -623,6 +634,141 @@ GROUP BY b.IdBacSi, b.HoTen
 ORDER BY ThuHang ASC;
 
 -------------------------------------------------------------PROC---------------------------------------------------------------
+--15. pr_XoaLichCu: Xóa các lịch làm việc đã qua hơn 1 năm để nhẹ database.
+GO
+CREATE PROC pr_XoaLichCu
+AS
+BEGIN
+    DECLARE @SoLuongXoa INT
+    DELETE 
+    FROM LichLamViec
+    WHERE NgayLamViec<DATEADD(YEAR,-1,GETDATE())
+    SET @SoLuongXoa=@@ROWCOUNT
+    PRINT N'Đã xóa thành công '+CAST(@SoLuongXoa AS NVARCHAR)+' lich làm viec cũ!'
+END
+EXEC pr_XoaLichCu
+--16. pr_LayHoSoChiTietBacSi: Join nhiều bảng để lấy toàn bộ thông tin, bằng cấp, chuyên khoa của BS.
+GO
+CREATE PROC pr_LayHoSoChiTietBacSi
+    @idBacSi INT
+AS
+BEGIN
+    SELECT b.IdBacSi, b.HoTen, b.SoDienThoai, b.Email,dbo.fn_MaHoaMatKhauDonGian(b.MatKhau) AS MatKhauBaoMat,b.BangCap, b.NamKinhNghiem, b.ThanhTuu,bv.TenBenhVien,
+        b.soNhaTenDuong + ', ' + px.TenPhuongXa + ', ' + tt.TenTinhThanh AS DiaChi,
+        (SELECT STRING_AGG(ck.TenChuyenKhoa, ', ') 
+         FROM ChuyenKhoa_BacSi ckb 
+         JOIN ChuyenKhoa ck ON ckb.IdChuyenKhoa = ck.IdChuyenKhoa 
+         WHERE ckb.IdBacSi = b.IdBacSi) AS CacChuyenKhoa,
+         dbo.fn_ThongKeXepHangBacSi(b.IdBacSi) AS ThuHangHienTai
+    FROM BacSi b
+    JOIN BENHVIEN bv ON bv.IdBenhVien=b.IdBenhVien
+    JOIN PhuongXa px ON px.IdPhuongXa=b.IdPhuongXa
+    JOIN TinhThanh tt ON tt.IdTinhThanh=px.IdTinhThanh
+    WHERE b.IdBacSi=@idBacSi
+END
+GO
+EXEC pr_LayHoSoChiTietBacSi 1;
+--17. pr_GuiMailNhacLich: Trích xuất danh sách email bác sĩ có lịch vào ngày mai.
+GO
+CREATE OR ALTER PROC pr_GuiMailNhacLich
+AS
+BEGIN
+    DECLARE @ngayMai DATE = CAST(DATEADD(DAY,1,GETDATE()) AS DATE)
+    IF NOT EXISTS(SELECT 1 FROM LichLamViec WHERE NgayLamViec=@ngayMai)
+    BEGIN
+        PRINT N'Không có bác sĩ nào làm việc vào ngày mai '+CAST(@ngayMai as NVARCHAR(10))+')'
+        RETURN
+    END
+    SELECT b.IdBacSi,b.HoTen,b.Email,p.TenPhong,p.Tang,@ngayMai as NgayNhacLich
+    FROM BacSi b
+    JOIN LichLamViec l ON b.IdBacSi = l.IdBacSi
+    JOIN Phong p ON l.IdPhong = p.IdPhong
+    WHERE l.NgayLamViec = @NgayMai AND l.TrangThai = N'Sẵn sàng'
+END
+GO
+EXEC pr_GuiMailNhacLich;
+--18. pr_PhanQuyenCanBo: Cập nhật chức vụ và quyền hạn cho Cán bộ.
+GO
+CREATE OR ALTER PROC pr_PhanQuyenCanBo
+    @idCanBo INT,
+    @chucVuMoi NVARCHAR(50)
+AS
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM CanBoHanhChinh WHERE @idCanBo=IdCanBo)
+    BEGIN 
+        PRINT'Không tồn tại cán bộ trong danh sách!'
+        RETURN
+    END
+    UPDATE CanBoHanhChinh
+    SET ChucVu=@chucVuMoi
+    WHERE @idCanBo=IdCanBo
+END
+EXEC pr_PhanQuyenCanBo 1, N'Trưởng phòng Nhân sự'
+SELECT * FROM CanBoHanhChinh
+--19. pr_KhoaTaiKhoan: Khóa người dùng nếu có quá nhiều báo cáo vi phạm.
+GO
+CREATE OR ALTER PROC pr_KhoaTaiKhoan
+AS
+BEGIN
+    UPDATE BACSI
+    SET TrangThai=0
+    WHERE IdBacSi IN (
+        SELECT IdBacSi
+        FROM BaoCao 
+        GROUP BY IdBacSi
+        HAVING COUNT(IdBaoCao) >= 3
+    )
+    UPDATE BenhNhan
+    SET TrangThai=0
+    WHERE IdBenhNhan IN(
+        SELECT IdeBenhNhan
+        FROM BaoCao 
+        GROUP BY IdeBenhNhan
+        HAVING COUNT(IdBaoCao) >= 3
+    )
+    PRINT N'Hệ thống đã khóa các tài khoản vi phạm nhiều hơn 3 lần bị báo cáo!.'
+END
+GO
+EXEC pr_KhoaTaiKhoan;
+SELECT IdBacSi, HoTen, TrangThai FROM BacSi;
+-------------------------------------------------------------TRIGGER---------------------------------------------------------------
+--1. TG_GioiHanDiemDanhGia: Kiểm tra dữ liệu khi Bệnh nhân đánh giá bác sĩ. Đảm bảo số sao (Rating) phải nằm trong khoảng từ 1 đến 5.
+GO
+CREATE OR ALTER TRIGGER TG_GioiHanDiemDanhGia
+ON DANHGIA
+FOR INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS(SELECT 1 FROM inserted WHERE DiemDanhGia<1 OR DiemDanhGia>5)
+    BEGIN
+        PRINT 'Điểm đánh giá phải nằm trong khoảng từ 1 đến 5 sao'
+        ROLLBACK TRANSACTION;
+    END
+END
+---demo insert 6 sao
+INSERT INTO DanhGia (DiemDanhGia, NoiDung, NgayDanhGia, IdBacSi, IdBenhNhan) 
+VALUES (6, N'Quá tốt', GETDATE(), 1, 1);
+--2. TG_KiemTraTuoiHanhNghe: Kiểm tra ngày sinh của Bác sĩ khi thêm mới. 
+--Đảm bảo bác sĩ phải đủ tuổi lao động hoặc tuổi hành nghề (ví dụ trên 24 tuổi) mới được lưu vào hệ thống.
+GO
+CREATE OR ALTER TRIGGER TG_KiemTraTuoiHanhNghe
+ON BACSI
+FOR INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS(SELECT 1 FROM inserted WHERE DATEDIFF(YEAR,NGaySinh,GETDATE())<24)
+    BEGIN
+        PRINT'Bác sĩ phải từ 24 tuổi trở lên mới đủ điều kiện'
+        ROLLBACK TRANSACTION;
+    END
+END
+--- demo thêm bác sĩ sinh năm 2010
+INSERT INTO BacSi (SoDienThoai, HoTen, NgaySinh, IdBenhVien, IdPhuongXa) 
+VALUES ('0905123456', N'Bác sĩ Trẻ', '2010-01-01', 1, 1);
+DELETE 
+FROM BACSI
+WHERE HoTen=N'Bác sĩ Trẻ'
+=======
 USE TimKiemThongTinBacSi;
 GO
 
@@ -1167,3 +1313,4 @@ GO
 	WHERE IdBacSi = 1;
 
 	SELECT * FROM dbo.Log_Changes; -- Kiểm tra bản ghi log cũ và mới*/
+

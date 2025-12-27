@@ -590,3 +590,6 @@ GO
 EXEC pr_KhoaTaiKhoan;
 SELECT IdBacSi, HoTen, TrangThai FROM BacSi;
 -------------------------------------------------------------TRIGGER---------------------------------------------------------------
+--1. TG_GioiHanDiemDanhGia: Kiểm tra dữ liệu khi Bệnh nhân đánh giá bác sĩ. Đảm bảo số sao (Rating) phải nằm trong khoảng từ 1 đến 5.
+GO
+CREATE OR ALTER TRIGGER TG_GioiHanDiemDanhGia

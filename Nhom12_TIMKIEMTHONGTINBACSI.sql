@@ -483,3 +483,139 @@ ORDER BY ThuHang ASC;
 -------------------------------------------------------------PROC---------------------------------------------------------------
 
 -------------------------------------------------------------TRIGGER---------------------------------------------------------------
+--3. TG_CapNhatTrangThaiLich: Khi một lịch khám (Appointment) được tạo thành công, trigger này tự động cập nhật trạng thái khung giờ đó của bác sĩ từ "Trống" sang "Đã đặt" để người sau không tìm thấy khung giờ đó nữa.
+IF OBJECT_ID(N'dbo.LichHen', N'U') IS NOT NULL
+BEGIN
+    EXEC(N'
+    CREATE OR ALTER TRIGGER dbo.TG_CapNhatTrangThaiLich
+    ON dbo.LichHen
+    AFTER INSERT
+    AS
+    BEGIN
+        SET NOCOUNT ON;
+
+        IF EXISTS
+        (
+            SELECT 1
+            FROM inserted i
+            LEFT JOIN dbo.LichLamViec llv
+              ON llv.IdBacSi = i.IdBacSi
+             AND llv.NgayLamViec = i.NgayHen
+             AND llv.KhungGio = i.KhungGio
+             AND (i.IdPhong IS NULL OR llv.IdPhong = i.IdPhong)
+             AND llv.TrangThai = N''Trống''
+            WHERE llv.IdLichLamViec IS NULL
+        )
+        BEGIN
+            THROW 51010, N''Khung giờ không còn trống hoặc không tồn tại trong lịch làm việc.'', 1;
+        END
+
+        UPDATE llv
+        SET llv.TrangThai = N''Đã đặt''
+        FROM dbo.LichLamViec llv
+        JOIN inserted i
+          ON llv.IdBacSi = i.IdBacSi
+         AND llv.NgayLamViec = i.NgayHen
+         AND llv.KhungGio = i.KhungGio
+         AND (i.IdPhong IS NULL OR llv.IdPhong = i.IdPhong)
+        WHERE llv.TrangThai = N''Trống'';
+    END
+    ');
+END
+ELSE
+BEGIN
+    PRINT N'Bỏ qua tạo TG_CapNhatTrangThaiLich vì chưa có bảng dbo.LichHen (Appointment).';
+END
+GO
+
+--4. TG_TuDongTaoThongBao: Khi Cán bộ cập nhật thông tin Bệnh viện (như đổi địa chỉ hoặc hotline), trigger này tự động chèn một bản ghi vào bảng ThongBao cho tất cả Bác sĩ thuộc bệnh viện đó biết.
+CREATE OR ALTER TRIGGER dbo.TG_TuDongTaoThongBao
+ON dbo.BenhVien
+AFTER UPDATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @IdCanBo INT = TRY_CONVERT(INT, SESSION_CONTEXT(N'IdCanBo'));
+
+    -- Gom các bệnh viện có thay đổi thật sự vào bảng tạm
+    DECLARE @Changed TABLE
+    (
+        IdBenhVien INT PRIMARY KEY,
+        TenBenhVien NVARCHAR(200) NULL,
+
+        OldDiaDiem NVARCHAR(255) NULL, NewDiaDiem NVARCHAR(255) NULL,
+        OldHotLine VARCHAR(20)   NULL, NewHotLine VARCHAR(20)   NULL,
+        OldEmail   VARCHAR(100)  NULL, NewEmail   VARCHAR(100)  NULL,
+        OldMoTa    NVARCHAR(MAX) NULL, NewMoTa    NVARCHAR(MAX) NULL
+    );
+
+    INSERT INTO @Changed
+    (
+        IdBenhVien, TenBenhVien,
+        OldDiaDiem, NewDiaDiem,
+        OldHotLine, NewHotLine,
+        OldEmail,   NewEmail,
+        OldMoTa,    NewMoTa
+    )
+    SELECT
+        i.IdBenhVien,
+        i.TenBenhVien,
+        d.DiaDiem,  i.DiaDiem,
+        d.HotLine,  i.HotLine,
+        d.Email,    i.Email,
+        d.MoTa,     i.MoTa
+    FROM inserted i
+    JOIN deleted  d ON i.IdBenhVien = d.IdBenhVien
+    WHERE
+        ISNULL(i.DiaDiem, N'') <> ISNULL(d.DiaDiem, N'')
+     OR ISNULL(i.HotLine, '')  <> ISNULL(d.HotLine, '')
+     OR ISNULL(i.Email, '')    <> ISNULL(d.Email, '')
+     OR ISNULL(i.MoTa, N'')    <> ISNULL(d.MoTa, N'');
+
+    -- Không có thay đổi thì thoát
+    IF NOT EXISTS (SELECT 1 FROM @Changed)
+        RETURN;
+
+    DECLARE @Map TABLE
+    (
+        IdBenhVien INT NOT NULL,
+        IdThongBao INT NOT NULL
+    );
+
+    -- Tạo ThongBao: 1 bệnh viện đổi -> 1 thông báo
+    MERGE dbo.ThongBao AS tgt
+    USING
+    (
+        SELECT
+            c.IdBenhVien,
+            N'Cập nhật thông tin bệnh viện' AS TieuDe,
+            CONCAT(
+                N'Bệnh viện "', ISNULL(c.TenBenhVien, N''), N'" vừa được cập nhật.',
+                N' DiaDiem: "', ISNULL(c.OldDiaDiem, N''), N'" -> "', ISNULL(c.NewDiaDiem, N''), N'".',
+                N' HotLine: "', ISNULL(c.OldHotLine, ''),   N'" -> "', ISNULL(c.NewHotLine, ''),   N'".',
+                N' Email: "',   ISNULL(c.OldEmail, ''),     N'" -> "', ISNULL(c.NewEmail, ''),     N'".'
+            ) AS NoiDung,
+            GETDATE() AS NgayGui,
+            N'Bệnh viện' AS LoaiThongBao,
+            @IdCanBo AS IdCanBo
+        FROM @Changed c
+    ) AS src
+    ON 1 = 0
+    WHEN NOT MATCHED THEN
+        INSERT (TieuDe, NoiDung, NgayGui, LoaiThongBao, IdCanBo)
+        VALUES (src.TieuDe, src.NoiDung, src.NgayGui, src.LoaiThongBao, src.IdCanBo)
+    OUTPUT src.IdBenhVien, inserted.IdThongBao
+    INTO @Map (IdBenhVien, IdThongBao);
+
+    -- Gán thông báo cho tất cả bác sĩ thuộc bệnh viện đó
+    INSERT INTO dbo.ThongBao_BacSi (IdBacSi, IdThongBao, NgayXem, TrangThaiXem)
+    SELECT
+        bs.IdBacSi,
+        m.IdThongBao,
+        NULL,
+        N'Chưa xem'
+    FROM @Map m
+    JOIN dbo.BacSi bs ON bs.IdBenhVien = m.IdBenhVien;
+END
+GO

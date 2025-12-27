@@ -1,4 +1,4 @@
-﻿--Kiem tra xem database đa ton ti hay chưa, ton tai th? xóa
+--Kiem tra xem database đa ton ti hay chưa, ton tai th? xóa
 USE master;
 IF EXISTS (SELECT name FROM sys.databases WHERE name = 'TimKiemThongTinBacSi')
 BEGIN
@@ -634,7 +634,6 @@ GROUP BY b.IdBacSi, b.HoTen
 ORDER BY ThuHang ASC;
 
 -------------------------------------------------------------PROC---------------------------------------------------------------
-<<<<<<< HEAD
 --15. pr_XoaLichCu: Xóa các lịch làm việc đã qua hơn 1 năm để nhẹ database.
 GO
 CREATE PROC pr_XoaLichCu
@@ -1089,7 +1088,7 @@ BEGIN
         RETURN;
     END
 
-    THROW 50303, N'LoaiNguoiDung không hợp lệ. Dùng: BACSI | BENHNHAN | CANBO.', 1;
+    ;THROW 50303, N'LoaiNguoiDung không hợp lệ. Dùng: BACSI | BENHNHAN | CANBO.', 1;
 END
 GO
 
@@ -1231,4 +1230,87 @@ BEGIN
     JOIN dbo.BacSi bs ON bs.IdBenhVien = m.IdBenhVien;
 END
 GO
->>>>>>> 02a757e8e8135e01b5b155e422fbca37cb405f0a
+
+-- 5. TG_GhiLogTimKiem: Tự động tổng hợp từ khóa hot để phục vụ thống kê bác sĩ được quan tâm nhất.
+IF OBJECT_ID('dbo.ThongKeTimKiem', 'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.ThongKeTimKiem (
+        TuKhoa NVARCHAR(255) PRIMARY KEY,
+        SoLuotTim INT DEFAULT 0,
+        NgayCapNhatCuoi DATETIME
+    );
+END
+GO
+
+CREATE OR ALTER TRIGGER dbo.TG_GhiLogTimKiem
+ON dbo.TimKiem
+AFTER INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    -- Cập nhật số lượt tìm kiếm cho từ khóa vừa chèn
+    MERGE dbo.ThongKeTimKiem AS target
+    USING (SELECT TuKhoaTK FROM inserted) AS source
+    ON (target.TuKhoa = source.TuKhoaTK)
+    WHEN MATCHED THEN
+        UPDATE SET SoLuotTim = target.SoLuotTim + 1, NgayCapNhatCuoi = GETDATE()
+    WHEN NOT MATCHED THEN
+        INSERT (TuKhoa, SoLuotTim, NgayCapNhatCuoi)
+        VALUES (source.TuKhoaTK, 1, GETDATE());
+END
+GO
+	--TEST
+	/*INSERT INTO dbo.TimKiem (TuKhoaTK, ThoiGianTK, ViTriTimKiem, IdBenhNhan) 
+	VALUES (N'Bác sĩ Bửu', GETDATE(), N'Đà Nẵng', 1);
+
+	SELECT * FROM dbo.ThongKeTimKiem; -- Kiểm tra số lượt tìm tăng lên 1*/
+
+-- 6. TG_LuuLichSuThayDoiThongTin: Lưu vết thay đổi SĐT hoặc Email của Bác sĩ vào bảng Log_Changes.
+IF OBJECT_ID('dbo.Log_Changes', 'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.Log_Changes (
+        IdLog INT IDENTITY PRIMARY KEY,
+        LoaiDoiTuong NVARCHAR(50), -- 'BACSI'
+        IdDoiTuong INT,
+        TenCot NVARCHAR(50),
+        GiaTriCu NVARCHAR(MAX),
+        GiaTriMoi NVARCHAR(MAX),
+        NgayThayDoi DATETIME DEFAULT GETDATE(),
+        NguoiThucHien NVARCHAR(100)
+    );
+END
+GO
+
+CREATE OR ALTER TRIGGER dbo.TG_LuuLichSuThayDoiThongTin
+ON dbo.BacSi
+AFTER UPDATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Lưu lịch sử nếu đổi Số điện thoại
+    IF UPDATE(SoDienThoai)
+    BEGIN
+        INSERT INTO dbo.Log_Changes (LoaiDoiTuong, IdDoiTuong, TenCot, GiaTriCu, GiaTriMoi, NguoiThucHien)
+        SELECT N'BACSI', i.IdBacSi, N'SoDienThoai', d.SoDienThoai, i.SoDienThoai, SUSER_NAME()
+        FROM inserted i JOIN deleted d ON i.IdBacSi = d.IdBacSi
+        WHERE i.SoDienThoai <> d.SoDienThoai;
+    END
+
+    -- Lưu lịch sử nếu đổi Email
+    IF UPDATE(Email)
+    BEGIN
+        INSERT INTO dbo.Log_Changes (LoaiDoiTuong, IdDoiTuong, TenCot, GiaTriCu, GiaTriMoi, NguoiThucHien)
+        SELECT N'BACSI', i.IdBacSi, N'Email', d.Email, i.Email, SUSER_NAME()
+        FROM inserted i JOIN deleted d ON i.IdBacSi = d.IdBacSi
+        WHERE i.Email <> d.Email;
+    END
+END
+GO
+	--TEST
+	/*UPDATE dbo.BacSi 
+	SET SoDienThoai = '0123444559', Email = 'new_email@gmail.com' 
+	WHERE IdBacSi = 1;
+
+	SELECT * FROM dbo.Log_Changes; -- Kiểm tra bản ghi log cũ và mới*/
+

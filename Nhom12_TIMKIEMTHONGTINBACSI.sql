@@ -198,6 +198,78 @@ CREATE TABLE BaoCao (
 -------------------------------------------------------------INSERT---------------------------------------------------------------
 
 -------------------------------------------------------------SELECT---------------------------------------------------------------
+-- Select theo IdBacSi
+SELECT * FROM BacSi WHERE IdBacSi = 1;
+
+-- Select theo Tên (Tìm gần đúng)
+SELECT * FROM BacSi WHERE HoTen LIKE N'%Nguyễn%';
+
+-- Select theo Chuyên khoa
+SELECT bs.*, ck.TenChuyenKhoa 
+FROM BacSi bs
+JOIN ChuyenKhoa_BacSi ckbs ON bs.IdBacSi = ckbs.IdBacSi
+JOIN ChuyenKhoa ck ON ckbs.IdChuyenKhoa = ck.IdChuyenKhoa
+WHERE ck.TenChuyenKhoa LIKE N'%Nội khoa%';
+
+-- Select theo Tỉnh Thành
+SELECT bs.*, tt.TenTinhThanh
+FROM BacSi bs
+JOIN PhuongXa px ON bs.IdPhuongXa = px.IdPhuongXa
+JOIN TinhThanh tt ON px.IdTinhThanh = tt.IdTinhThanh
+WHERE tt.TenTinhThanh LIKE N'%Đà Nẵng%';
+
+-- Select theo Phường Xã
+SELECT bs.*, px.TenPhuongXa
+FROM BacSi bs
+JOIN PhuongXa px ON bs.IdPhuongXa = px.IdPhuongXa
+WHERE px.TenPhuongXa LIKE N'%Quế Sơn%';
+
+-- Select bác sĩ theo Ngày làm việc
+SELECT DISTINCT bs.HoTen, l.NgayLamViec, l.KhungGio, l.TrangThai
+FROM BacSi bs
+JOIN LichLamViec l ON bs.IdBacSi = l.IdBacSi
+WHERE l.NgayLamViec = '2023-12-25';
+
+-- Select bác sĩ theo Khu
+SELECT DISTINCT bs.HoTen, k.TenKhu
+FROM BacSi bs
+JOIN LichLamViec l ON bs.IdBacSi = l.IdBacSi
+JOIN Phong p ON l.IdPhong = p.IdPhong
+JOIN Khu k ON p.IdKhu = k.IdKhu
+WHERE k.TenKhu LIKE N'%Khu A%';
+
+-- Select bác sĩ theo Phòng
+SELECT DISTINCT bs.HoTen, p.TenPhong, p.Tang
+FROM BacSi bs
+JOIN LichLamViec l ON bs.IdBacSi = l.IdBacSi
+JOIN Phong p ON l.IdPhong = p.IdPhong
+WHERE p.TenPhong LIKE N'%Phòng 101%';
+
+-- Select bác sĩ thuộc một Bệnh viện cụ thể
+SELECT bs.*, bv.TenBenhVien
+FROM BacSi bs
+JOIN BenhVien bv ON bs.IdBenhVien = bv.IdBenhVien
+WHERE bv.TenBenhVien LIKE N'%Bệnh viện Ung Bướu%';
+
+-- Select danh sách bệnh nhân đang theo dõi một bác sĩ (ví dụ IdBacSi = 1)
+SELECT bn.HoTen AS TenBenhNhan, bn.SoDienThoai, td.NgayBatDauTheoDoi
+FROM BenhNhan bn
+JOIN TheoDoi td ON bn.IdBenhNhan = td.IdBenhNhan
+WHERE td.IdBacSi = 1;
+
+-- Select bác sĩ được tìm kiếm nhiều nhất (Dựa trên từ khóa có chứa tên bác sĩ)
+SELECT TOP 5 bs.HoTen, COUNT(tk.IdTimKiem) AS SoLuotTimKiem
+FROM BacSi bs
+LEFT JOIN TimKiem tk ON tk.TuKhoaTK LIKE N'%' + bs.HoTen + '%'
+GROUP BY bs.IdBacSi, bs.HoTen
+ORDER BY SoLuotTimKiem DESC;
+
+-- Select bệnh nhân tìm kiếm bác sĩ nhiều nhất
+SELECT TOP 5 bn.HoTen, COUNT(tk.IdTimKiem) AS TongSoLuotTim
+FROM BenhNhan bn
+JOIN TimKiem tk ON bn.IdBenhNhan = tk.IdBenhNhan
+GROUP BY bn.IdBenhNhan, bn.HoTen
+ORDER BY TongSoLuotTim DESC;
 
 -------------------------------------------------------------FUNCTION---------------------------------------------------------------
 

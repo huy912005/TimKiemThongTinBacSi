@@ -759,6 +759,72 @@ BEGIN
     RETURN NULLIF(@diachi, N'');
 END
 GO
+--6.fn_TinhTuoi
+CREATE FUNCTION fn_TinhTuoi (@NgaySinh DATE)
+RETURNS INT
+AS
+BEGIN
+    RETURN DATEDIFF(YEAR, @NgaySinh, GETDATE()) - 
+           CASE WHEN (MONTH(@NgaySinh) > MONTH(GETDATE())) 
+           OR (MONTH(@NgaySinh) = MONTH(GETDATE()) AND DAY(@NgaySinh) > DAY(GETDATE())) 
+           THEN 1 ELSE 0 END;
+END;
+GO
+--7.fn_PhanLoaiKinhNghiem
+CREATE FUNCTION fn_PhanLoaiKinhNghiem (@IdBacSi INT)
+RETURNS NVARCHAR(50)
+AS
+BEGIN
+    DECLARE @Nam INT;
+    DECLARE @KetQua NVARCHAR(50);
+    
+    SELECT @Nam = NamKinhNghiem FROM BacSi WHERE IdBacSi = @IdBacSi;
+    
+    SET @KetQua = CASE 
+        WHEN @Nam > 10 THEN N'Chuyên gia'
+        WHEN @Nam BETWEEN 5 AND 10 THEN N'Kinh nghiệm'
+        ELSE N'Trẻ'
+    END;
+    
+    RETURN @KetQua;
+END;
+GO
+--8.fn_LayTenChuyenKhoaChinh
+CREATE FUNCTION fn_LayTenChuyenKhoaChinh (@IdBacSi INT)
+RETURNS NVARCHAR(150)
+AS
+BEGIN
+    DECLARE @TenCK NVARCHAR(150);
+    
+    SELECT TOP 1 @TenCK = ck.TenChuyenKhoa
+    FROM ChuyenKhoa ck
+    JOIN ChuyenKhoa_BacSi ckbs ON ck.IdChuyenKhoa = ckbs.IdChuyenKhoa
+    WHERE ckbs.IdBacSi = @IdBacSi;
+    
+    RETURN ISNULL(@TenCK, N'Chưa có');
+END;
+GO
+--9.fn_DemThongBaoChuaDoc
+CREATE FUNCTION fn_DemThongBaoChuaDoc (@IdNguoiDung INT, @LoaiNguoiDung NVARCHAR(20))
+RETURNS INT
+AS
+BEGIN
+    DECLARE @SoLuong INT = 0;
+    
+    IF @LoaiNguoiDung = 'BacSi'
+    BEGIN
+        SELECT @SoLuong = COUNT(*) FROM ThongBao_BacSi 
+        WHERE IdBacSi = @IdNguoiDung AND TrangThaiXem = N'Chưa xem';
+    END
+    ELSE IF @LoaiNguoiDung = 'BenhNhan'
+    BEGIN
+        SELECT @SoLuong = COUNT(*) FROM ThongBao_BenhNhan 
+        WHERE IdBenhNhan = @IdNguoiDung AND TrangThaiXem = N'Chưa xem';
+    END
+    
+    RETURN @SoLuong;
+END;
+GO
 -- 10. fn_TinhTyLePhanHoi: Tính % số thông báo đã xem trên tổng số thông báo nhận được (cho Bệnh nhân)
 GO
 CREATE FUNCTION fn_TinhTyLePhanHoi(@idBenhNhan INT)

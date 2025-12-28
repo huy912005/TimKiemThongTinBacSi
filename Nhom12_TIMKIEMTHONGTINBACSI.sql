@@ -498,7 +498,6 @@ FROM BenhNhan bn
 JOIN BaoCao bc ON bn.IdBenhNhan = bc.IdeBenhNhan
 GROUP BY bn.IdBenhNhan, bn.HoTen
 ORDER BY SoLuotDaBaoCao DESC;
--------------------------------------------------------------FUNCTION---------------------------------------------------------------
 -- Select theo IdBacSi
 SELECT * FROM BacSi WHERE IdBacSi = 1;
 -- Select theo Tên (Tìm gần đúng)
@@ -658,6 +657,8 @@ BEGIN
     RETURN @s;
 END
 GO
+--chạy function 1
+SELECT dbo.fn_DinhDangSoDienThoai('0901234567') AS KetQua;
 --2. fn_TinhTrungBinhSao: Tính điểm đánh giá trung bình của 1 bác sĩ.
 IF OBJECT_ID('dbo.fn_TinhTrungBinhSao', 'FN') IS NOT NULL
     DROP FUNCTION dbo.fn_TinhTrungBinhSao;
@@ -675,7 +676,10 @@ BEGIN
 
     RETURN ISNULL(@avg, 0.00);
 END
+--chạy function 2
 GO
+SELECT idBacSi,HoTen,dbo.fn_TinhTrungBinhSao(idBacSi) 
+FROM BacSi 
 --3. fn_DemBenhNhanTheoDoi: Đếm số lượng bệnh nhân đang theo dõi một bác sĩ cụ thể.
 IF OBJECT_ID('dbo.fn_DemBenhNhanTheoDoi', 'FN') IS NOT NULL
     DROP FUNCTION dbo.fn_DemBenhNhanTheoDoi;
@@ -692,7 +696,10 @@ BEGIN
 
     RETURN ISNULL(@cnt, 0);
 END
+--chạy function 3
 GO
+SELECT idBacSi,HoTen,dbo.fn_DemBenhNhanTheoDoi(idBacSi) soLuong
+FROM BacSi 
 --4. fn_KiemTraLichTrong: Trả về 1 (True) nếu bác sĩ rảnh vào một khung giờ/ngày cụ thể.
 IF OBJECT_ID('dbo.fn_KiemTraLichTrong', 'FN') IS NOT NULL
     DROP FUNCTION dbo.fn_KiemTraLichTrong;
@@ -721,7 +728,11 @@ BEGIN
 
     RETURN @kq;
 END
+--chạy function 4
 GO
+SELECT 
+    dbo.fn_KiemTraLichTrong(1, '2024-12-30', N'07:30 - 11:30') AS Sang,
+    dbo.fn_KiemTraLichTrong(1, '2024-12-30', N'13:30 - 17:00') AS Chieu;
 --5. fn_LayDiaChiDayDuBacSi: Kết hợp Số nhà + Phường + Tỉnh thành thành 1 chuỗi.
 IF OBJECT_ID('dbo.fn_LayDiaChiDayDuBacSi', 'FN') IS NOT NULL
     DROP FUNCTION dbo.fn_LayDiaChiDayDuBacSi;
@@ -756,9 +767,13 @@ BEGIN
 
     RETURN NULLIF(@diachi, N'');
 END
+--chạy function 5
 GO
---6.fn_TinhTuoi
-CREATE FUNCTION fn_TinhTuoi (@NgaySinh DATE)
+SELECT idBacSi,HoTen,dbo.fn_LayDiaChiDayDuBacSi(idBacSi) diaChi
+FROM BacSi
+--6.fn_TinhTuoi: Tính tuổi của Bác sĩ/Bệnh nhân từ ngày sinh.
+GO
+CREATE FUNCTION fn_TinhTuoi(@NgaySinh DATE)
 RETURNS INT
 AS
 BEGIN
@@ -767,8 +782,12 @@ BEGIN
            OR (MONTH(@NgaySinh) = MONTH(GETDATE()) AND DAY(@NgaySinh) > DAY(GETDATE())) 
            THEN 1 ELSE 0 END;
 END;
+--chạy function 6
 GO
---7.fn_PhanLoaiKinhNghiem
+SELECT idBacSi,HoTen,dbo.fn_TinhTuoi(b.NgaySinh) Tuoi
+FROM BacSi b
+--7.fn_PhanLoaiKinhNghiem: Trả về 'Chuyên gia' (>10 năm), 'Kinh nghiệm' (5-10 năm), 'Trẻ' (<5 năm).
+GO
 CREATE FUNCTION fn_PhanLoaiKinhNghiem (@IdBacSi INT)
 RETURNS NVARCHAR(50)
 AS
@@ -786,8 +805,12 @@ BEGIN
     
     RETURN @KetQua;
 END;
+--chạy function 7
 GO
---8.fn_LayTenChuyenKhoaChinh
+SELECT idBacSi,HoTen,dbo.fn_PhanLoaiKinhNghiem(idBacSi) LoaiKinhNghiem
+FROM BacSi
+--8.fn_LayTenChuyenKhoaChinh: Trả về tên chuyên khoa đầu tiên của bác sĩ.
+GO
 CREATE FUNCTION fn_LayTenChuyenKhoaChinh (@IdBacSi INT)
 RETURNS NVARCHAR(150)
 AS
@@ -801,8 +824,12 @@ BEGIN
     
     RETURN ISNULL(@TenCK, N'Chưa có');
 END;
+--chạy function 8
 GO
+SELECT idBacSi,HoTen,dbo.fn_LayTenChuyenKhoaChinh(idBacSi) tenChuyenKhoa
+FROM BacSi
 --9.fn_DemThongBaoChuaDoc
+GO
 CREATE FUNCTION fn_DemThongBaoChuaDoc (@IdNguoiDung INT, @LoaiNguoiDung NVARCHAR(20))
 RETURNS INT
 AS
@@ -822,7 +849,15 @@ BEGIN
     
     RETURN @SoLuong;
 END;
+--chạy function 9: Đếm số thông báo mới của một Id người dùng.
+-----bacsi
 GO
+SELECT idBacSi,HoTen,dbo.fn_DemThongBaoChuaDoc(1,'BacSi') soThongBao
+FROM BacSi
+-----benhnhan
+GO
+SELECT idBenhNhan,HoTen,dbo.fn_DemThongBaoChuaDoc(1,'BenhNhan') soThongBao
+FROM BenhNhan
 -- 10. fn_TinhTyLePhanHoi: Tính % số thông báo đã xem trên tổng số thông báo nhận được (cho Bệnh nhân)
 GO
 CREATE FUNCTION fn_TinhTyLePhanHoi(@idBenhNhan INT)
@@ -842,7 +877,7 @@ END
 GO
 	-- Kiểm tra cho Bệnh nhân Id = 1 (Dương Công Tiến)
 	-- Trong phần INSERT của bạn, Tiến có 1 thông báo và đã xem -> Kết quả kỳ vọng: 100.00
-	/*SELECT 
+	SELECT 
 		HoTen, 
 		dbo.fn_TinhTyLePhanHoi(IdBenhNhan) AS TyLePhanHoi_PhanTram
 	FROM BenhNhan
@@ -854,7 +889,7 @@ GO
 		HoTen, 
 		dbo.fn_TinhTyLePhanHoi(IdBenhNhan) AS TyLePhanHoi_PhanTram
 	FROM BenhNhan
-	WHERE IdBenhNhan = 2;*/
+	WHERE IdBenhNhan = 2;
 
 -- 11. fn_LayDanhSachBacSiTheoPhuong: Trả về bảng danh sách bác sĩ tại 1 IdPhuongXa
 GO
@@ -869,10 +904,10 @@ RETURN (
 GO
 	-- Lấy bác sĩ ở Phường Hải Châu I (IdPhuongXa = 1)
 	-- Kết quả kỳ vọng: Bác sĩ Phạm Minh Huy
-	/*SELECT * FROM dbo.fn_LayDanhSachBacSiTheoPhuong(1);
+	SELECT * FROM dbo.fn_LayDanhSachBacSiTheoPhuong(1);
 
 	-- Thử với một ID không có bác sĩ nào (ví dụ: 99) -> Kết quả kỳ vọng: Bảng trống
-	SELECT * FROM dbo.fn_LayDanhSachBacSiTheoPhuong(99);*/
+	SELECT * FROM dbo.fn_LayDanhSachBacSiTheoPhuong(99);
 
 -- 12. fn_KiemTraCCCD: Kiểm tra độ dài và định dạng số CCCD (12 số)
 GO
@@ -885,14 +920,14 @@ BEGIN
     RETURN N'Không hợp lệ'
 END
 GO
-	/*SELECT 
+	SELECT 
 		'049205002552' AS SoNhapVao, dbo.fn_KiemTraCCCD('049205002552') AS KetQua -- Đúng 12 số
 	UNION ALL
 	SELECT 
 		'12345' AS SoNhapVao, dbo.fn_KiemTraCCCD('12345') AS KetQua -- Sai (thiếu độ dài)
 	UNION ALL
 	SELECT 
-		'04920500255A' AS SoNhapVao, dbo.fn_KiemTraCCCD('04920500255A') AS KetQua; -- Sai (chứa chữ)*/
+		'04920500255A' AS SoNhapVao, dbo.fn_KiemTraCCCD('04920500255A') AS KetQua; -- Sai (chứa chữ)
 
 -- 13. fn_LocTuKhoaNhayCam: Kiểm tra nội dung DanhGia có chứa từ cấm không
 GO
@@ -901,16 +936,16 @@ RETURNS NVARCHAR(50)
 AS
 BEGIN
     -- Bạn có thể thêm nhiều từ cấm vào đây
-    IF @noiDung LIKE N'%tệ%' OR @noiDung LIKE N'%dở%' OR @noiDung LIKE N'%lừa đảo%'
+    IF @noiDung LIKE N'%tệ%' OR @noiDung LIKE N'%dở%' OR @noiDung LIKE N'%lừa đảo%' OR @noiDung LIKE N'%ngu%' OR @noiDung LIKE N'%quỷ%'
         RETURN N'Vi phạm'
     RETURN N'Hợp lệ'
 END
 GO
-	/*SELECT 
+	SELECT 
 		N'Bác sĩ rất tận tâm' AS NoiDung, dbo.fn_LocTuKhoaNhayCam(N'Bác sĩ rất tận tâm') AS KiemTra
 	UNION ALL
 	SELECT
-N'Dịch vụ quá tệ và lừa đảo' AS NoiDung, dbo.fn_LocTuKhoaNhayCam(N'Dịch vụ quá tệ và lừa đảo') AS KiemTra;*/
+N'Dịch vụ quá tệ và lừa đảo' AS NoiDung, dbo.fn_LocTuKhoaNhayCam(N'Dịch vụ quá tệ và lừa đảo') AS KiemTra;
 
 -- 14. fn_DemSoCaKhamTrongNgay: Đếm tổng số ca làm việc của 1 bệnh viện trong ngày
 GO
@@ -928,14 +963,14 @@ END
 GO
 	-- Kiểm tra Bệnh viện Đà Nẵng (Id = 1) vào ngày 2024-12-30
 	-- Kết quả kỳ vọng: 1 (vì có bác sĩ Phạm Minh Huy trực P101)
-	/*SELECT 
+	SELECT 
 		TenBenhVien, 
 		dbo.fn_DemSoCaKhamTrongNgay(IdBenhVien, '2024-12-30') AS SoCaTrucTrongNgay
 	FROM BenhVien
 	WHERE IdBenhVien = 1;
 
 	-- Thử ngày không có lịch khám -> Kết quả kỳ vọng: 0
-	SELECT dbo.fn_DemSoCaKhamTrongNgay(1, '1900-01-01') AS SoCaTrucTrongNgay;*/
+	SELECT dbo.fn_DemSoCaKhamTrongNgay(1, '1900-01-01') AS SoCaTrucTrongNgay;
 
 --15. fn_LayGioBatDau: Trích xuất giờ bắt đầu từ chuỗi KhungGio (ví dụ: "08:00 - 10:00").
 GO
@@ -953,6 +988,7 @@ BEGIN
     END
     RETURN @GioBatDau
 END
+-- chạy function 15
 GO
 SELECT dbo.fn_LayGioBatDau('9:00-20:00') AS GioBatDau;
 --16. fn_TinhThoiGianTheoDoi: Tính số ngày bệnh nhân đã theo dõi bác sĩ.
@@ -972,6 +1008,7 @@ BEGIN
         SET @SoNgay=0
     RETURN @SoNgay
 END
+-- chạy function 16
 GO
 SELECT 
     b.HoTen AS TenBacSi, 
@@ -992,6 +1029,7 @@ BEGIN
     WHERE c.IdCanBo=@idCanBo
     RETURN ISNULL(@emailCB, N'Không tìm thấy Email')
 END
+-- chạy function 17
 GO
 SELECT IdCanBo,dbo.fn_LayEmailCuaCanBo(IdCanBo) EmailCB
 FROM CanBoHanhChinh
@@ -1005,6 +1043,7 @@ BEGIN
     SET @matKhauKetQua=REPLICATE('*',LEN(@matKhau))
     RETURN @matKhauKetQua
 END
+-- chạy function 18
 GO
 SELECT b.HoTen,b.CCCD,b.AnhDaiDien,dbo.fn_MaHoaMatKhauDonGian(b.MatKhau) MatKhau
 FROM BacSi b
@@ -1030,6 +1069,7 @@ BEGIN
     WHERE DiemTB>@soSaoCuaMinh
     RETURN @thuHang
 END
+-- chạy function 19
 GO
 SELECT b.IdBacSi, b.HoTen, ISNULL(CAST(AVG(CAST(d.DiemDanhGia AS FLOAT)) AS DECIMAL(10,1)), 0) AS DiemTrungBinh,dbo.fn_ThongKeXepHangBacSi(b.IdBacSi) AS ThuHang
 FROM BacSi b
@@ -1594,6 +1634,7 @@ BEGIN
     SET @SoLuongXoa=@@ROWCOUNT
     PRINT N'Đã xóa thành công '+CAST(@SoLuongXoa AS NVARCHAR)+' lich làm viec cũ!'
 END
+-- chay proc 15
 EXEC pr_XoaLichCu
 --16. pr_LayHoSoChiTietBacSi: Join nhiều bảng để lấy toàn bộ thông tin, bằng cấp, chuyên khoa của BS.
 GO
@@ -1614,6 +1655,7 @@ BEGIN
     JOIN TinhThanh tt ON tt.IdTinhThanh=px.IdTinhThanh
     WHERE b.IdBacSi=@idBacSi
 END
+-- chay proc 16
 GO
 EXEC pr_LayHoSoChiTietBacSi 1;
 --17. pr_GuiMailNhacLich: Trích xuất danh sách email bác sĩ có lịch vào ngày mai.
@@ -1633,6 +1675,7 @@ BEGIN
     JOIN Phong p ON l.IdPhong = p.IdPhong
     WHERE l.NgayLamViec = @NgayMai AND l.TrangThai = N'Sẵn sàng'
 END
+-- chay proc 17
 GO
 EXEC pr_GuiMailNhacLich;
 --18. pr_PhanQuyenCanBo: Cập nhật chức vụ và quyền hạn cho Cán bộ.
@@ -1651,6 +1694,7 @@ BEGIN
     SET ChucVu=@chucVuMoi
     WHERE @idCanBo=IdCanBo
 END
+-- chay proc 18
 EXEC pr_PhanQuyenCanBo 1, N'Trưởng phòng Nhân sự'
 SELECT * FROM CanBoHanhChinh
 --19. pr_KhoaTaiKhoan: Khóa người dùng nếu có quá nhiều báo cáo vi phạm.
@@ -1676,6 +1720,7 @@ BEGIN
     )
     PRINT N'Hệ thống đã khóa các tài khoản vi phạm nhiều hơn 3 lần bị báo cáo!.'
 END
+-- chay proc 19
 GO
 EXEC pr_KhoaTaiKhoan;
 SELECT IdBacSi, HoTen, TrangThai FROM BacSi;

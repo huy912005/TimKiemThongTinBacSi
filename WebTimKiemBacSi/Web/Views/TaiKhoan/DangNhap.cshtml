@@ -1,0 +1,47 @@
+﻿<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-lg border-0 rounded-4 p-4" style="width: 450px;">
+        <div class="text-center mb-4">
+            <div class="bg-primary d-inline-block p-3 rounded-circle mb-3 shadow">
+                <i class="bi bi-shield-lock-fill text-white fs-1"></i>
+            </div>
+            <h2 class="fw-bold text-dark">Đăng Nhập</h2>
+            <p class="text-muted">Chào mừng bạn trở lại với hệ thống</p>
+        </div>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger border-0 shadow-sm mb-4">
+                <i class="bi bi-exclamation-circle me-2"></i>@ViewBag.Error
+            </div>
+        }
+
+        <form asp-action="DangNhap" method="post">
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-muted small">Email đăng nhập</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-0"><i class="bi bi-envelope"></i></span>
+                    <input type="email" name="email" class="form-control bg-light border-0 px-3 py-2" placeholder="name@example.com" required />
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-semibold text-muted small">Mật khẩu</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-0"><i class="bi bi-key"></i></span>
+                    <input type="password" name="password" class="form-control bg-light border-0 px-3 py-2" placeholder="••••••••" required />
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 fw-bold shadow">
+                XÁC NHẬN ĐĂNG NHẬP
+            </button>
+
+            <div class="text-center mt-4">
+                <p class="small text-muted">
+                    Chưa có tài khoản?
+                    <a asp-action="DangKy" class="text-primary fw-bold text-decoration-none border-bottom">Đăng ký ngay</a>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>

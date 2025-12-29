@@ -1,0 +1,93 @@
+﻿@model BacSi
+<div class="container py-5">
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+        <div class="row g-0">
+            <div class="col-md-4 bg-primary text-white text-center p-5">
+                <div class="mb-4">
+                    <img src="~/images/@Model.AnhDaiDien"
+                         onerror="this.src='/images/default-doctor.png'"
+                         class="rounded-circle img-thumbnail shadow"
+                         style="width: 200px; height: 200px; object-fit: cover;">
+                </div>
+                <h2 class="fw-bold">@Model.HoTen</h2>
+                <p class="badge bg-white text-primary rounded-pill px-4 py-2 fs-6">@Model.BangCap</p>
+
+                <div class="mt-4 text-start">
+                    <p><i class="bi bi-telephone-fill me-2"></i> @Model.SoDienThoai</p>
+                    <p><i class="bi bi-envelope-fill me-2"></i> @Model.Email</p>
+                    <p><i class="bi bi-card-text me-2"></i> CCCD: @Model.CCCD</p>
+                </div>
+
+                <div class="mt-5 d-grid gap-2">
+                    <a asp-controller="BacSi" asp-action="Edit" asp-route-id="@Model.IdBacSi" class="btn btn-light fw-bold text-primary">Chỉnh sửa hồ sơ</a>
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-light">Quay lại trang chủ</a>
+                </div>
+            </div>
+
+            <div class="col-md-8 p-5 bg-white">
+                <h3 class="text-primary border-bottom pb-3 mb-4 fw-bold">Thông Tin Chuyên Môn</h3>
+
+                <div class="row mb-4">
+                    <div class="col-sm-6">
+                        <label class="text-muted d-block">Kinh nghiệm hành nghề</label>
+                        <span class="fs-5 fw-semibold">@Model.NamKinhNghiem năm</span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="text-muted d-block">Chứng chỉ hành nghề</label>
+                        <span class="fs-5 fw-semibold">@Model.ChungChiHanhNghe</span>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="text-muted d-block">Nơi công tác hiện tại</label>
+                    <span class="fs-5 fw-semibold text-dark">
+                        <i class="bi bi-hospital me-2"></i>@(Model.BenhVien?.TenBenhVien ?? "Chưa cập nhật")
+                    </span>
+                </div>
+
+                <div class="mb-4">
+                    <label class="text-muted d-block">Địa chỉ công tác</label>
+                    <span class="fs-6">
+                        @Model.soNhaTenDuong, @(Model.PhuongXa?.TenPhuongXa ?? "N/A")
+                    </span>
+                </div>
+
+                <h3 class="text-primary border-bottom pb-3 mt-5 mb-4 fw-bold">Thành Tựu & Mô Tả</h3>
+                <div class="bg-light p-4 rounded-3 mb-4">
+                    <p class="fst-italic text-secondary">"@Model.MoTa"</p>
+                </div>
+
+                <div class="p-3 border-start border-4 border-primary">
+                    <h6 class="fw-bold">Thành tựu nổi bật:</h6>
+                    <p>@Model.ThanhTuu</p>
+                </div>
+
+                <div class="mt-5 text-end">
+                    <small class="text-muted">Trạng thái tài khoản: </small>
+                    @if (Model.TrangThai == 1)
+                    {
+                        <span class="badge bg-success">Đang hoạt động</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">Bị khóa</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #e9eff6;
+    }
+
+    .card {
+        transition: transform 0.3s;
+    }
+
+    .img-thumbnail {
+        border: 5px solid rgba(255,255,255,0.3);
+    }
+</style>

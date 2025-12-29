@@ -1,0 +1,186 @@
+﻿@using WebTimKiemBacSi.ViewModel
+@model HomeViewModel
+
+@{
+    ViewData["Title"] = "Trang Chủ";
+}
+
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #4a90e2, #6e8efb);
+        color: white;
+        padding: 60px 0;
+        border-radius: 0 0 50px 50px;
+        margin-bottom: 40px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .doctor-card {
+        border: none;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+        background: white;
+    }
+
+        .doctor-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+        }
+
+    .img-container {
+        width: 100px;
+        height: 100px;
+        margin: 20px auto;
+        overflow: hidden;
+        border: 4px solid #f8f9fa;
+    }
+
+    .btn-view-profile {
+        border-radius: 50px;
+        font-weight: 600;
+    }
+</style>
+
+<style>
+    /* Style mới cho bộ lọc chuyên sâu */
+    .search-wrapper {
+        border-radius: 100px; /* Bo tròn hẵn như thanh search của Google/Airbnb */
+        overflow: hidden;
+    }
+
+    .border-end-custom {
+        border-right: 1px solid #eee;
+    }
+
+    /* Xử lý hiển thị trên điện thoại */
+    @@media (max-width: 768px) {
+        .search-wrapper {
+            border-radius: 20px;
+            padding: 15px !important;
+        }
+
+        .border-end-custom {
+            border-right: none;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 10px;
+        }
+    }
+
+    /* Hiệu ứng focus cho input/select không bị hiện viền đen */
+    .search-wrapper .form-control:focus,
+    .search-wrapper .form-select:focus {
+        box-shadow: none;
+        background-color: transparent;
+    }
+
+    .form-select {
+        cursor: pointer;
+    }
+</style>
+<div class="hero-section text-center">
+    <div class="container">
+        <h1 class="display-4 fw-bold mb-3">Tìm kiếm chuyên gia y tế</h1>
+        <p class="lead mb-5">Tiếp cận đội ngũ bác sĩ uy tín tại các bệnh viện hàng đầu</p>
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <form method="get" asp-action="Index" class="search-wrapper p-2 bg-white shadow-lg">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-md-3 border-end-custom">
+                            <div class="input-group">
+                                <span class="input-group-text bg-transparent border-0 text-primary">
+                                    <i class="bi bi-person-fill"></i>
+                                </span>
+                                <input type="text" name="tenBS" value="@Model.SearchTen"
+                                       class="form-control border-0" placeholder="Tên bác sĩ...">
+                            </div>
+                        </div>
+                        <div class="col-md-3 border-end-custom">
+                            <div class="input-group">
+                                <span class="input-group-text bg-transparent border-0 text-primary">
+                                    <i class="bi bi-stethoscope"></i>
+                                </span>
+                                <select name="chuyenKhoa" asp-items="Model.ChuyenKhoaList"
+                                        class="form-select border-0 text-muted">
+                                    <option value="">Chuyên khoa</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3 border-end-custom">
+                            <div class="input-group">
+                                <span class="input-group-text bg-transparent border-0 text-primary">
+                                    <i class="bi bi-hospital"></i>
+                                </span>
+                                <select name="benhVien" asp-items="Model.BenhVienList"
+                                        class="form-select border-0 text-muted">
+                                    <option value="">Bệnh viện</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3 ps-2">
+                            <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 fw-bold shadow-sm">
+                                <i class="bi bi-search me-2"></i>TÌM KIẾM
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col">
+            <h3 class="fw-bold text-dark">
+                <i class="bi bi-star-fill text-warning me-2"></i>
+                @if (string.IsNullOrEmpty(Model.SearchTen) && !Model.SelectedChuyenKhoaId.HasValue && !Model.SelectedBenhVienId.HasValue)
+                {
+                    <text>Bác sĩ nổi bật</text>
+                }
+                else
+                {
+                    <text>Kết quả tìm kiếm</text>
+                }
+            </h3>
+        </div>
+    </div>
+
+    @if (!Model.BacSis.Any())
+    {
+        <div class="text-center py-5">
+            <p class="text-muted fs-4">Không tìm thấy bác sĩ nào phù hợp với tiêu chí.</p>
+            <a asp-action="Index" class="btn btn-outline-primary">Xem tất cả bác sĩ</a>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var obj in Model.BacSis)
+            {
+                <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                    <div class="card doctor-card h-100 text-center shadow-sm">
+                        <div class="img-container rounded-circle shadow-sm">
+                            <img src="~/images/@obj.AnhDaiDien"
+                                 onerror="this.src='/images/default-doctor.png'"
+                                 class="w-100 h-100 object-fit-cover"
+                                 alt="@obj.HoTen">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold text-primary">@obj.HoTen</h5>
+                            <p class="card-text text-muted small">
+                                <i class="bi bi-award me-1"></i> @obj.BangCap <br />
+                                <i class="bi bi-briefcase me-1"></i> @(obj.NamKinhNghiem ?? 0) năm kinh nghiệm
+                            </p>
+                        </div>
+                        <div class="card-footer bg-transparent border-0 pb-4">
+                            <a asp-controller="Home" asp-action="Details" asp-route-id="@obj.IdBacSi"
+                               class="btn btn-outline-primary btn-view-profile w-100">
+                                Xem hồ sơ
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

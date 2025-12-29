@@ -1,0 +1,54 @@
+﻿@model BacSi
+
+<form method="post" asp-action="Delete">
+    @* Phải giữ IdBacSi ẩn để Controller biết cần xóa dòng nào *@
+    <input asp-for="IdBacSi" hidden />
+
+    <div class="container shadow p-4 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-danger">Xác Nhận Xóa Bác Sĩ</h2>
+            <hr />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="HoTen" class="form-label">Họ và Tên</label>
+            <input asp-for="HoTen" class="form-control" disabled />
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" disabled />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label asp-for="SoDienThoai" class="form-label"></label>
+                <input asp-for="SoDienThoai" class="form-control" disabled />
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="BangCap" class="form-label"></label>
+            <input asp-for="BangCap" class="form-control" disabled />
+        </div>
+
+        <div class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle"></i>
+            <strong>Cảnh báo:</strong> Hành động này sẽ xóa vĩnh viễn dữ liệu bác sĩ khỏi hệ thống.
+        </div>
+
+        <div class="row pt-2">
+            <div class="col-6 col-md-3">
+                <button type="submit" class="btn btn-danger form-control">Xóa Bác Sĩ</button>
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-controller="BacSi" asp-action="Index" class="btn btn-secondary border form-control">
+                    Quay lại danh sách
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

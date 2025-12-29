@@ -22,11 +22,25 @@
                     <a asp-controller="BacSi" asp-action="Edit" asp-route-id="@Model.IdBacSi" class="btn btn-light fw-bold text-primary">Chỉnh sửa hồ sơ</a>
                     <a asp-controller="Home" asp-action="Index" class="btn btn-outline-light">Quay lại trang chủ</a>
                 </div>
+                @* Thêm vào dưới phần nút Chỉnh sửa hồ sơ *@
+                <div class="mt-3 d-grid gap-2">
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("BenhNhan"))
+                    {
+                        <button id="btnTheoDoi" class="btn btn-warning fw-bold shadow-sm rounded-pill" onclick="theoDoi(@Model.IdBacSi)">
+                            <i class="bi bi-star me-2"></i>Theo dõi bác sĩ
+                        </button>
+                    }
+                    else if (!User.Identity.IsAuthenticated)
+                    {
+                        <a asp-controller="TaiKhoan" asp-action="DangNhap" class="btn btn-warning fw-bold shadow-sm rounded-pill">
+                            Đăng nhập để theo dõi
+                        </a>
+                    }
+                </div>
             </div>
 
             <div class="col-md-8 p-5 bg-white">
                 <h3 class="text-primary border-bottom pb-3 mb-4 fw-bold">Thông Tin Chuyên Môn</h3>
-
                 <div class="row mb-4">
                     <div class="col-sm-6">
                         <label class="text-muted d-block">Kinh nghiệm hành nghề</label>
@@ -91,3 +105,36 @@
         border: 5px solid rgba(255,255,255,0.3);
     }
 </style>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function theoDoi(idBacSi) {
+            $.ajax({
+                url: '/Home/TheoDoiBacSi', 
+                type: 'POST',
+                data: { idBacSi: idBacSi },
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thành công',
+                            text: response.message,
+                            timer: 2000
+                        });
+                        // Đổi màu nút hoặc ẩn nút sau khi thành công
+                        $("#btnTheoDoi").addClass("disabled").html('<i class="bi bi-check-lg me-2"></i>Đã theo dõi');
+                    } else {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Thông báo',
+                            text: response.message
+                        });
+                    }
+                },
+                error: function () {
+                    alert("Có lỗi xảy ra, vui lòng thử lại.");
+                }
+            });
+        }
+    </script>
+}

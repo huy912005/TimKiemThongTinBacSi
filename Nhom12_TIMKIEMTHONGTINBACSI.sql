@@ -1927,10 +1927,10 @@ BEGIN
 END
 GO
 	--TEST
-	/*INSERT INTO dbo.TimKiem (TuKhoaTK, ThoiGianTK, ViTriTimKiem, IdBenhNhan) 
+	INSERT INTO dbo.TimKiem (TuKhoaTK, ThoiGianTK, ViTriTimKiem, IdBenhNhan) 
 	VALUES (N'Bác sĩ Bửu', GETDATE(), N'Đà Nẵng', 1);
 
-	SELECT * FROM dbo.ThongKeTimKiem; -- Kiểm tra số lượt tìm tăng lên 1*/
+	SELECT * FROM dbo.ThongKeTimKiem; -- Kiểm tra số lượt tìm tăng lên 1
 
 -- 6. TG_LuuLichSuThayDoiThongTin: Lưu vết thay đổi SĐT hoặc Email của Bác sĩ vào bảng Log_Changes.
 IF OBJECT_ID('dbo.Log_Changes', 'U') IS NULL

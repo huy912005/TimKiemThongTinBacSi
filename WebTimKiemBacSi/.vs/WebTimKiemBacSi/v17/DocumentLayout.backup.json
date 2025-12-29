@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\views\\taikhoan\\quanlybenhnhan.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\views\\taikhoan\\quanlybenhnhan.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\controllers\\taikhoancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\controllers\\taikhoancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\models\\benhnhan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\models\\benhnhan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\views\\taikhoan\\dangnhap.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\views\\taikhoan\\dangnhap.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\views\\taikhoan\\dangky.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\views\\taikhoan\\dangky.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\views\\taikhoan\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\views\\taikhoan\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -27,28 +27,48 @@
       "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\models\\thongketimkiem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\models\\thongketimkiem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\views\\taikhoan\\taikhoancanhan.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\views\\taikhoan\\taikhoancanhan.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\viewmodel\\taikhoancanhanvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\viewmodel\\taikhoancanhanvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\models\\timkiem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\models\\timkiem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\views\\home\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\views\\home\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\viewmodel\\homeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\viewmodel\\homeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\controllers\\bacsicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\controllers\\bacsicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\views\\taikhoan\\dangnhap.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\views\\taikhoan\\dangnhap.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\views\\taikhoan\\dangky.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\views\\taikhoan\\dangky.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\models\\lichlamviec.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\models\\lichlamviec.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\controllers\\bacsicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\controllers\\bacsicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\models\\khu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -57,10 +77,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\models\\chuyenkhoa_bacsi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\models\\chuyenkhoa_bacsi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\models\\thongbao_bacsi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -81,10 +97,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\models\\danhgia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\models\\danhgia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\models\\timkiem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|solutionrelative:web\\models\\timkiem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4350DE63-D3ED-44CB-A6F9-2275A0F0A9E4}|Web\\WebTimKiemBacSi.csproj|f:\\2025-2026\\2026\\ttcm\\timkiemthongtinbacsi\\webtimkiembacsi\\web\\models\\baocao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -146,7 +158,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -154,15 +166,41 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "DangKy.cshtml",
-              "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\TaiKhoan\\DangKy.cshtml",
-              "RelativeDocumentMoniker": "Web\\Views\\TaiKhoan\\DangKy.cshtml",
-              "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\TaiKhoan\\DangKy.cshtml",
-              "RelativeToolTip": "Web\\Views\\TaiKhoan\\DangKy.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAwAAAAAAAAAA==",
+              "DocumentIndex": 8,
+              "Title": "TaiKhoanCaNhanVM.cs",
+              "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\ViewModel\\TaiKhoanCaNhanVM.cs",
+              "RelativeDocumentMoniker": "Web\\ViewModel\\TaiKhoanCaNhanVM.cs",
+              "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\ViewModel\\TaiKhoanCaNhanVM.cs",
+              "RelativeToolTip": "Web\\ViewModel\\TaiKhoanCaNhanVM.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwA4AAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-29T09:47:22.576Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Web\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Web\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwDEAAAB9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-28T18:33:52.501Z",
+              "WhenOpened": "2025-07-22T07:05:11.685Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Web\\Controllers\\HomeController.cs",
+              "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Web\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAgwC8AAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-28T15:44:28.544Z",
               "EditorCaption": ""
             },
             {
@@ -173,51 +211,115 @@
               "RelativeDocumentMoniker": "Web\\Data\\ApplicationDbContext.cs",
               "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Data\\ApplicationDbContext.cs",
               "RelativeToolTip": "Web\\Data\\ApplicationDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAzAAAAAAAAAA==",
+              "ViewState": "AgIAADMAAAAAAAAAAAAAAFYAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-28T18:23:22.773Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 9,
+              "Title": "TimKiem.cs",
+              "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\TimKiem.cs",
+              "RelativeDocumentMoniker": "Web\\Models\\TimKiem.cs",
+              "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\TimKiem.cs",
+              "RelativeToolTip": "Web\\Models\\TimKiem.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-28T16:33:45.064Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "TaiKhoanController.cs",
               "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Controllers\\TaiKhoanController.cs",
               "RelativeDocumentMoniker": "Web\\Controllers\\TaiKhoanController.cs",
               "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Controllers\\TaiKhoanController.cs",
               "RelativeToolTip": "Web\\Controllers\\TaiKhoanController.cs",
-              "ViewState": "AgIAAEgAAAAAAAAAAAAmwFoAAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAAN8AAAAAAAAAAAAUwPwAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-28T18:16:13.31Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "LichLamViec.cs",
-              "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\LichLamViec.cs",
-              "RelativeDocumentMoniker": "Web\\Models\\LichLamViec.cs",
-              "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\LichLamViec.cs",
-              "RelativeToolTip": "Web\\Models\\LichLamViec.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAsAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "QuanLyBenhNhan.cshtml",
+              "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\TaiKhoan\\QuanLyBenhNhan.cshtml",
+              "RelativeDocumentMoniker": "Web\\Views\\TaiKhoan\\QuanLyBenhNhan.cshtml",
+              "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\TaiKhoan\\QuanLyBenhNhan.cshtml",
+              "RelativeToolTip": "Web\\Views\\TaiKhoan\\QuanLyBenhNhan.cshtml",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAAD0AAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-29T11:12:52.369Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ThongKeTimKiem.cs",
+              "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\ThongKeTimKiem.cs",
+              "RelativeDocumentMoniker": "Web\\Models\\ThongKeTimKiem.cs",
+              "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\ThongKeTimKiem.cs",
+              "RelativeToolTip": "Web\\Models\\ThongKeTimKiem.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-28T16:31:55.208Z"
+              "WhenOpened": "2025-12-29T10:48:56.682Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Dashboard.cshtml",
+              "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\TaiKhoan\\Dashboard.cshtml",
+              "RelativeDocumentMoniker": "Web\\Views\\TaiKhoan\\Dashboard.cshtml",
+              "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\TaiKhoan\\Dashboard.cshtml",
+              "RelativeToolTip": "Web\\Views\\TaiKhoan\\Dashboard.cshtml",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAABYAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-29T10:54:22.107Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "TaiKhoanCaNhan.cshtml",
+              "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\TaiKhoan\\TaiKhoanCaNhan.cshtml",
+              "RelativeDocumentMoniker": "Web\\Views\\TaiKhoan\\TaiKhoanCaNhan.cshtml",
+              "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\TaiKhoan\\TaiKhoanCaNhan.cshtml",
+              "RelativeToolTip": "Web\\Views\\TaiKhoan\\TaiKhoanCaNhan.cshtml",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAAEMAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-29T10:03:17.13Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 11,
-              "Title": "BacSiController.cs",
-              "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Controllers\\BacSiController.cs",
-              "RelativeDocumentMoniker": "Web\\Controllers\\BacSiController.cs",
-              "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Controllers\\BacSiController.cs",
-              "RelativeToolTip": "Web\\Controllers\\BacSiController.cs",
-              "ViewState": "AgIAAD0AAAAAAAAAAAAAwEYAAAAwAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T07:01:15.007Z"
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\Home\\Details.cshtml",
+              "RelativeDocumentMoniker": "Web\\Views\\Home\\Details.cshtml",
+              "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\Home\\Details.cshtml",
+              "RelativeToolTip": "Web\\Views\\Home\\Details.cshtml",
+              "ViewState": "AgIAAF4AAAAAAAAAAAAYwIIAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-28T17:51:52.649Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 10,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Web\\Views\\Home\\Index.cshtml",
+              "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Web\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAowGkAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-28T16:18:13.994Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
               "Title": "Khu.cs",
               "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\Khu.cs",
               "RelativeDocumentMoniker": "Web\\Models\\Khu.cs",
@@ -229,45 +331,43 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "Web\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "Web\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAABAAAAAAAAAAAAAQwBkAAAAdAAAAAAAAAA==",
+              "DocumentIndex": 12,
+              "Title": "BacSiController.cs",
+              "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Controllers\\BacSiController.cs",
+              "RelativeDocumentMoniker": "Web\\Controllers\\BacSiController.cs",
+              "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Controllers\\BacSiController.cs",
+              "RelativeToolTip": "Web\\Controllers\\BacSiController.cs",
+              "ViewState": "AgIAAD0AAAAAAAAAAAAAwEYAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T07:01:15.007Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "LichLamViec.cs",
+              "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\LichLamViec.cs",
+              "RelativeDocumentMoniker": "Web\\Models\\LichLamViec.cs",
+              "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\LichLamViec.cs",
+              "RelativeToolTip": "Web\\Models\\LichLamViec.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-28T16:31:55.208Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "DangKy.cshtml",
+              "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\TaiKhoan\\DangKy.cshtml",
+              "RelativeDocumentMoniker": "Web\\Views\\TaiKhoan\\DangKy.cshtml",
+              "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\TaiKhoan\\DangKy.cshtml",
+              "RelativeToolTip": "Web\\Views\\TaiKhoan\\DangKy.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-22T07:05:11.685Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-28T18:33:52.501Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "HomeViewModel.cs",
-              "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\ViewModel\\HomeViewModel.cs",
-              "RelativeDocumentMoniker": "Web\\ViewModel\\HomeViewModel.cs",
-              "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\ViewModel\\HomeViewModel.cs",
-              "RelativeToolTip": "Web\\ViewModel\\HomeViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-28T17:15:55.998Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "BenhNhan.cs",
-              "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\BenhNhan.cs",
-              "RelativeDocumentMoniker": "Web\\Models\\BenhNhan.cs",
-              "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\BenhNhan.cs",
-              "RelativeToolTip": "Web\\Models\\BenhNhan.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAxwCgAAAA3AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-28T16:30:36.477Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 13,
               "Title": "DangNhap.cshtml",
               "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\TaiKhoan\\DangNhap.cshtml",
               "RelativeDocumentMoniker": "Web\\Views\\TaiKhoan\\DangNhap.cshtml",
@@ -275,37 +375,11 @@
               "RelativeToolTip": "Web\\Views\\TaiKhoan\\DangNhap.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-28T18:48:52.039Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-28T18:48:52.039Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "Web\\Controllers\\HomeController.cs",
-              "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "Web\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAmwCAAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-28T15:44:28.544Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Details.cshtml",
-              "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\Home\\Details.cshtml",
-              "RelativeDocumentMoniker": "Web\\Views\\Home\\Details.cshtml",
-              "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\Home\\Details.cshtml",
-              "RelativeToolTip": "Web\\Views\\Home\\Details.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-28T17:51:52.649Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 18,
               "Title": "ChuyenKhoa_BacSi.cs",
               "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\ChuyenKhoa_BacSi.cs",
               "RelativeDocumentMoniker": "Web\\Models\\ChuyenKhoa_BacSi.cs",
@@ -317,19 +391,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "Web\\Views\\Home\\Index.cshtml",
-              "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "Web\\Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAAI0AAAAAAAAAAAAvwKYAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-28T16:18:13.994Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 15,
               "Title": "Program.cs",
               "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Program.cs",
               "RelativeDocumentMoniker": "Web\\Program.cs",
@@ -337,12 +399,11 @@
               "RelativeToolTip": "Web\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T06:52:43.052Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-22T06:52:43.052Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 19,
               "Title": "ThongBao_BacSi.cs",
               "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\ThongBao_BacSi.cs",
               "RelativeDocumentMoniker": "Web\\Models\\ThongBao_BacSi.cs",
@@ -354,7 +415,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 20,
               "Title": "ThongBao.cs",
               "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\ThongBao.cs",
               "RelativeDocumentMoniker": "Web\\Models\\ThongBao.cs",
@@ -366,7 +427,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 21,
               "Title": "ThongBao_BenhNhan.cs",
               "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\ThongBao_BenhNhan.cs",
               "RelativeDocumentMoniker": "Web\\Models\\ThongBao_BenhNhan.cs",
@@ -378,7 +439,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 22,
               "Title": "TheoDoi.cs",
               "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\TheoDoi.cs",
               "RelativeDocumentMoniker": "Web\\Models\\TheoDoi.cs",
@@ -390,7 +451,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 23,
               "Title": "DanhGia.cs",
               "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\DanhGia.cs",
               "RelativeDocumentMoniker": "Web\\Models\\DanhGia.cs",
@@ -402,19 +463,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "TimKiem.cs",
-              "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\TimKiem.cs",
-              "RelativeDocumentMoniker": "Web\\Models\\TimKiem.cs",
-              "ToolTip": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\TimKiem.cs",
-              "RelativeToolTip": "Web\\Models\\TimKiem.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-28T16:33:45.064Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 24,
               "Title": "BaoCao.cs",
               "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\BaoCao.cs",
               "RelativeDocumentMoniker": "Web\\Models\\BaoCao.cs",
@@ -426,7 +475,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 25,
               "Title": "ChuyenKhoa.cs",
               "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\ChuyenKhoa.cs",
               "RelativeDocumentMoniker": "Web\\Models\\ChuyenKhoa.cs",
@@ -438,7 +487,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 26,
               "Title": "Phong.cs",
               "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\Phong.cs",
               "RelativeDocumentMoniker": "Web\\Models\\Phong.cs",
@@ -450,7 +499,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 27,
               "Title": "BenhVien.cs",
               "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\BenhVien.cs",
               "RelativeDocumentMoniker": "Web\\Models\\BenhVien.cs",
@@ -462,7 +511,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 28,
               "Title": "PhuongXa.cs",
               "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\PhuongXa.cs",
               "RelativeDocumentMoniker": "Web\\Models\\PhuongXa.cs",
@@ -474,7 +523,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 29,
               "Title": "TinhThanh.cs",
               "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Models\\TinhThanh.cs",
               "RelativeDocumentMoniker": "Web\\Models\\TinhThanh.cs",
@@ -486,7 +535,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 30,
               "Title": "site.css",
               "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\wwwroot\\css\\site.css",
               "RelativeDocumentMoniker": "Web\\wwwroot\\css\\site.css",
@@ -498,7 +547,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 31,
               "Title": "appsettings.json",
               "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\appsettings.json",
               "RelativeDocumentMoniker": "Web\\appsettings.json",
@@ -510,7 +559,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 32,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\BacSi\\Edit.cshtml",
               "RelativeDocumentMoniker": "Web\\Views\\BacSi\\Edit.cshtml",
@@ -522,7 +571,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 33,
               "Title": "Create.cshtml",
               "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\BacSi\\Create.cshtml",
               "RelativeDocumentMoniker": "Web\\Views\\BacSi\\Create.cshtml",
@@ -534,7 +583,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 34,
               "Title": "Delete.cshtml",
               "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\BacSi\\Delete.cshtml",
               "RelativeDocumentMoniker": "Web\\Views\\BacSi\\Delete.cshtml",
@@ -546,7 +595,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 35,
               "Title": "20250722070028_AddCategoryToDb.cs",
               "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Migrations\\20250722070028_AddCategoryToDb.cs",
               "RelativeDocumentMoniker": "Web\\Migrations\\20250722070028_AddCategoryToDb.cs",
@@ -558,7 +607,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 36,
               "Title": "_Notification.cshtml",
               "DocumentMoniker": "F:\\2025-2026\\2026\\TTCM\\TimKiemThongTinBacSi\\WebTimKiemBacSi\\Web\\Views\\Shared\\_Notification.cshtml",
               "RelativeDocumentMoniker": "Web\\Views\\Shared\\_Notification.cshtml",

@@ -33,7 +33,7 @@ namespace Web.Models
 
         [StringLength(20)]
         public string? CCCD { get; set; }
-
+        public int? TrangThai { get; set; }
         public int? IdPhuongXa { get; set; }
 
         [ForeignKey(nameof(IdPhuongXa))]

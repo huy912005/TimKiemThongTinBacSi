@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Security.Claims;
 using Web.Data;
 using Web.Models;
 using WebTimKiemBacSi.ViewModel;
@@ -28,6 +29,26 @@ namespace Web.Controllers
                 query=query.Where(b => b.ChuyenKhoa_BacSis.Any(ckbs => ckbs.IdChuyenKhoa == chuyenKhoa));
             if(benhVien.HasValue && benhVien.Value > 0)
                 query=query.Where(b => b.IdBenhVien == benhVien);
+            if(!string.IsNullOrWhiteSpace(tenBS)||chuyenKhoa.HasValue||benhVien.HasValue)
+            {
+                string tenchuyenKhoa="",tenBenhVien="";
+                string userID = User.FindFirstValue("UserId");
+                int? idBenhNhan = !string.IsNullOrEmpty(userID) && User.IsInRole("BenhNhan") ? int.Parse(userID) : null;
+                if (chuyenKhoa.HasValue && chuyenKhoa.Value > 0)
+                    tenchuyenKhoa=_db.ChuyenKhoa.FirstOrDefault(ck => ck.IdChuyenKhoa == chuyenKhoa.Value)?.TenChuyenKhoa ?? "";
+                if (benhVien.HasValue && benhVien.Value > 0)
+                    tenBenhVien=_db.BenhVien.FirstOrDefault(bv => bv.IdBenhVien == benhVien.Value)?.TenBenhVien ?? "";
+                string tuKhoaTK=tenBS + " " + tenchuyenKhoa+ " "+tenBenhVien;
+                var lichSuTimKiem = new TimKiem
+                {
+                    TuKhoaTK = tuKhoaTK,
+                    IdBenhNhan = idBenhNhan,
+                    ThoiGianTK = DateTime.Now,
+                    ViTriTimKiem=tenBenhVien
+                };
+                _db.TimKiem.Add(lichSuTimKiem);
+                _db.SaveChanges();
+            }
             IEnumerable<BacSi> objBacSiList = query.ToList();
             var homeViewModel= new HomeViewModel()
             {
@@ -60,6 +81,26 @@ namespace Web.Controllers
                 return NotFound();
             }
             return View(bacSi);
+        }
+        [HttpPost]
+        public async Task<IActionResult> TheoDoiBacSi(int idBacSi)
+        {
+            var userId = User.FindFirstValue("UserId");
+            if (string.IsNullOrEmpty(userId) || !User.IsInRole("BenhNhan"))
+                return Json(new { success = false, message = "Bạn cần đăng nhập với tài khoản bệnh nhân!" });
+            int idBenhNhan = int.Parse(userId);
+            var daTheoDoi = _db.TheoDoi.Any(kt => kt.IdBacSi == idBacSi && kt.IdBenhNhan == idBenhNhan);
+            if (daTheoDoi)
+                return Json(new { success = false, message = "Bạn đã theo dõi bác sĩ này rồi!" });
+            var theoDoi = new TheoDoi
+            {
+                IdBacSi = idBacSi,
+                IdBenhNhan = idBenhNhan,
+                NgayBatDauTheoDoi = DateTime.Now
+            };
+            _db.TheoDoi.Add(theoDoi);
+            await _db.SaveChangesAsync();
+            return Json(new { success = true, message = "Theo dõi bác sĩ thành công!" });
         }
         public IActionResult Privacy()
         {

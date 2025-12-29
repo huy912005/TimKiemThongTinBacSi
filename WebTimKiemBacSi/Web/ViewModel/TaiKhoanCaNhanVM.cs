@@ -14,5 +14,13 @@ namespace WebTimKiemBacSi.ViewModel
         public string? GioiTinh { get; set; }
         public int? IdPhuongXa { get; set; }
         public List<SelectListItem>? PhuongXaList { get; set; }
+        public List<BacSiTheoDoiDTO>? DanhSachTheoDoi { get; set; }
     }
+}
+public class BacSiTheoDoiDTO
+{
+    public int IdBacSi { get; set; }
+    public string HoTen { get; set; }
+    public string ChuyenKhoa { get; set; }
+    public string AnhDaiDien { get; set; }
 }

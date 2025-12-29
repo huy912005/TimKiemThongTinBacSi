@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Security.Claims;
 using Web.Data;
 using Web.Models;
 using WebTimKiemBacSi.ViewModel;
@@ -28,6 +29,26 @@ namespace Web.Controllers
                 query=query.Where(b => b.ChuyenKhoa_BacSis.Any(ckbs => ckbs.IdChuyenKhoa == chuyenKhoa));
             if(benhVien.HasValue && benhVien.Value > 0)
                 query=query.Where(b => b.IdBenhVien == benhVien);
+            if(!string.IsNullOrWhiteSpace(tenBS)||chuyenKhoa.HasValue||benhVien.HasValue)
+            {
+                string tenchuyenKhoa="",tenBenhVien="";
+                string userID = User.FindFirstValue("UserId");
+                int? idBenhNhan = !string.IsNullOrEmpty(userID) && User.IsInRole("BenhNhan") ? int.Parse(userID) : null;
+                if (chuyenKhoa.HasValue && chuyenKhoa.Value > 0)
+                    tenchuyenKhoa=_db.ChuyenKhoa.FirstOrDefault(ck => ck.IdChuyenKhoa == chuyenKhoa.Value)?.TenChuyenKhoa ?? "";
+                if (benhVien.HasValue && benhVien.Value > 0)
+                    tenBenhVien=_db.BenhVien.FirstOrDefault(bv => bv.IdBenhVien == benhVien.Value)?.TenBenhVien ?? "";
+                string tuKhoaTK=tenBS + " " + tenchuyenKhoa;
+                var lichSuTimKiem = new TimKiem
+                {
+                    TuKhoaTK = tuKhoaTK,
+                    IdBenhNhan = idBenhNhan,
+                    ThoiGianTK = DateTime.Now,
+                    ViTriTimKiem=tenBenhVien
+                };
+                _db.TimKiem.Add(lichSuTimKiem);
+                _db.SaveChanges();
+            }
             IEnumerable<BacSi> objBacSiList = query.ToList();
             var homeViewModel= new HomeViewModel()
             {

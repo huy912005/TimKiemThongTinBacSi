@@ -99,8 +99,7 @@
                                 <span class="input-group-text bg-transparent border-0 text-primary">
                                     <i class="bi bi-stethoscope"></i>
                                 </span>
-                                <select name="chuyenKhoa" asp-items="Model.ChuyenKhoaList"
-                                        class="form-select border-0 text-muted">
+                                <select name="chuyenKhoa" asp-items="Model.ChuyenKhoaList" asp-for="SelectedChuyenKhoaId" class="form-select border-0 text-muted">
                                     <option value="">Chuyên khoa</option>
                                 </select>
                             </div>
@@ -110,8 +109,7 @@
                                 <span class="input-group-text bg-transparent border-0 text-primary">
                                     <i class="bi bi-hospital"></i>
                                 </span>
-                                <select name="benhVien" asp-items="Model.BenhVienList"
-                                        class="form-select border-0 text-muted">
+                                <select name="benhVien" asp-items="Model.BenhVienList" asp-for="SelectedBenhVienId" class="form-select border-0 text-muted">
                                     <option value="">Bệnh viện</option>
                                 </select>
                             </div>

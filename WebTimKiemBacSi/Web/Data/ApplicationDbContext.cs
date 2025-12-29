@@ -19,6 +19,7 @@ namespace Web.Data
         public DbSet<ThongBao_BenhNhan> ThongBao_BenhNhan { get; set; }
         public DbSet<LichLamViec> LichLamViec { get; set; }
         public DbSet<CanBoHanhChinh> CanBoHanhChinh { get; set; }
+        public DbSet<TimKiem> TimKiem { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -79,6 +80,8 @@ namespace Web.Data
                 .HasOne(tb => tb.ThongBao)
                 .WithMany(t => t.ThongBao_BenhNhans)
                 .HasForeignKey(tb => tb.IdThongBao);
+            modelBuilder.Entity<TimKiem>()
+                .ToTable(tb => tb.HasTrigger("TG_GhiLogTimKiem"));
         }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Web.Data;
@@ -167,12 +168,22 @@ namespace WebTimKiemBacSi.Controllers
             if (role == "BenhNhan")
             {
                 var idBenhNhan = _db.BenhNhan.Find(id);
-                taiKhoanCaNhanVM.HoTen = idBenhNhan.HoTen;
-                taiKhoanCaNhanVM.SoDienThoai = idBenhNhan.SoDienThoai;
-                taiKhoanCaNhanVM.CCCD = idBenhNhan.CCCD;
-                taiKhoanCaNhanVM.soNhaTenDuong = idBenhNhan.soNhaTenDuong;
-                taiKhoanCaNhanVM.GioiTinh = idBenhNhan.GioiTinh;
-                taiKhoanCaNhanVM.IdPhuongXa = idBenhNhan.IdPhuongXa;
+                if(idBenhNhan != null)
+                {
+                    taiKhoanCaNhanVM.HoTen = idBenhNhan.HoTen;
+                    taiKhoanCaNhanVM.SoDienThoai = idBenhNhan.SoDienThoai;
+                    taiKhoanCaNhanVM.CCCD = idBenhNhan.CCCD;
+                    taiKhoanCaNhanVM.soNhaTenDuong = idBenhNhan.soNhaTenDuong;
+                    taiKhoanCaNhanVM.GioiTinh = idBenhNhan.GioiTinh;
+                    taiKhoanCaNhanVM.IdPhuongXa = idBenhNhan.IdPhuongXa;
+                    taiKhoanCaNhanVM.DanhSachTheoDoi = _db.TheoDoi.Where(kt => kt.IdBenhNhan == id).Include(bd => bd.BacSi).Select(td => new BacSiTheoDoiDTO
+                    {
+                        IdBacSi = td.BacSi.IdBacSi,
+                        AnhDaiDien = td.BacSi.AnhDaiDien,
+                        HoTen = td.BacSi.HoTen,
+                        ChuyenKhoa = td.BacSi.BangCap
+                    }).ToList();
+                }
             }
             else if (role == "BacSi")
             {
@@ -231,6 +242,23 @@ namespace WebTimKiemBacSi.Controllers
                 return RedirectToAction("TaiKhoanCaNhan");
             }
             return View(model);
+        }
+        [HttpPost] 
+        [ValidateAntiForgeryToken] 
+        public async Task<IActionResult> XoaTheoDoi(int idBacSi)
+        {
+            var userId = User.FindFirstValue("UserId");
+            if (string.IsNullOrEmpty(userId)) 
+                return Unauthorized();
+            int idBenhNhan = int.Parse(userId);
+            var target = await _db.TheoDoi.FirstOrDefaultAsync(td => td.IdBenhNhan == idBenhNhan && td.IdBacSi == idBacSi);
+            if (target != null)
+            {
+                _db.TheoDoi.Remove(target);
+                await _db.SaveChangesAsync();
+                TempData["Success"] = "Đã bỏ theo dõi bác sĩ thành công!";
+            }
+            return RedirectToAction(nameof(TaiKhoanCaNhan));
         }
         [Authorize(Roles = "CanBoHanhChinh")]
         public IActionResult Dashboard()

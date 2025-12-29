@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WebTimKiemBacSi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8406b42208f607083fd4ca7231df5f68e59183a9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+64513a4b91d49634f23235fa9d50f438c18657ad")]
 [assembly: System.Reflection.AssemblyProductAttribute("WebTimKiemBacSi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebTimKiemBacSi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

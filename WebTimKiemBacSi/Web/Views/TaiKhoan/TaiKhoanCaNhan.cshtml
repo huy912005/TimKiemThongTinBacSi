@@ -1,13 +1,14 @@
 ﻿@using WebTimKiemBacSi.ViewModel
 @model TaiKhoanCaNhanVM
+
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow border-0 rounded-4">
+        <div class="col-md-9">
+            <div class="card shadow-lg border-0 rounded-4 mb-4">
                 <div class="card-header bg-primary text-white py-3">
-                    <h4 class="mb-0"><i class="bi bi-person-gear me-2"></i>Thông Tin Cá Nhân</h4>
+                    <h4 class="mb-0"><i class="bi bi-person-gear me-2"></i>Thông Tin Tài Khoản</h4>
                 </div>
-                <div class="card-body p-4">
+                <div class="card-body p-4 bg-white">
                     <form asp-action="TaiKhoanCaNhan" method="post">
                         <input type="hidden" asp-for="Id" />
                         <input type="hidden" asp-for="Role" />
@@ -53,16 +54,102 @@
 
                         <div class="mb-4">
                             <label class="form-label fw-bold">Số nhà, tên đường</label>
-                            <input asp-for="soNhaTenDuong" class="form-control" placeholder="Ví dụ: 123 Nguyễn Lương Bằng" />
+                            <input asp-for="soNhaTenDuong" class="form-control" />
                         </div>
 
-                        <div class="d-flex justify-content-between">
-                            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary px-4 rounded-pill">Quay lại</a>
-                            <button type="submit" class="btn btn-primary px-5 rounded-pill shadow-sm">Lưu cập nhật</button>
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary px-5 rounded-pill shadow-sm fw-bold">CẬP NHẬT HỒ SƠ</button>
                         </div>
                     </form>
                 </div>
             </div>
+
+            @if (Model.Role == "BenhNhan")
+            {
+                <div class="card shadow-lg border-0 rounded-4">
+                    <div class="card-header bg-success text-white py-3">
+                        <h4 class="mb-0"><i class="bi bi-star-fill me-2"></i>Bác Sĩ Đang Theo Dõi</h4>
+                    </div>
+                    <div class="card-body p-4 bg-white">
+                        @if (Model.DanhSachTheoDoi == null || !Model.DanhSachTheoDoi.Any())
+                        {
+                            <div class="text-center py-4 text-muted">
+                                <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                                Bạn chưa theo dõi bác sĩ nào.
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle border-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Bác sĩ</th>
+                                            <th>Chuyên môn</th>
+                                            <th class="text-end">Hành động</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var bs in Model.DanhSachTheoDoi)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <img src="~/images/@bs.AnhDaiDien"
+                                                             onerror="this.src='/images/default-doctor.png'"
+                                                             class="rounded-circle shadow-sm me-3"
+                                                             style="width: 50px; height: 50px; object-fit: cover;">
+                                                        <span class="fw-bold">@bs.HoTen</span>
+                                                    </div>
+                                                </td>
+                                                <td>@bs.ChuyenKhoa</td>
+                                                <td class="text-end">
+                                                    <form asp-action="XoaTheoDoi" method="post" id="form-xoa-@bs.IdBacSi">
+                                                        <input type="hidden" name="idBacSi" value="@bs.IdBacSi" />
+
+                                                        <a asp-controller="Home" asp-action="Details" asp-route-id="@bs.IdBacSi"
+                                                           class="btn btn-sm btn-outline-info rounded-pill px-3">Hồ sơ</a>
+
+                                                        <button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-3 btn-confirm-delete"
+                                                                data-id="@bs.IdBacSi">
+                                                            <i class="bi bi-trash"></i> Bỏ theo dõi
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
         </div>
     </div>
 </div>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+            $('.btn-confirm-delete').click(function () {
+                const idBacSi = $(this).data('id');
+                const form = $('#form-xoa-' + idBacSi);
+                Swal.fire({
+                    title: 'Xác nhận bỏ theo dõi?',
+                    text: "Bạn sẽ không còn nhận được cập nhật từ bác sĩ này!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Đồng ý, bỏ theo dõi!',
+                    cancelButtonText: 'Hủy'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
+}

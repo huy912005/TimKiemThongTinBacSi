@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Web.Data;
 using Web.Models;
 using WebTimKiemBacSi.ViewModel;
+using WebTimKiemBacSi.ViewModel.DTO;
 
 namespace WebTimKiemBacSi.Controllers
 {
@@ -140,6 +142,8 @@ namespace WebTimKiemBacSi.Controllers
                 TempData["Success"] = "Đăng nhập thành công!";
                 if (role == "CanBoHanhChinh")
                     return RedirectToAction("Dashboard", "TaiKhoan");
+                else if (role == "BacSi")
+                    return RedirectToAction("BacSiDashboard", "TaiKhoan");
                 return RedirectToAction("Index", "Home");
             }
             ModelState.AddModelError(string.Empty, "Email hoặc mật khẩu không đúng.");
@@ -269,17 +273,113 @@ namespace WebTimKiemBacSi.Controllers
             ViewBag.TotalTimKiem = _db.TimKiem.Count();
             return View(thongKe);
         }
+        [HttpPost]
         [Authorize(Roles = "CanBoHanhChinh")]
-        public IActionResult QuanLyBacSi()
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> GuiThongBao(GuiThongBaoVM model)
         {
-            var list = _db.BacSi.ToList();
-            return View(list);
+            if (ModelState.IsValid)
+            {
+                var idCanBo = User.FindFirstValue("UserId");
+                var thongBao = new ThongBao
+                {
+                    TieuDe = model.TieuDe,
+                    NoiDung = model.NoiDung,
+                    NgayGui = DateTime.Now,
+                    LoaiThongBao = model.LoaiThongBao,
+                    IdCanBo = int.Parse(idCanBo)
+                };
+                _db.ThongBao.Add(thongBao);
+                await _db.SaveChangesAsync();
+                var tatCaBacSi = _db.BacSi.Select(b => b.IdBacSi).ToList();
+                foreach (var idBS in tatCaBacSi)
+                {
+                    _db.ThongBao_BacSi.Add(new ThongBao_BacSi
+                    {
+                        IdBacSi = idBS,
+                        IdThongBao = thongBao.IdThongBao,
+                        TrangThaiXem = "Chưa xem"
+                    });
+                }
+                await _db.SaveChangesAsync();
+                TempData["Success"] = "Đã gửi thông báo đến toàn bộ bác sĩ!";
+                return RedirectToAction("Dashboard");
+            }
+            TempData["Error"] = "Vui lòng kiểm tra lại thông tin thông báo.";
+            return RedirectToAction("Dashboard");
         }
-        [Authorize(Roles ="CanBoHanhChinh")]
-        public IActionResult QuanLyBenhNhan()
+        [Authorize(Roles ="BacSi")]
+        public IActionResult BacSiDashboard()
         {
-            var list = _db.BenhNhan.ToList();
-            return View(list);
+            var userId=User.FindFirstValue("UserId");
+            if(string.IsNullOrEmpty(userId))
+                return RedirectToAction("DangNhap");
+            int id=int.Parse(userId);
+            var bacSi=_db.BacSi.Include(bv=>bv.BenhVien).Include(px=>px.PhuongXa).FirstOrDefault(bs=>bs.IdBacSi==id);
+            var model = new BacSiDashboardVM
+            {
+                HoSo=bacSi,
+                DanhSachBenhNhanTheoDoi=_db.TheoDoi.Where(td=>td.IdBacSi==id).Include(userId=>userId.BenhNhan).Select(td=>new BenhNhanTheoDoiDTO
+                {
+                    IdBenhNhan=td.BenhNhan.IdBenhNhan,
+                    HoTen=td.BenhNhan.HoTen,
+                    SoDienThoai=td.BenhNhan.SoDienThoai,
+                    NgayTheoDoi=td.NgayBatDauTheoDoi??DateTime.Now
+                }).ToList(),
+                ThongBaoMoi=_db.ThongBao_BacSi.Where(tb=>tb.IdBacSi==id).Include(tb=>tb.ThongBao).OrderByDescending(tb=>tb.ThongBao.NgayGui).ToList(),
+                PhuongXaList=_db.PhuongXa.Select(px=>new SelectListItem { 
+                    Text=px.TenPhuongXa,
+                    Value=px.IdPhuongXa.ToString()
+                }).ToList(),
+                BenhVienList=_db.BenhVien.Select(bv=> new SelectListItem
+                {
+                    Text=bv.TenBenhVien,
+                    Value=bv.IdBenhVien.ToString()
+                }).ToList()
+            };
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CapNhatHoSoBacSi(BacSi hoSoMoi, IFormFile? AnhFile)
+        {
+            var bacSiDb = _db.BacSi.Find(hoSoMoi.IdBacSi);
+            if (bacSiDb == null) 
+                return NotFound();
+            bacSiDb.HoTen = hoSoMoi.HoTen;
+            bacSiDb.SoDienThoai = hoSoMoi.SoDienThoai;
+            bacSiDb.NgaySinh = hoSoMoi.NgaySinh;
+            bacSiDb.GioiTinh = hoSoMoi.GioiTinh;
+            bacSiDb.BangCap = hoSoMoi.BangCap;
+            bacSiDb.NamKinhNghiem = hoSoMoi.NamKinhNghiem;
+            bacSiDb.ChungChiHanhNghe = hoSoMoi.ChungChiHanhNghe;
+            bacSiDb.ThanhTuu = hoSoMoi.ThanhTuu;
+            bacSiDb.MoTa = hoSoMoi.MoTa;
+            bacSiDb.soNhaTenDuong = hoSoMoi.soNhaTenDuong;
+            bacSiDb.CCCD = hoSoMoi.CCCD;
+            bacSiDb.IdBenhVien = hoSoMoi.IdBenhVien;
+            bacSiDb.IdPhuongXa = hoSoMoi.IdPhuongXa;
+            if (AnhFile != null)
+            {
+                if (!string.IsNullOrEmpty(bacSiDb.AnhDaiDien))
+                {
+                    var oldPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", bacSiDb.AnhDaiDien);
+                    if (System.IO.File.Exists(oldPath))
+                    {
+                        System.IO.File.Delete(oldPath);
+                    }
+                }
+                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(AnhFile.FileName);
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await AnhFile.CopyToAsync(stream);
+                }
+                bacSiDb.AnhDaiDien = fileName;
+            }
+            await _db.SaveChangesAsync();
+            TempData["Success"] = "Cập nhật hồ sơ thành công!";
+            return RedirectToAction("BacSiDashboard");
         }
     }
 }

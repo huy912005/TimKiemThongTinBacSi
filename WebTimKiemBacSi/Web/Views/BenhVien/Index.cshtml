@@ -1,0 +1,109 @@
+﻿@model IEnumerable<Web.Models.BenhVien>
+@{
+    ViewData["Title"] = "Quản lý Bệnh viện";
+    Layout = "_AdminLayout";
+}
+<link rel="stylesheet" href="~/css/benhVien.css" />
+<div class="container pb-5">
+    <div class="hospital-container">
+        <div class="row align-items-center mb-4">
+            <div class="col-md-7">
+                <h1 class="main-title">Quản Lý Bệnh Viện</h1>
+                <p class="text-muted mt-2">Danh sách các cơ sở y tế trong hệ thống</p>
+            </div>
+            <div class="col-md-5 text-end">
+                <a class="btn btn-add-new" asp-action="Create">
+                    <i class="bi bi-plus-circle-fill me-2"></i> Thêm Bệnh Viện Mới
+                </a>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-custom">
+                <thead>
+                    <tr>
+                        <th class="text-center" style="width: 80px;">ID</th>
+                        <th>Cơ Sở Y Tế</th>
+                        <th>Liên Hệ & Hotline</th>
+                        <th>Địa Chỉ</th>
+                        <th class="text-center">Thao Tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr id="row-@item.IdBenhVien">
+                            <td class="text-center fw-bold text-muted">
+                                #@item.IdBenhVien
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="hospital-icon me-3">
+                                        <i class="bi bi-hospital"></i>
+                                    </div>
+                                    <div>
+                                        <div class="fw-bold text-dark">@item.TenBenhVien</div>
+                                        <small class="text-muted">Chuyên khoa đa khoa</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="contact-item"><i class="bi bi-telephone-fill"></i> @item.HotLine</div>
+                                <div class="contact-item mt-1"><i class="bi bi-envelope-at-fill"></i> @item.Email</div>
+                            </td>
+                            <td>
+                                <div class="small text-dark fw-medium">
+                                    <i class="bi bi-geo-alt-fill text-danger me-1"></i> @item.DiaDiem
+                                </div>
+                                <div class="text-muted x-small mt-1 ps-4">
+                                    @(item.PhuongXa?.TenPhuongXa ?? "N/A")
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group shadow-sm rounded">
+                                    <a asp-action="Edit" asp-route-id="@item.IdBenhVien"
+                                       class="btn btn-white text-primary btn-sm border-end" title="Sửa thông tin">
+                                        <i class="bi bi-pencil-square fs-5"></i>
+                                    </a>
+                                    <button onclick="confirmDelete(@item.IdBenhVien)"
+                                            class="btn btn-white text-danger btn-sm" title="Xóa cơ sở">
+                                        <i class="bi bi-trash3-fill fs-5"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Xác nhận xóa?',
+                text: "Dữ liệu về bệnh viện này sẽ bị xóa vĩnh viễn!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#28a745',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Đồng ý xóa',
+                cancelButtonText: 'Hủy'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post('/BenhVien/Delete/' + id, function (data) {
+                        if (data.success) {
+                            Swal.fire('Thành công!', 'Bệnh viện đã được xóa.', 'success');
+                            $('#row-' + id).remove();
+                        } else {
+                            Swal.fire('Lỗi!', 'Không thể xóa bệnh viện này.', 'error');
+                        }
+                    });
+                }
+            })
+        }
+    </script>
+}

@@ -600,7 +600,6 @@ F:\2025-2026\2026\TTCM\TimKiemThongTinBacSi\WebTimKiemBacSi\Web\obj\Debug\net9.0
 F:\2025-2026\2026\TTCM\TimKiemThongTinBacSi\WebTimKiemBacSi\Web\obj\Debug\net9.0\scopedcss\bundle\WebTimKiemBacSi.styles.css
 F:\2025-2026\2026\TTCM\TimKiemThongTinBacSi\WebTimKiemBacSi\Web\obj\Debug\net9.0\scopedcss\projectbundle\WebTimKiemBacSi.bundle.scp.css
 F:\2025-2026\2026\TTCM\TimKiemThongTinBacSi\WebTimKiemBacSi\Web\obj\Debug\net9.0\compressed\17gx8gshvu-qp1mgd6n66.gz
-F:\2025-2026\2026\TTCM\TimKiemThongTinBacSi\WebTimKiemBacSi\Web\obj\Debug\net9.0\compressed\zvtd74g1jh-phb2zoecap.gz
 F:\2025-2026\2026\TTCM\TimKiemThongTinBacSi\WebTimKiemBacSi\Web\obj\Debug\net9.0\compressed\s0nqwa2nn8-61n19gt1b8.gz
 F:\2025-2026\2026\TTCM\TimKiemThongTinBacSi\WebTimKiemBacSi\Web\obj\Debug\net9.0\compressed\vox74u171l-xtxxf3hu2r.gz
 F:\2025-2026\2026\TTCM\TimKiemThongTinBacSi\WebTimKiemBacSi\Web\obj\Debug\net9.0\compressed\768mkj9wh6-t1cqhe9u97.gz
@@ -675,3 +674,7 @@ F:\2025-2026\2026\TTCM\TimKiemThongTinBacSi\WebTimKiemBacSi\Web\obj\Debug\net9.0
 F:\2025-2026\2026\TTCM\TimKiemThongTinBacSi\WebTimKiemBacSi\Web\obj\Debug\net9.0\WebTimKiemBacSi.pdb
 F:\2025-2026\2026\TTCM\TimKiemThongTinBacSi\WebTimKiemBacSi\Web\obj\Debug\net9.0\WebTimKiemBacSi.genruntimeconfig.cache
 F:\2025-2026\2026\TTCM\TimKiemThongTinBacSi\WebTimKiemBacSi\Web\obj\Debug\net9.0\ref\WebTimKiemBacSi.dll
+F:\2025-2026\2026\TTCM\TimKiemThongTinBacSi\WebTimKiemBacSi\Web\obj\Debug\net9.0\compressed\zvtd74g1jh-b5zz1xpkng.gz
+F:\2025-2026\2026\TTCM\TimKiemThongTinBacSi\WebTimKiemBacSi\Web\obj\Debug\net9.0\compressed\txskgmbuew-hpw3pz7j61.gz
+F:\2025-2026\2026\TTCM\TimKiemThongTinBacSi\WebTimKiemBacSi\Web\obj\Debug\net9.0\compressed\usbkdhzqvi-do0lzbd10u.gz
+F:\2025-2026\2026\TTCM\TimKiemThongTinBacSi\WebTimKiemBacSi\Web\obj\Debug\net9.0\compressed\10aq9pjcg7-i8a10ytqu9.gz

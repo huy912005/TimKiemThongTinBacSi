@@ -1,4 +1,5 @@
-﻿@model BacSi
+﻿@using System.Security.Claims
+@model BacSi
 <div class="container py-5">
     <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
         <div class="row g-0">
@@ -15,25 +16,37 @@
                 <div class="mt-4 text-start">
                     <p><i class="bi bi-telephone-fill me-2"></i> @Model.SoDienThoai</p>
                     <p><i class="bi bi-envelope-fill me-2"></i> @Model.Email</p>
+                    <p><i class="bi bi-calendar-event-fill me-2"></i> Ngày sinh: @(Model.NgaySinh?.ToString("dd/MM/yyyy") ?? "Chưa cập nhật")</p>
                     <p><i class="bi bi-card-text me-2"></i> CCCD: @Model.CCCD</p>
                 </div>
 
-                <div class="mt-5 d-grid gap-2">
-                    <a asp-controller="BacSi" asp-action="Edit" asp-route-id="@Model.IdBacSi" class="btn btn-light fw-bold text-primary">Chỉnh sửa hồ sơ</a>
-                    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-light">Quay lại trang chủ</a>
-                </div>
-                @* Thêm vào dưới phần nút Chỉnh sửa hồ sơ *@
-                <div class="mt-3 d-grid gap-2">
+                <div class="mt-4 d-grid gap-3">
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("BacSi") && User.FindFirstValue("UserId") == Model.IdBacSi.ToString())
+                    {
+                        <a asp-controller="BacSi" asp-action="Edit" asp-route-id="@Model.IdBacSi"
+                           class="btn btn-light fw-bold text-primary rounded-pill shadow-sm">
+                            <i class="bi bi-pencil-square me-2"></i>Chỉnh sửa hồ sơ
+                        </a>
+                    }
                     @if (User.Identity.IsAuthenticated && User.IsInRole("BenhNhan"))
                     {
-                        <button id="btnTheoDoi" class="btn btn-warning fw-bold shadow-sm rounded-pill" onclick="theoDoi(@Model.IdBacSi)">
-                            <i class="bi bi-star me-2"></i>Theo dõi bác sĩ
+                        <button id="btnTheoDoi" class="btn btn-light fw-bold shadow-sm rounded-pill text-primary"
+                                onclick="theoDoi(@Model.IdBacSi)">
+                            <i class="bi bi-star-fill me-2"></i>Theo dõi bác sĩ
                         </button>
                     }
                     else if (!User.Identity.IsAuthenticated)
                     {
-                        <a asp-controller="TaiKhoan" asp-action="DangNhap" class="btn btn-warning fw-bold shadow-sm rounded-pill">
-                            Đăng nhập để theo dõi
+                        <a asp-controller="TaiKhoan" asp-action="DangNhap"
+                           class="btn btn-light fw-bold shadow-sm rounded-pill text-primary">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Đăng nhập để theo dõi
+                        </a>
+                    }
+                    @if (!User.IsInRole("BacSi") && !User.IsInRole("CanBoHanhChinh"))
+                    {
+                        <a asp-controller="Home" asp-action="Index"
+                           class="btn btn-outline-light rounded-pill">
+                            <i class="bi bi-arrow-left me-2"></i>Quay lại trang chủ
                         </a>
                     }
                 </div>
@@ -121,7 +134,6 @@
                             text: response.message,
                             timer: 2000
                         });
-                        // Đổi màu nút hoặc ẩn nút sau khi thành công
                         $("#btnTheoDoi").addClass("disabled").html('<i class="bi bi-check-lg me-2"></i>Đã theo dõi');
                     } else {
                         Swal.fire({

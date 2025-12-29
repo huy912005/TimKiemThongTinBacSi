@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using WebTimKiemBacSi.ViewModel.DTO;
 
 namespace WebTimKiemBacSi.ViewModel
 {
@@ -16,11 +17,4 @@ namespace WebTimKiemBacSi.ViewModel
         public List<SelectListItem>? PhuongXaList { get; set; }
         public List<BacSiTheoDoiDTO>? DanhSachTheoDoi { get; set; }
     }
-}
-public class BacSiTheoDoiDTO
-{
-    public int IdBacSi { get; set; }
-    public string HoTen { get; set; }
-    public string ChuyenKhoa { get; set; }
-    public string AnhDaiDien { get; set; }
 }

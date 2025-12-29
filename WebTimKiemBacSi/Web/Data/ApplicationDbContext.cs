@@ -88,7 +88,9 @@ namespace Web.Data
                 .ToTable(tb => tb.HasTrigger("TG_GhiLogTimKiem"));
 
             modelBuilder.Entity<ThongKeTimKiem>()
-            .HasKey(t => t.TuKhoa);
+                .HasKey(t => t.TuKhoa);
+            modelBuilder.Entity<BenhVien>()
+                .ToTable(tb => tb.HasTrigger("TG_TuDongTaoThongBao"));
         }
     }
 }

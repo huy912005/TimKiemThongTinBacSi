@@ -1,5 +1,7 @@
 ﻿@model BacSi
-
+@{
+    Layout = "_AdminLayout";
+}
 <form method="post" asp-action="Delete">
     @* Phải giữ IdBacSi ẩn để Controller biết cần xóa dòng nào *@
     <input asp-for="IdBacSi" hidden />

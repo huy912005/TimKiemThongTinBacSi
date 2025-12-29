@@ -1,0 +1,135 @@
+﻿@model Web.Models.BenhVien
+@{
+    ViewData["Title"] = "Thêm Bệnh Viện Mới";
+    Layout = "_AdminLayout";
+}
+
+<style>
+    .form-container {
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        padding: 40px;
+        margin-top: 20px;
+    }
+
+    .form-title {
+        color: #28a745;
+        font-weight: 700;
+        margin-bottom: 30px;
+        border-bottom: 2px solid #f1f5f9;
+        padding-bottom: 15px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #475569;
+        margin-bottom: 8px;
+    }
+
+    .input-group-text {
+        background-color: #f8fafc;
+        border: 1px solid #e2e8f0;
+        color: #28a745;
+        border-radius: 12px 0 0 12px !important;
+    }
+
+    .form-control, .form-select {
+        border: 1px solid #e2e8f0;
+        border-radius: 12px !important;
+        padding: 12px 15px;
+        transition: all 0.3s;
+    }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+        }
+
+    .btn-save {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        border: none;
+        border-radius: 50px;
+        padding: 12px 35px;
+        color: white;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    }
+
+    .btn-back {
+        border-radius: 50px;
+        padding: 12px 35px;
+        font-weight: 600;
+    }
+</style>
+
+<div class="container pb-5">
+    <div class="form-container">
+        <h2 class="form-title"><i class="bi bi-hospital me-2"></i> Thêm Bệnh Viện Mới</h2>
+
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="row g-4">
+                <div class="col-md-12">
+                    <label asp-for="TenBenhVien" class="form-label">Tên Bệnh Viện</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-building"></i></span>
+                        <input asp-for="TenBenhVien" class="form-control" placeholder="Nhập tên bệnh viện..." />
+                    </div>
+                    <span asp-validation-for="TenBenhVien" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="HotLine" class="form-label">Đường dây nóng (Hotline)</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                        <input asp-for="HotLine" class="form-control" placeholder="0235..." />
+                    </div>
+                    <span asp-validation-for="HotLine" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Email" class="form-label">Email liên hệ</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                        <input asp-for="Email" class="form-control" placeholder="hospital@example.com" />
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-8">
+                    <label asp-for="DiaDiem" class="form-label">Số nhà, tên đường</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                        <input asp-for="DiaDiem" class="form-control" placeholder="Ví dụ: 123 Phan Châu Trinh..." />
+                    </div>
+                    <span asp-validation-for="DiaDiem" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="IdPhuongXa" class="form-label">Phường / Xã</label>
+                    <select asp-for="IdPhuongXa" class="form-select" asp-items="@(new SelectList(ViewBag.PhuongXaList, "IdPhuongXa", "TenPhuongXa"))">
+                        <option value="">-- Chọn Phường Xã --</option>
+                    </select>
+                    <span asp-validation-for="IdPhuongXa" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-12">
+                    <label asp-for="MoTa" class="form-label">Mô tả bệnh viện</label>
+                    <textarea asp-for="MoTa" class="form-control" rows="4" placeholder="Giới thiệu sơ lược về bệnh viện..."></textarea>
+                    <span asp-validation-for="MoTa" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="mt-5 d-flex gap-3">
+                <button type="submit" class="btn btn-save">
+                    <i class="bi bi-check-circle me-2"></i> Lưu Bệnh Viện
+                </button>
+                <a asp-action="Index" class="btn btn-outline-secondary btn-back">
+                    <i class="bi bi-x-circle me-2"></i> Quay Lại
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,144 @@
+﻿@using WebTimKiemBacSi.ViewModel
+@model BacSiDashboardVM
+<div class="container py-4">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="card shadow border-0 rounded-4 text-center p-4 mb-4">
+                <img src="~/images/@Model.HoSo.AnhDaiDien" onerror="this.src='/images/default-doctor.png'" class="rounded-circle shadow mx-auto mb-3" style="width:150px; height:150px; object-fit:cover;">
+                <h4 class="fw-bold text-primary">BS. @Model.HoSo.HoTen</h4>
+                <p class="text-muted small">@Model.HoSo.BangCap</p>
+                <hr>
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist">
+                    <button class="nav-link active mb-2" data-bs-toggle="pill" data-bs-target="#tab-hoso"><i class="bi bi-person-vcard me-2"></i>Chỉnh sửa hồ sơ</button>
+                    <button class="nav-link mb-2" data-bs-toggle="pill" data-bs-target="#tab-benhnhan"><i class="bi bi-people me-2"></i>Bệnh nhân theo dõi</button>
+                    <button class="nav-link mb-2 position-relative" data-bs-toggle="pill" data-bs-target="#tab-thongbao">
+                        <i class="bi bi-bell me-2"></i>Thông báo hệ thống
+                        @if (Model.ThongBaoMoi.Any(x => x.TrangThaiXem == "Chưa xem"))
+                        {
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@Model.ThongBaoMoi.Count(x => x.TrangThaiXem == "Chưa xem")</span>
+                        }
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <div class="tab-content shadow rounded-4 bg-white p-4">
+
+                <div class="tab-pane fade show active" id="tab-hoso">
+                    <h5 class="fw-bold mb-4">Cập nhật thông tin chi tiết</h5>
+                    <form asp-action="CapNhatHoSoBacSi" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="IdBacSi" value="@Model.HoSo.IdBacSi" />
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Họ tên</label>
+                                <input type="text" name="HoTen" value="@Model.HoSo.HoTen" class="form-control rounded-pill">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Số điện thoại</label>
+                                <input type="text" name="SoDienThoai" value="@Model.HoSo.SoDienThoai" class="form-control rounded-pill">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold">Ngày sinh</label>
+                                <input type="date" name="NgaySinh" value="@Model.HoSo.NgaySinh?.ToString("yyyy-MM-dd")" class="form-control rounded-pill">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold">Giới tính</label>
+                                <select name="GioiTinh" class="form-select rounded-pill">
+                                    <option value="Nam" selected="@(Model.HoSo.GioiTinh == "Nam")">Nam</option>
+                                    <option value="Nữ" selected="@(Model.HoSo.GioiTinh == "Nữ")">Nữ</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold">CCCD</label>
+                                <input type="text" name="CCCD" value="@Model.HoSo.CCCD" class="form-control rounded-pill">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Bệnh viện công tác</label>
+                                <select name="IdBenhVien" asp-items="Model.BenhVienList" class="form-select rounded-pill"></select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Phường xã</label>
+                                <select name="IdPhuongXa" asp-items="Model.PhuongXaList" class="form-select rounded-pill"></select>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label small fw-bold">Mô tả bản thân</label>
+                                <textarea name="MoTa" class="form-control" rows="3">@Model.HoSo.MoTa</textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label small fw-bold">Thay đổi ảnh đại diện</label>
+                                <input type="file" name="AnhFile" class="form-control">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-4 rounded-pill px-5">Lưu thay đổi</button>
+                    </form>
+                </div>
+
+                <div class="tab-pane fade" id="tab-benhnhan">
+                    <h5 class="fw-bold mb-4">Danh sách bệnh nhân quan tâm</h5>
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Tên bệnh nhân</th>
+                                <th>Số điện thoại</th>
+                                <th>Ngày theo dõi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.DanhSachBenhNhanTheoDoi)
+                            {
+                                <tr>
+                                    <td class="fw-bold">@item.HoTen</td>
+                                    <td>@item.SoDienThoai</td>
+                                    <td>@item.NgayTheoDoi.ToString("dd/MM/yyyy")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tab-pane fade" id="tab-thongbao">
+                    <h5 class="fw-bold mb-4 text-danger">Thông báo từ hệ thống</h5>
+                    @foreach (var item in Model.ThongBaoMoi)
+                    {
+                        <div class="notification-item p-3 mb-2 rounded shadow-sm @(item.TrangThaiXem == "Chưa xem" ? "bg-info-subtle unread" : "bg-white")"
+                             onclick="xuLyDocThongBao(this, @item.IdThongBao)"
+                             style="cursor: pointer;">
+                            <div class="d-flex justify-content-between">
+                                <h6 class="fw-bold @(item.TrangThaiXem == "Chưa xem" ? "text-primary" : "text-dark")">@item.ThongBao.TieuDe</h6>
+                                <small class="text-muted">@item.ThongBao.NgayGui</small>
+                            </div>
+                            <p class="mb-0 small">@item.ThongBao.NoiDung</p>
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+        function xuLyDocThongBao(element, id) {
+        if (element.classList.contains('unread')) {
+            $.ajax({
+                url: '/BacSi/DanhDauDaXem',
+                type: 'POST',
+                data: { idThongBao: id },
+                success: function (response) {
+                    if (response.success) {
+                        element.classList.remove('bg-info-subtle', 'unread');
+                        element.classList.add('bg-white');
+                        let badge = $('.btn-primary .badge, .badge-notification-count');
+                        if (badge.length > 0) {
+                            let currentCount = parseInt(badge.text());
+                            if (currentCount > 1) {
+                                badge.text(currentCount - 1);
+                            } else {
+                                badge.hide();
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }
+</script>

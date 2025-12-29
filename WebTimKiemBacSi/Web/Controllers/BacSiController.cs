@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using Web.Data;
 using Web.Models;
 
@@ -76,6 +77,21 @@ namespace Web.Controllers
             _db.BacSi.Remove(obj);
             _db.SaveChanges();
             return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<IActionResult> DanhDauDaXem(int idThongBao)
+        {
+            var userId = User.FindFirstValue("UserId");
+            if (string.IsNullOrEmpty(userId)) return Json(new { success = false });
+            var thongBaoBS = await _db.ThongBao_BacSi.FirstOrDefaultAsync(x => x.IdThongBao == idThongBao && x.IdBacSi == int.Parse(userId));
+            if (thongBaoBS != null && thongBaoBS.TrangThaiXem == "Chưa xem")
+            {
+                thongBaoBS.TrangThaiXem = "Đã xem";
+                thongBaoBS.NgayXem = DateTime.Now;
+                await _db.SaveChangesAsync();
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
         }
     }
 }

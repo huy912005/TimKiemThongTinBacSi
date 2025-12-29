@@ -19,15 +19,20 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="collapse navbar-collapse" id="navbarColor01">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">TRANG CHỦ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="BacSi" asp-action="Index">DANH SÁCH BÁC SĨ</a>
-                        </li>
+                        @if (!User.Identity.IsAuthenticated || User.IsInRole("BenhNhan"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">TRANG CHỦ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="BacSi" asp-action="Index">DANH SÁCH BÁC SĨ</a>
+                            </li>
+                        }
                     </ul>
+
                     <ul class="navbar-nav ms-auto align-items-center">
                         @if (User.Identity.IsAuthenticated)
                         {
@@ -37,11 +42,13 @@
                                     <span class="badge bg-info-subtle text-info small">@User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value</span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end shadow border-0">
-                                    @if (User.IsInRole("CanBoHanhChinh"))
+                                    @if (User.IsInRole("BacSi"))
                                     {
-                                        <li><a class="dropdown-item fw-bold text-primary" asp-controller="TaiKhoan" asp-action="Dashboard"><i class="bi bi-graph-up me-2"></i>Trang Quản Trị</a></li>
-                                        <li><a class="dropdown-item" asp-controller="BacSi" asp-action="Index"><i class="bi bi-person-badge me-2"></i>Quản lý Bác sĩ</a></li>
-                                        <li><a class="dropdown-item" asp-controller="TaiKhoan" asp-action="QuanLyBenhNhan"><i class="bi bi-people me-2"></i>Quản lý Bệnh nhân</a></li>
+                                        <li>
+                                            <a class="dropdown-item fw-bold text-primary" asp-controller="TaiKhoan" asp-action="BacSiDashboard">
+                                                <i class="bi bi-speedometer2 me-2"></i>Trang quản lý Bác sĩ
+                                            </a>
+                                        </li>
                                         <li><hr class="dropdown-divider"></li>
                                     }
                                     <li><a class="dropdown-item" asp-controller="TaiKhoan" asp-action="TaiKhoanCaNhan"><i class="bi bi-gear me-2"></i>Cài đặt tài khoản</a></li>
@@ -76,10 +83,12 @@
     </div>
     <footer class="footer text-muted text-center py-3 border-top bg-white">
         <div class="container">
-            &copy; 2025 - <strong>Hệ Thống Tìm Kiếm Bác Sĩ</strong>
+            &copy; 2025 - <strong>Hệ Thống Tìm Kiếm thông tin Bác Sĩ</strong>
             &nbsp;&nbsp;&nbsp;
+            <br />
+            <span>Phạm Minh Huy - 125TTCMTKCSDL01</span>
             <br/>
-            <a style="text-decoration: none" href="https://github.com/huy912005/TimKiemThongTinBacSi" class="github-link" target="_blank">
+            <a style="text-decoration: none;color:black" href="https://github.com/huy912005/TimKiemThongTinBacSi" class="github-link" target="_blank">
                 <i class="bi bi-github me-1"></i> Mã nguồn trên GitHub
             </a>
         </div>

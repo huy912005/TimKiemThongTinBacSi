@@ -498,7 +498,7 @@ VALUES
 (7,N'Bác sĩ da liễu Khánh Hòa',GETDATE(),N'Nha Trang',7),
 (8,  N'Bác sĩ thần kinh Nghệ An',   GETDATE(), N'Vinh',     8),
 (9,  N'Khám răng Hải Dương',        GETDATE(), N'Hải Dương', 9),
-(10, N'Chẩn đoán hình ảnh Lâm Đồng',GETDATE(), N'Đà Lạt',    10);
+(10, N'Nguyễn Phước Quý Bửu',GETDATE(), N'Đà Lạt',    10);
 SET IDENTITY_INSERT TimKiem OFF;
 -- 18. BÁO CÁO
 SET IDENTITY_INSERT BaoCao ON;
@@ -516,42 +516,6 @@ VALUES
 (10, N'Báo cáo lịch làm việc cập nhật',   N'Điều phối',GETDATE(), 10, 10, 10);
 SET IDENTITY_INSERT BaoCao OFF;
 -------------------------------------------------------------SELECT-----------------------------------------------------------
----Danh sách bác sĩ bị báo cáo
-SELECT 
-    b.IdBacSi, 
-    b.HoTen AS TenBacSi, 
-    bc.NoiDung, 
-    bc.LoaiBaoCao, 
-    bc.NgayTaoBaoCao
-FROM BacSi b
-JOIN BaoCao bc ON b.IdBacSi = bc.IdBacSi;
----Bác sĩ bị báo cáo nhiều nhất
-SELECT TOP 1 
-    b.IdBacSi, 
-    b.HoTen AS TenBacSi, 
-    COUNT(bc.IdBaoCao) AS SoLuotBiBaoCao
-FROM BacSi b
-JOIN BaoCao bc ON b.IdBacSi = bc.IdBacSi
-GROUP BY b.IdBacSi, b.HoTen
-ORDER BY SoLuotBiBaoCao DESC;
----Danh sách bệnh nhân đã báo cáo
-SELECT 
-    bn.IdBenhNhan, 
-    bn.HoTen AS TenBenhNhan, 
-    bc.NoiDung, 
-    bc.LoaiBaoCao, 
-    bc.NgayTaoBaoCao
-FROM BenhNhan bn
-JOIN BaoCao bc ON bn.IdBenhNhan = bc.IdeBenhNhan;
----Bệnh nhân báo cáo nhiều nhất
-SELECT TOP 1 
-    bn.IdBenhNhan, 
-    bn.HoTen AS TenBenhNhan, 
-    COUNT(bc.IdBaoCao) AS SoLuotDaBaoCao
-FROM BenhNhan bn
-JOIN BaoCao bc ON bn.IdBenhNhan = bc.IdeBenhNhan
-GROUP BY bn.IdBenhNhan, bn.HoTen
-ORDER BY SoLuotDaBaoCao DESC;
 -- Select theo IdBacSi
 SELECT * FROM BacSi WHERE IdBacSi = 1;
 -- Select theo Tên (Tìm gần đúng)
@@ -561,95 +525,36 @@ SELECT bs.*, ck.TenChuyenKhoa
 FROM BacSi bs
 JOIN ChuyenKhoa_BacSi ckbs ON bs.IdBacSi = ckbs.IdBacSi
 JOIN ChuyenKhoa ck ON ckbs.IdChuyenKhoa = ck.IdChuyenKhoa
-WHERE ck.TenChuyenKhoa LIKE N'%Nội khoa%';
--- Select theo Tỉnh Thành
-SELECT bs.*, tt.TenTinhThanh
-FROM BacSi bs
-JOIN PhuongXa px ON bs.IdPhuongXa = px.IdPhuongXa
-JOIN TinhThanh tt ON px.IdTinhThanh = tt.IdTinhThanh
-WHERE tt.TenTinhThanh LIKE N'%Đà Nẵng%';
--- Select theo Phường Xã
-SELECT bs.*, px.TenPhuongXa
-FROM BacSi bs
-JOIN PhuongXa px ON bs.IdPhuongXa = px.IdPhuongXa
-WHERE px.TenPhuongXa LIKE N'%Quế Sơn%';
--- Select bác sĩ theo Ngày làm việc
-SELECT DISTINCT bs.HoTen, l.NgayLamViec, l.KhungGio, l.TrangThai
-FROM BacSi bs
-JOIN LichLamViec l ON bs.IdBacSi = l.IdBacSi
-WHERE l.NgayLamViec = '2023-12-25';
--- Select bác sĩ theo Khu
-SELECT DISTINCT bs.HoTen, k.TenKhu
-FROM BacSi bs
-JOIN LichLamViec l ON bs.IdBacSi = l.IdBacSi
-JOIN Phong p ON l.IdPhong = p.IdPhong
-JOIN Khu k ON p.IdKhu = k.IdKhu
-WHERE k.TenKhu LIKE N'%Khu A%';
--- Select bác sĩ theo Phòng
-SELECT DISTINCT bs.HoTen, p.TenPhong, p.Tang
-FROM BacSi bs
-JOIN LichLamViec l ON bs.IdBacSi = l.IdBacSi
-JOIN Phong p ON l.IdPhong = p.IdPhong
-WHERE p.TenPhong LIKE N'%Phòng 101%';
--- Select bác sĩ thuộc một Bệnh viện cụ thể
-SELECT bs.*, bv.TenBenhVien
-FROM BacSi bs
-JOIN BenhVien bv ON bs.IdBenhVien = bv.IdBenhVien
-WHERE bv.TenBenhVien LIKE N'%Bệnh viện Ung Bướu%';
--- Select danh sách bệnh nhân đang theo dõi một bác sĩ (ví dụ IdBacSi = 1)
-SELECT bn.HoTen AS TenBenhNhan, bn.SoDienThoai, td.NgayBatDauTheoDoi
-FROM BenhNhan bn
-JOIN TheoDoi td ON bn.IdBenhNhan = td.IdBenhNhan
-WHERE td.IdBacSi = 1;
--- Select bác sĩ được tìm kiếm nhiều nhất (Dựa trên từ khóa có chứa tên bác sĩ)
-SELECT TOP 5 bs.HoTen, COUNT(tk.IdTimKiem) AS SoLuotTimKiem
-FROM BacSi bs
-LEFT JOIN TimKiem tk ON tk.TuKhoaTK LIKE N'%' + bs.HoTen + '%'
-GROUP BY bs.IdBacSi, bs.HoTen
-ORDER BY SoLuotTimKiem DESC;
--- Select bệnh nhân tìm kiếm bác sĩ nhiều nhất
-SELECT TOP 5 bn.HoTen, COUNT(tk.IdTimKiem) AS TongSoLuotTim
-FROM BenhNhan bn
-JOIN TimKiem tk ON bn.IdBenhNhan = tk.IdBenhNhan
-GROUP BY bn.IdBenhNhan, bn.HoTen
-ORDER BY TongSoLuotTim DESC;
--- Select theo Tên (Tìm gần đúng)
-SELECT * FROM BacSi WHERE HoTen LIKE N'%Nguyễn%';
--- Select theo Chuyên khoa
-SELECT bs.*, ck.TenChuyenKhoa 
-FROM BacSi bs
-JOIN ChuyenKhoa_BacSi ckbs ON bs.IdBacSi = ckbs.IdBacSi
-JOIN ChuyenKhoa ck ON ckbs.IdChuyenKhoa = ck.IdChuyenKhoa
 WHERE ck.TenChuyenKhoa LIKE N'%Nhi khoa%';
--- Select theo Tỉnh Thành
-SELECT bs.*, tt.TenTinhThanh
-FROM BacSi bs
-JOIN PhuongXa px ON bs.IdPhuongXa = px.IdPhuongXa
-JOIN TinhThanh tt ON px.IdTinhThanh = tt.IdTinhThanh
-WHERE tt.TenTinhThanh LIKE N'%Đà Nẵng%';
 -- Select theo Phường Xã
 SELECT bs.*, px.TenPhuongXa
 FROM BacSi bs
 JOIN PhuongXa px ON bs.IdPhuongXa = px.IdPhuongXa
 WHERE px.TenPhuongXa LIKE N'%Hải Châu%';
+-- Select theo Tỉnh Thành
+SELECT bs.*, tt.TenTinhThanh
+FROM BacSi bs
+JOIN PhuongXa px ON bs.IdPhuongXa = px.IdPhuongXa
+JOIN TinhThanh tt ON px.IdTinhThanh = tt.IdTinhThanh
+WHERE tt.TenTinhThanh LIKE N'%Đà Nẵng%';
 -- Select bác sĩ theo Ngày làm việc
 SELECT DISTINCT bs.HoTen, l.NgayLamViec, l.KhungGio, l.TrangThai
 FROM BacSi bs
 JOIN LichLamViec l ON bs.IdBacSi = l.IdBacSi
-WHERE l.NgayLamViec = '2023-12-25';
--- Select bác sĩ theo Khu
-SELECT DISTINCT bs.HoTen, k.TenKhu
-FROM BacSi bs
-JOIN LichLamViec l ON bs.IdBacSi = l.IdBacSi
-JOIN Phong p ON l.IdPhong = p.IdPhong
-JOIN Khu k ON p.IdKhu = k.IdKhu
-WHERE k.TenKhu LIKE N'%Khu A%';
+WHERE l.NgayLamViec = '2024-12-31';
 -- Select bác sĩ theo Phòng
 SELECT DISTINCT bs.HoTen, p.TenPhong, p.Tang
 FROM BacSi bs
 JOIN LichLamViec l ON bs.IdBacSi = l.IdBacSi
 JOIN Phong p ON l.IdPhong = p.IdPhong
 WHERE p.TenPhong LIKE N'%P101%';
+-- Select bác sĩ theo Khu
+SELECT DISTINCT bs.HoTen, k.TenKhu
+FROM BacSi bs
+JOIN LichLamViec l ON bs.IdBacSi = l.IdBacSi
+JOIN Phong p ON l.IdPhong = p.IdPhong
+JOIN Khu k ON p.IdKhu = k.IdKhu
+WHERE k.TenKhu LIKE N'%Khu A%';
 -- Select bác sĩ thuộc một Bệnh viện cụ thể
 SELECT bs.*, bv.TenBenhVien
 FROM BacSi bs
@@ -672,6 +577,42 @@ FROM BenhNhan bn
 JOIN TimKiem tk ON bn.IdBenhNhan = tk.IdBenhNhan
 GROUP BY bn.IdBenhNhan, bn.HoTen
 ORDER BY TongSoLuotTim DESC;
+-- Danh sách bác sĩ bị báo cáo
+SELECT 
+    b.IdBacSi, 
+    b.HoTen AS TenBacSi, 
+    bc.NoiDung, 
+    bc.LoaiBaoCao, 
+    bc.NgayTaoBaoCao
+FROM BacSi b
+JOIN BaoCao bc ON b.IdBacSi = bc.IdBacSi;
+-- Bác sĩ bị báo cáo nhiều nhất
+SELECT TOP 1 
+    b.IdBacSi, 
+    b.HoTen AS TenBacSi, 
+    COUNT(bc.IdBaoCao) AS SoLuotBiBaoCao
+FROM BacSi b
+JOIN BaoCao bc ON b.IdBacSi = bc.IdBacSi
+GROUP BY b.IdBacSi, b.HoTen
+ORDER BY SoLuotBiBaoCao DESC;
+-- Danh sách bệnh nhân đã báo cáo
+SELECT 
+    bn.IdBenhNhan, 
+    bn.HoTen AS TenBenhNhan, 
+    bc.NoiDung, 
+    bc.LoaiBaoCao, 
+    bc.NgayTaoBaoCao
+FROM BenhNhan bn
+JOIN BaoCao bc ON bn.IdBenhNhan = bc.IdeBenhNhan;
+-- Bệnh nhân báo cáo nhiều nhất
+SELECT TOP 1 
+    bn.IdBenhNhan, 
+    bn.HoTen AS TenBenhNhan, 
+    COUNT(bc.IdBaoCao) AS SoLuotDaBaoCao
+FROM BenhNhan bn
+JOIN BaoCao bc ON bn.IdBenhNhan = bc.IdeBenhNhan
+GROUP BY bn.IdBenhNhan, bn.HoTen
+ORDER BY SoLuotDaBaoCao DESC;
 -------------------------------------------------------------FUNCTION---------------------------------------------------------------
 --1. fn_DinhDangSoDienThoai: Chuyển số điện thoại về định dạng chuẩn (vd: 090... -> +84...).
 IF OBJECT_ID('dbo.fn_DinhDangSoDienThoai', 'FN') IS NOT NULL
@@ -712,7 +653,7 @@ BEGIN
 END
 GO
 --chạy function 1
-SELECT dbo.fn_DinhDangSoDienThoai('0901234567') AS KetQua;
+SELECT idBenhNhan,SoDienThoai,dbo.fn_DinhDangSoDienThoai(SoDienThoai) AS KetQua From BenhNhan;
 --2. fn_TinhTrungBinhSao: Tính điểm đánh giá trung bình của 1 bác sĩ.
 IF OBJECT_ID('dbo.fn_TinhTrungBinhSao', 'FN') IS NOT NULL
     DROP FUNCTION dbo.fn_TinhTrungBinhSao;
@@ -732,7 +673,7 @@ BEGIN
 END
 --chạy function 2
 GO
-SELECT idBacSi,HoTen,dbo.fn_TinhTrungBinhSao(idBacSi) 
+SELECT idBacSi,HoTen,dbo.fn_TinhTrungBinhSao(idBacSi) AS KetQua
 FROM BacSi 
 --3. fn_DemBenhNhanTheoDoi: Đếm số lượng bệnh nhân đang theo dõi một bác sĩ cụ thể.
 IF OBJECT_ID('dbo.fn_DemBenhNhanTheoDoi', 'FN') IS NOT NULL
@@ -785,8 +726,8 @@ END
 --chạy function 4
 GO
 SELECT 
-    dbo.fn_KiemTraLichTrong(1, '2024-12-30', N'07:30 - 11:30') AS Sang,
-    dbo.fn_KiemTraLichTrong(1, '2024-12-30', N'13:30 - 17:00') AS Chieu;
+	bs.IdBacSi, l.NgayLamViec, l.KhungGio, dbo.fn_KiemTraLichTrong(bs.IdBacSi, l.NgayLamViec, l.KhungGio) AS Sang FROM BacSi bs JOIN LichLamViec l ON bs.IdBacSi = l.IdBacSi 
+	WHERE bs.IdBacSi = 1 AND l.NgayLamViec = '2024-12-30' AND l.KhungGio = N'07:30 - 11:30';
 --5. fn_LayDiaChiDayDuBacSi: Kết hợp Số nhà + Phường + Tỉnh thành thành 1 chuỗi.
 IF OBJECT_ID('dbo.fn_LayDiaChiDayDuBacSi', 'FN') IS NOT NULL
     DROP FUNCTION dbo.fn_LayDiaChiDayDuBacSi;
@@ -906,12 +847,12 @@ END;
 --chạy function 9: Đếm số thông báo mới của một Id người dùng.
 -----bacsi
 GO
-SELECT idBacSi,HoTen,dbo.fn_DemThongBaoChuaDoc(1,'BacSi') soThongBao
-FROM BacSi
+SELECT IdBacSi, HoTen, dbo.fn_DemThongBaoChuaDoc(IdBacSi, 'BacSi') AS SoThongBaoChuaDoc
+FROM BacSi;
 -----benhnhan
 GO
-SELECT idBenhNhan,HoTen,dbo.fn_DemThongBaoChuaDoc(1,'BenhNhan') soThongBao
-FROM BenhNhan
+SELECT IdBenhNhan, HoTen, dbo.fn_DemThongBaoChuaDoc(IdBenhNhan, 'BenhNhan') AS SoThongBaoChuaDoc
+FROM BenhNhan;
 -- 10. fn_TinhTyLePhanHoi: Tính % số thông báo đã xem trên tổng số thông báo nhận được (cho Bệnh nhân)
 GO
 CREATE FUNCTION fn_TinhTyLePhanHoi(@idBenhNhan INT)
@@ -974,14 +915,8 @@ BEGIN
     RETURN N'Không hợp lệ'
 END
 GO
-	SELECT 
-		'049205002552' AS SoNhapVao, dbo.fn_KiemTraCCCD('049205002552') AS KetQua -- Đúng 12 số
-	UNION ALL
-	SELECT 
-		'12345' AS SoNhapVao, dbo.fn_KiemTraCCCD('12345') AS KetQua -- Sai (thiếu độ dài)
-	UNION ALL
-	SELECT 
-		'04920500255A' AS SoNhapVao, dbo.fn_KiemTraCCCD('04920500255A') AS KetQua; -- Sai (chứa chữ)
+	SELECT IdBacSi, HoTen, CCCD, dbo.fn_KiemTraCCCD(CCCD) AS TrangThaiCCCD 
+	FROM BacSi;
 
 -- 13. fn_LocTuKhoaNhayCam: Kiểm tra nội dung DanhGia có chứa từ cấm không
 GO
@@ -995,11 +930,8 @@ BEGIN
     RETURN N'Hợp lệ'
 END
 GO
-	SELECT 
-		N'Bác sĩ rất tận tâm' AS NoiDung, dbo.fn_LocTuKhoaNhayCam(N'Bác sĩ rất tận tâm') AS KiemTra
-	UNION ALL
-	SELECT
-N'Dịch vụ quá tệ và lừa đảo' AS NoiDung, dbo.fn_LocTuKhoaNhayCam(N'Dịch vụ quá tệ và lừa đảo') AS KiemTra;
+	SELECT IdDanhGia, NoiDung, dbo.fn_LocTuKhoaNhayCam(NoiDung) AS TrangThaiKiemDuyet 
+	FROM DanhGia;
 
 -- 14. fn_DemSoCaKhamTrongNgay: Đếm tổng số ca làm việc của 1 bệnh viện trong ngày
 GO
@@ -1042,9 +974,10 @@ BEGIN
     END
     RETURN @GioBatDau
 END
--- chạy function 15
 GO
-SELECT dbo.fn_LayGioBatDau('9:00-20:00') AS GioBatDau;
+-- chạy function 15 
+SELECT IdLichLamViec, KhungGio, dbo.fn_LayGioBatDau(KhungGio) AS GioBatDau 
+FROM LichLamViec;
 --16. fn_TinhThoiGianTheoDoi: Tính số ngày bệnh nhân đã theo dõi bác sĩ.
 GO
 CREATE FUNCTION fn_TinhThoiGianTheoDoi(@idBacSi INT,@idBenhNhan INT)

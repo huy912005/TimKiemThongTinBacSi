@@ -275,7 +275,10 @@ VALUES(1,N'Thành phố Đà Nẵng'),
 (4, N'Thành phố Huế'),
 (5, N'Tỉnh Quảng Nam'),
 (6, N'Tỉnh Bình Định'),
-(7, N'Tỉnh Khánh Hòa');
+(7, N'Tỉnh Khánh Hòa'),
+(8,  N'Tỉnh Nghệ An'),
+(9,  N'Tỉnh Hải Dương'),
+(10, N'Tỉnh Lâm Đồng');
 SET IDENTITY_INSERT TinhThanh OFF;
 -- 2. PHƯỜNG XÃ
 SET IDENTITY_INSERT PhuongXa ON;
@@ -286,7 +289,10 @@ INSERT INTO PhuongXa (IdPhuongXa, TenPhuongXa, IdTinhThanh) VALUES
 (4, N'Phường Thuận Hòa', 4),
 (5, N'Phường An Mỹ', 5),
 (6, N'Phường Trần Phú', 6),
-(7, N'Phường Vĩnh Hải', 7);
+(7, N'Phường Vĩnh Hải', 7),
+(8,  N'Phường Vinh Tân', 8),
+(9,  N'Phường Tân Bình', 9),
+(10, N'Phường 1',        10);
 SET IDENTITY_INSERT PhuongXa OFF;
 -- 3. BỆNH VIỆN
 SET IDENTITY_INSERT BenhVien ON;
@@ -297,7 +303,10 @@ INSERT INTO BenhVien (IdBenhVien, TenBenhVien, HotLine, Email, MoTa, DiaDiem, Id
 (4, N'Bệnh viện Trung ương Huế', '02343822222', 'bvhue@vn', N'BV tuyến trung ương', N'16 Lê Lợi', 4),
 (5, N'Bệnh viện Đa khoa Quảng Nam', '02353991111', 'bvqn@vn', N'BV tỉnh Quảng Nam', N'01 Phan Bội Châu', 5),
 (6, N'Bệnh viện Đa khoa Bình Định', '02563992222', 'bvbd@vn', N'BV đa khoa', N'106 Nguyễn Huệ', 6),
-(7, N'Bệnh viện Khánh Hòa', '02583883333', 'bvkh@vn', N'BV tỉnh Khánh Hòa', N'19 Yersin', 7);
+(7, N'Bệnh viện Khánh Hòa', '02583883333', 'bvkh@vn', N'BV tỉnh Khánh Hòa', N'19 Yersin', 7),
+(8,  N'Bệnh viện Hữu nghị Nghệ An',  '02381234567', 'Bvna@vn',  N'BV đa khoa tuyến tỉnh', N'12 Trường Thi', 8),
+(9,  N'Bệnh viện Đa khoa Hải Dương', '02203889999', 'Bvhd@vn',  N'BV đa khoa',           N'88 Nguyễn Lương Bằng', 9),
+(10, N'Bệnh viện Đa khoa Lâm Đồng',  '02633887777', 'Bvld@vn',  N'BV tuyến tỉnh',        N'05 Trần Phú', 10);
 SET IDENTITY_INSERT BenhVien OFF;
 -- 4. KHU
 SET IDENTITY_INSERT Khu ON;
@@ -308,7 +317,10 @@ VALUES (1, N'Khu A', 1),
 (4, N'Khu D', 4),
 (5, N'Khu E', 5),
 (6, N'Khu F', 6),
-(7, N'Khu G', 7);
+(7, N'Khu G', 7),
+(8,  N'Khu H', 8),
+(9,  N'Khu I', 9),
+(10, N'Khu J', 10);
 SET IDENTITY_INSERT Khu OFF
 -- 5. PHÒNG
 SET IDENTITY_INSERT Phong ON;
@@ -319,7 +331,10 @@ VALUES (1, N'P101', 1, 1),
 (4, N'P401', 4, 4),
 (5, N'P502', 5, 5),
 (6, N'P603', 6, 6),
-(7, N'P704', 7, 7);
+(7, N'P704', 7, 7),
+(8,  N'P808', 8, 8),
+(9,  N'P909', 9, 9),
+(10, N'P1001', 10, 10);
 SET IDENTITY_INSERT Phong OFF
 USE TimKiemThongTinBacSi;
 GO
@@ -332,7 +347,10 @@ VALUES (1, '0905111222', N'Phạm Minh Huy', 'Huy@gmail.com', 'Huy123!@#', '1980
 (4,'0906000001',N'Lê Văn Thành','thanh@bv.vn','123','1982-02-02',N'Nam',N'Thạc sĩ',12,N'CCHN-11111',N'Giỏi ngoại khoa',N'Bác sĩ giàu kinh nghiệm','thanh.jpg',N'12 Lê Lợi','049200001111',4,4),
 (5,'0906000002',N'Nguyễn Thị Mai','mai@bv.vn','123','1987-03-03',N'Nữ',N'Bác sĩ CKI',8,N'CCHN-22222',N'Tận tâm bệnh nhân',N'Chuyên khoa tổng quát','mai.jpg',N'22 Phan Bội Châu','049200002222',5,5),
 (6,'0906000003',N'Trần Hoàng Long','long@bv.vn','123','1991-04-04',N'Nam',N'Bác sĩ',5,N'CCHN-33333',N'Nhiệt huyết',N'Luôn học hỏi','long.jpg',N'45 Nguyễn Huệ','049200003333',6,6),
-(7,'0906000004',N'Phan Thị Hồng','hong@bv.vn','123','1994-05-05',N'Nữ',N'Bác sĩ',3,N'CCHN-44444',N'Trẻ trung',N'Chăm sóc tận tình','hong.jpg',N'99 Yersin','049200004444',7,7);
+(7,'0906000004',N'Phan Thị Hồng','hong@bv.vn','123','1994-05-05',N'Nữ',N'Bác sĩ',3,N'CCHN-44444',N'Trẻ trung',N'Chăm sóc tận tình','hong.jpg',N'99 Yersin','049200004444',7,7),
+(8,  '0907000008', N'Ngô Đức An',      'An@bv.vn',   '123', '1983-08-08', N'NAM', N'Thạc sĩ',     11, N'CCHN-88888', N'Chuyên gia thần kinh', N'Nội thần kinh', 'an.jpg',  N'12 Trường Thi',         '049200008888', 8, 8),
+(9,  '0907000009', N'Vũ Thị Thanh',    'Thanh@bv.vn','123', '1989-09-09', N'NỮ',  N'Bác sĩ CKI',  9,  N'CCHN-99999', N'Giỏi răng hàm mặt',     N'RHM nhiều kinh nghiệm', 'thanh2.jpg', N'88 Nguyễn Lương Bằng', '049200009999', 9, 9),
+(10, '0907000010', N'Trần Minh Khang', 'Khang@bv.vn','123', '1992-10-10', N'NAM', N'Tiến sĩ',     13, N'CCHN-101010',N'Chẩn đoán hình ảnh',    N'CDHA',          'khang.jpg', N'05 Trần Phú',          '049200010101', 10, 10);
 SET IDENTITY_INSERT BacSi OFF;
 -- 7. BỆNH NHÂN
 SET IDENTITY_INSERT BenhNhan ON;
@@ -343,7 +361,10 @@ VALUES (1, '0914000111', N'Dương Công Tiến', 'Tien@gmail.com', '123', '2000
 (4,'0915000001',N'Phạm Quốc Huy','pq@bn.vn','123','1999-01-01',N'Nam',GETDATE(),N'10 Lê Lợi','049300001111',4),
 (5,'0915000002',N'Ngô Thị Lan','lan@bn.vn','123','2001-02-02',N'Nữ',GETDATE(),N'20 An Mỹ','049300002222',5),
 (6,'0915000003',N'Lý Minh Đức','duc@bn.vn','123','1997-03-03',N'Nam',GETDATE(),N'30 Trần Phú','049300003333',6),
-(7,'0915000004',N'Võ Thanh Tâm','tam@bn.vn','123','2003-04-04',N'Nữ',GETDATE(),N'40 Vĩnh Hải','049300004444',7);
+(7,'0915000004',N'Võ Thanh Tâm','tam@bn.vn','123','2003-04-04',N'Nữ',GETDATE(),N'40 Vĩnh Hải','049300004444',7),
+(8,  '0916000008', N'Đặng Gia Huy',   'Huybn@vn',  '123', '2002-08-08', N'NAM', GETDATE(), N'01 Lê Lợi',        '049300008888', 8),
+(9,  '0916000009', N'Phan Ngọc Linh', 'Linhbn@vn', '123', '2001-09-09', N'NỮ',  GETDATE(), N'02 Nguyễn Huệ',    '049300009999', 9),
+(10, '0916000010', N'Nguyễn Minh Đức','Ducbn@vn',  '123', '2000-10-10', N'NAM', GETDATE(), N'03 Trần Phú',      '049300010101', 10);
 SET IDENTITY_INSERT BenhNhan OFF;
 -- 8. CÁN BỘ HÀNH CHÍNH
 SET IDENTITY_INSERT CanBoHanhChinh ON;
@@ -354,7 +375,10 @@ VALUES (1, '0236111987', N'Phạm Minh Huy', 'Huy@vn', 'Huy123!@#', '1975-01-01'
 (4,'0236000001',N'Nguyễn Văn Quản','ql@bv.vn','123','1980-01-01',N'Nam',N'Quản lý','12 Lê Lợi','049400001111',4,4),
 (5,'0236000002',N'Lê Thị Hạnh','hanh@bv.vn','123','1985-02-02',N'Nữ',N'Nhân sự','22 An Mỹ','049400002222',5,5),
 (6,'0236000003',N'Đỗ Minh Khoa','khoa@bv.vn','123','1990-03-03',N'Nam',N'Điều phối','33 Trần Phú','049400003333',6,6),
-(7,'0236000004',N'Phan Thị Nga','nga@bv.vn','123','1993-04-04',N'Nữ',N'Thư ký','44 Yersin','049400004444',7,7);
+(7,'0236000004',N'Phan Thị Nga','nga@bv.vn','123','1993-04-04',N'Nữ',N'Thư ký','44 Yersin','049400004444',7,7),
+(8,  '02381230008', N'Nguyễn Văn Hòa',  'Hoa@vn',  '123', '1984-08-08', N'NAM', N'Điều phối', N'12 Trường Thi',         '049400008888', 8, 8),
+(9,  '02203880009', N'Lê Thị Hương',    'Huong@vn','123', '1986-09-09', N'NỮ',  N'Nhân sự',   N'88 Nguyễn Lương Bằng', '049400009999', 9, 9),
+(10, '02633880010', N'Trần Quốc Bảo',   'Bao@vn',  '123', '1987-10-10', N'NAM', N'Quản lý',   N'05 Trần Phú',          '049400010101', 10, 10);
 SET IDENTITY_INSERT CanBoHanhChinh OFF;
 -- 9. CHUYÊN KHOA
 SET IDENTITY_INSERT ChuyenKhoa ON;
@@ -365,14 +389,19 @@ INSERT INTO ChuyenKhoa (IdChuyenKhoa, TenChuyenKhoa, MoTa) VALUES
 (4,N'Ngoại Tổng Quát',N'Phẫu thuật tổng hợp'),
 (5,N'Sản Khoa',N'Chăm sóc thai phụ'),
 (6,N'Tai Mũi Họng',N'Điều trị tai mũi họng'),
-(7,N'Da Liễu',N'Chăm sóc da');
+(7,N'Da Liễu',N'Chăm sóc da'),
+(8,  N'Nội Thần Kinh',        N'Khám và điều trị thần kinh'),
+(9,  N'Răng Hàm Mặt',         N'Khám và điều trị răng hàm mặt'),
+(10, N'Chẩn Đoán Hình Ảnh',   N'Siêu âm, X-quang, CT, MRI');
 SET IDENTITY_INSERT ChuyenKhoa OFF;
 -- 10. CHUYÊN KHOA_BÁC SĨ (Bảng trung gian, không có Identity nên insert bình thường)
 INSERT INTO ChuyenKhoa_BacSi (IdBacSi, IdChuyenKhoa) 
 VALUES (1, 1), 
 (2, 2), 
 (3, 3),
-(4,4),(5,5),(6,6),(7,7);
+(4,4),(5,5),(6,6),(7,7),(8, 8),
+(9, 9),
+(10, 10);
 -- 11. LỊCH LÀM VIỆC
 SET IDENTITY_INSERT LichLamViec ON;
 INSERT INTO LichLamViec (IdLichLamViec, NgayLamViec, KhungGio, TrangThai, IdBacSi, IdPhong) VALUES 
@@ -382,7 +411,10 @@ INSERT INTO LichLamViec (IdLichLamViec, NgayLamViec, KhungGio, TrangThai, IdBacS
 (4,'2025-01-02','07:30 - 11:30',N'Sẵn sàng',4,4),
 (5,'2025-01-02','13:30 - 17:00',N'Sẵn sàng',5,5),
 (6,'2025-01-03','07:30 - 11:30',N'Sẵn sàng',6,6),
-(7,'2025-01-03','13:30 - 17:00',N'Sẵn sàng',7,7);
+(7,'2025-01-03','13:30 - 17:00',N'Sẵn sàng',7,7),
+(8,  '2025-01-04', '07:30 - 11:30', N'Sẵn sàng', 8, 8),
+(9,  '2025-01-04', '13:30 - 17:00', N'Sẵn sàng', 9, 9),
+(10, '2025-01-05', '07:30 - 11:30', N'Sẵn sàng', 10, 10);
 
 SET IDENTITY_INSERT LichLamViec OFF;
 -- 12. THÔNG BÁO
@@ -394,7 +426,10 @@ INSERT INTO ThongBao (IdThongBao, TieuDe, NoiDung, NgayGui, LoaiThongBao, IdCanB
 (4,N'Cập nhật quy định',N'Quy định mới của Bộ Y tế',GETDATE(),N'Hành chính',4),
 (5,N'Tập huấn',N'Tập huấn phòng cháy',GETDATE(),N'Nội bộ',5),
 (6,N'Thông báo lịch trực',N'Lịch trực tháng 1',GETDATE(),N'Hành chính',6),
-(7,N'Thăm khám cộng đồng',N'Khám bệnh vùng sâu',GETDATE(),N'Cộng đồng',7);
+(7,N'Thăm khám cộng đồng',N'Khám bệnh vùng sâu',GETDATE(),N'Cộng đồng',7),
+(8,  N'Cập nhật hotline', N'Hotline bệnh viện vừa được cập nhật.', GETDATE(), N'Hành chính', 8),
+(9,  N'Cập nhật địa điểm', N'Địa điểm bệnh viện vừa được cập nhật.', GETDATE(), N'Hành chính', 9),
+(10, N'Thông báo nội bộ', N'Nhắc lịch kiểm tra cơ sở vật chất.', GETDATE(), N'Nội bộ', 10);
 SET IDENTITY_INSERT ThongBao OFF;
 -- 13. DANH GIA
 SET IDENTITY_INSERT DanhGia ON;
@@ -405,7 +440,11 @@ INSERT INTO DanhGia (IdDanhGia, DiemDanhGia, NoiDung, NgayDanhGia, IdBacSi, IdBe
 (4,4,N'Khám kỹ',GETDATE(),4,4),
 (5,5,N'Chu đáo',GETDATE(),5,5),
 (6,3,N'Đợi hơi lâu',GETDATE(),6,6),
-(7,4,N'Tư vấn rõ ràng',GETDATE(),7,7);
+(7,4,N'Tư vấn rõ ràng',GETDATE(),7,7),
+(8,  5, N'Rất chuyên nghiệp', GETDATE(), 8, 8),
+(9,  4, N'Tư vấn rõ ràng',    GETDATE(), 9, 9),
+(10, 5, N'Khám nhanh, kỹ',    GETDATE(), 10, 10);
+
 SET IDENTITY_INSERT DanhGia OFF;
 -- 14. THÔNG BÁO_BÁC SĨ
 INSERT INTO ThongBao_BacSi (IdBacSi, IdThongBao, NgayXem, TrangThaiXem) 
@@ -416,7 +455,10 @@ VALUES
 (4,3,NULL,N'Chưa xem'),
 (5,4,GETDATE(),N'Đã xem'),
 (6,5,NULL,N'Chưa xem'),
-(7,6,GETDATE(),N'Đã xem');
+(7,6,GETDATE(),N'Đã xem'),
+(8,  8,  NULL,     N'Chưa xem'),
+(9,  9,  GETDATE(),N'Đã xem'),
+(10, 10, NULL,     N'Chưa xem');
 -- 15. THÔNG BÁO_BỆNH NHÂN 
 INSERT INTO ThongBao_BenhNhan (IdBenhNhan, IdThongBao, NgayXem, TrangThaiXem) VALUES 
 (1,3,GETDATE(),N'Đã xem'),
@@ -425,7 +467,10 @@ INSERT INTO ThongBao_BenhNhan (IdBenhNhan, IdThongBao, NgayXem, TrangThaiXem) VA
 (4,4,NULL,N'Chưa xem'),
 (5,5,GETDATE(),N'Đã xem'),
 (6,6,NULL,N'Chưa xem'),
-(7,7,GETDATE(),N'Đã xem');
+(7,7,GETDATE(),N'Đã xem'),
+(8,  8,  NULL,     N'Chưa xem'),
+(9,  9,  GETDATE(),N'Đã xem'),
+(10, 10, NULL,     N'Chưa xem');
 -- 16. THEO DÕI
 INSERT INTO TheoDoi (IdBacSi, IdBenhNhan, NgayBatDauTheoDoi) 
 VALUES 
@@ -435,7 +480,10 @@ VALUES
 (4,4,'2025-01-04'),
 (5,5,'2025-01-05'),
 (6,6,'2025-01-06'),
-(7,7,'2025-01-07');
+(7,7,'2025-01-07'),
+(8,  8,  '2025-01-08'),
+(9,  9,  '2025-01-09'),
+(10, 10, '2025-01-10');
 
 -- 17. TÌM KIẾM
 SET IDENTITY_INSERT TimKiem ON;
@@ -447,7 +495,10 @@ VALUES
 (4,N'Bác sĩ ngoại khoa Huế',GETDATE(),N'Huế',4),
 (5,N'Khám sản khoa Quảng Nam',GETDATE(),N'Quảng Nam',5),
 (6,N'Khám tai mũi họng Bình Định',GETDATE(),N'Bình Định',6),
-(7,N'Bác sĩ da liễu Khánh Hòa',GETDATE(),N'Nha Trang',7);
+(7,N'Bác sĩ da liễu Khánh Hòa',GETDATE(),N'Nha Trang',7),
+(8,  N'Bác sĩ thần kinh Nghệ An',   GETDATE(), N'Vinh',     8),
+(9,  N'Khám răng Hải Dương',        GETDATE(), N'Hải Dương', 9),
+(10, N'Nguyễn Phước Quý Bửu',GETDATE(), N'Đà Lạt',    10);
 SET IDENTITY_INSERT TimKiem OFF;
 -- 18. BÁO CÁO
 SET IDENTITY_INSERT BaoCao ON;
@@ -459,45 +510,12 @@ VALUES
 (4,N'Đánh giá chất lượng khám',N'Đánh giá',GETDATE(),4,4,4),
 (5,N'Báo cáo lịch trực',N'Điều phối',GETDATE(),5,5,5),
 (6,N'Phản ánh thái độ phục vụ',N'Phản ánh',GETDATE(),6,6,6),
-(7,N'Báo cáo tổng hợp quý',N'Thống kê',GETDATE(),7,7,7);
+(7,N'Báo cáo tổng hợp quý',N'Thống kê',GETDATE(),7,7,7),
+(8,  N'Báo cáo tổng hợp tìm kiếm tuần 1', N'Thống kê', GETDATE(), 8,  8,  8),
+(9,  N'Báo cáo phản hồi bệnh nhân',       N'Góp ý',    GETDATE(), 9,  9,  9),
+(10, N'Báo cáo lịch làm việc cập nhật',   N'Điều phối',GETDATE(), 10, 10, 10);
 SET IDENTITY_INSERT BaoCao OFF;
 -------------------------------------------------------------SELECT-----------------------------------------------------------
----Danh sách bác sĩ bị báo cáo
-SELECT 
-    b.IdBacSi, 
-    b.HoTen AS TenBacSi, 
-    bc.NoiDung, 
-    bc.LoaiBaoCao, 
-    bc.NgayTaoBaoCao
-FROM BacSi b
-JOIN BaoCao bc ON b.IdBacSi = bc.IdBacSi;
----Bác sĩ bị báo cáo nhiều nhất
-SELECT TOP 1 
-    b.IdBacSi, 
-    b.HoTen AS TenBacSi, 
-    COUNT(bc.IdBaoCao) AS SoLuotBiBaoCao
-FROM BacSi b
-JOIN BaoCao bc ON b.IdBacSi = bc.IdBacSi
-GROUP BY b.IdBacSi, b.HoTen
-ORDER BY SoLuotBiBaoCao DESC;
----Danh sách bệnh nhân đã báo cáo
-SELECT 
-    bn.IdBenhNhan, 
-    bn.HoTen AS TenBenhNhan, 
-    bc.NoiDung, 
-    bc.LoaiBaoCao, 
-    bc.NgayTaoBaoCao
-FROM BenhNhan bn
-JOIN BaoCao bc ON bn.IdBenhNhan = bc.IdeBenhNhan;
----Bệnh nhân báo cáo nhiều nhất
-SELECT TOP 1 
-    bn.IdBenhNhan, 
-    bn.HoTen AS TenBenhNhan, 
-    COUNT(bc.IdBaoCao) AS SoLuotDaBaoCao
-FROM BenhNhan bn
-JOIN BaoCao bc ON bn.IdBenhNhan = bc.IdeBenhNhan
-GROUP BY bn.IdBenhNhan, bn.HoTen
-ORDER BY SoLuotDaBaoCao DESC;
 -- Select theo IdBacSi
 SELECT * FROM BacSi WHERE IdBacSi = 1;
 -- Select theo Tên (Tìm gần đúng)
@@ -507,95 +525,36 @@ SELECT bs.*, ck.TenChuyenKhoa
 FROM BacSi bs
 JOIN ChuyenKhoa_BacSi ckbs ON bs.IdBacSi = ckbs.IdBacSi
 JOIN ChuyenKhoa ck ON ckbs.IdChuyenKhoa = ck.IdChuyenKhoa
-WHERE ck.TenChuyenKhoa LIKE N'%Nội khoa%';
--- Select theo Tỉnh Thành
-SELECT bs.*, tt.TenTinhThanh
-FROM BacSi bs
-JOIN PhuongXa px ON bs.IdPhuongXa = px.IdPhuongXa
-JOIN TinhThanh tt ON px.IdTinhThanh = tt.IdTinhThanh
-WHERE tt.TenTinhThanh LIKE N'%Đà Nẵng%';
--- Select theo Phường Xã
-SELECT bs.*, px.TenPhuongXa
-FROM BacSi bs
-JOIN PhuongXa px ON bs.IdPhuongXa = px.IdPhuongXa
-WHERE px.TenPhuongXa LIKE N'%Quế Sơn%';
--- Select bác sĩ theo Ngày làm việc
-SELECT DISTINCT bs.HoTen, l.NgayLamViec, l.KhungGio, l.TrangThai
-FROM BacSi bs
-JOIN LichLamViec l ON bs.IdBacSi = l.IdBacSi
-WHERE l.NgayLamViec = '2023-12-25';
--- Select bác sĩ theo Khu
-SELECT DISTINCT bs.HoTen, k.TenKhu
-FROM BacSi bs
-JOIN LichLamViec l ON bs.IdBacSi = l.IdBacSi
-JOIN Phong p ON l.IdPhong = p.IdPhong
-JOIN Khu k ON p.IdKhu = k.IdKhu
-WHERE k.TenKhu LIKE N'%Khu A%';
--- Select bác sĩ theo Phòng
-SELECT DISTINCT bs.HoTen, p.TenPhong, p.Tang
-FROM BacSi bs
-JOIN LichLamViec l ON bs.IdBacSi = l.IdBacSi
-JOIN Phong p ON l.IdPhong = p.IdPhong
-WHERE p.TenPhong LIKE N'%Phòng 101%';
--- Select bác sĩ thuộc một Bệnh viện cụ thể
-SELECT bs.*, bv.TenBenhVien
-FROM BacSi bs
-JOIN BenhVien bv ON bs.IdBenhVien = bv.IdBenhVien
-WHERE bv.TenBenhVien LIKE N'%Bệnh viện Ung Bướu%';
--- Select danh sách bệnh nhân đang theo dõi một bác sĩ (ví dụ IdBacSi = 1)
-SELECT bn.HoTen AS TenBenhNhan, bn.SoDienThoai, td.NgayBatDauTheoDoi
-FROM BenhNhan bn
-JOIN TheoDoi td ON bn.IdBenhNhan = td.IdBenhNhan
-WHERE td.IdBacSi = 1;
--- Select bác sĩ được tìm kiếm nhiều nhất (Dựa trên từ khóa có chứa tên bác sĩ)
-SELECT TOP 5 bs.HoTen, COUNT(tk.IdTimKiem) AS SoLuotTimKiem
-FROM BacSi bs
-LEFT JOIN TimKiem tk ON tk.TuKhoaTK LIKE N'%' + bs.HoTen + '%'
-GROUP BY bs.IdBacSi, bs.HoTen
-ORDER BY SoLuotTimKiem DESC;
--- Select bệnh nhân tìm kiếm bác sĩ nhiều nhất
-SELECT TOP 5 bn.HoTen, COUNT(tk.IdTimKiem) AS TongSoLuotTim
-FROM BenhNhan bn
-JOIN TimKiem tk ON bn.IdBenhNhan = tk.IdBenhNhan
-GROUP BY bn.IdBenhNhan, bn.HoTen
-ORDER BY TongSoLuotTim DESC;
--- Select theo Tên (Tìm gần đúng)
-SELECT * FROM BacSi WHERE HoTen LIKE N'%Nguyễn%';
--- Select theo Chuyên khoa
-SELECT bs.*, ck.TenChuyenKhoa 
-FROM BacSi bs
-JOIN ChuyenKhoa_BacSi ckbs ON bs.IdBacSi = ckbs.IdBacSi
-JOIN ChuyenKhoa ck ON ckbs.IdChuyenKhoa = ck.IdChuyenKhoa
 WHERE ck.TenChuyenKhoa LIKE N'%Nhi khoa%';
--- Select theo Tỉnh Thành
-SELECT bs.*, tt.TenTinhThanh
-FROM BacSi bs
-JOIN PhuongXa px ON bs.IdPhuongXa = px.IdPhuongXa
-JOIN TinhThanh tt ON px.IdTinhThanh = tt.IdTinhThanh
-WHERE tt.TenTinhThanh LIKE N'%Đà Nẵng%';
 -- Select theo Phường Xã
 SELECT bs.*, px.TenPhuongXa
 FROM BacSi bs
 JOIN PhuongXa px ON bs.IdPhuongXa = px.IdPhuongXa
 WHERE px.TenPhuongXa LIKE N'%Hải Châu%';
+-- Select theo Tỉnh Thành
+SELECT bs.*, tt.TenTinhThanh
+FROM BacSi bs
+JOIN PhuongXa px ON bs.IdPhuongXa = px.IdPhuongXa
+JOIN TinhThanh tt ON px.IdTinhThanh = tt.IdTinhThanh
+WHERE tt.TenTinhThanh LIKE N'%Đà Nẵng%';
 -- Select bác sĩ theo Ngày làm việc
 SELECT DISTINCT bs.HoTen, l.NgayLamViec, l.KhungGio, l.TrangThai
 FROM BacSi bs
 JOIN LichLamViec l ON bs.IdBacSi = l.IdBacSi
-WHERE l.NgayLamViec = '2023-12-25';
--- Select bác sĩ theo Khu
-SELECT DISTINCT bs.HoTen, k.TenKhu
-FROM BacSi bs
-JOIN LichLamViec l ON bs.IdBacSi = l.IdBacSi
-JOIN Phong p ON l.IdPhong = p.IdPhong
-JOIN Khu k ON p.IdKhu = k.IdKhu
-WHERE k.TenKhu LIKE N'%Khu A%';
+WHERE l.NgayLamViec = '2024-12-31';
 -- Select bác sĩ theo Phòng
 SELECT DISTINCT bs.HoTen, p.TenPhong, p.Tang
 FROM BacSi bs
 JOIN LichLamViec l ON bs.IdBacSi = l.IdBacSi
 JOIN Phong p ON l.IdPhong = p.IdPhong
 WHERE p.TenPhong LIKE N'%P101%';
+-- Select bác sĩ theo Khu
+SELECT DISTINCT bs.HoTen, k.TenKhu
+FROM BacSi bs
+JOIN LichLamViec l ON bs.IdBacSi = l.IdBacSi
+JOIN Phong p ON l.IdPhong = p.IdPhong
+JOIN Khu k ON p.IdKhu = k.IdKhu
+WHERE k.TenKhu LIKE N'%Khu A%';
 -- Select bác sĩ thuộc một Bệnh viện cụ thể
 SELECT bs.*, bv.TenBenhVien
 FROM BacSi bs
@@ -618,6 +577,42 @@ FROM BenhNhan bn
 JOIN TimKiem tk ON bn.IdBenhNhan = tk.IdBenhNhan
 GROUP BY bn.IdBenhNhan, bn.HoTen
 ORDER BY TongSoLuotTim DESC;
+-- Danh sách bác sĩ bị báo cáo
+SELECT 
+    b.IdBacSi, 
+    b.HoTen AS TenBacSi, 
+    bc.NoiDung, 
+    bc.LoaiBaoCao, 
+    bc.NgayTaoBaoCao
+FROM BacSi b
+JOIN BaoCao bc ON b.IdBacSi = bc.IdBacSi;
+-- Bác sĩ bị báo cáo nhiều nhất
+SELECT TOP 1 
+    b.IdBacSi, 
+    b.HoTen AS TenBacSi, 
+    COUNT(bc.IdBaoCao) AS SoLuotBiBaoCao
+FROM BacSi b
+JOIN BaoCao bc ON b.IdBacSi = bc.IdBacSi
+GROUP BY b.IdBacSi, b.HoTen
+ORDER BY SoLuotBiBaoCao DESC;
+-- Danh sách bệnh nhân đã báo cáo
+SELECT 
+    bn.IdBenhNhan, 
+    bn.HoTen AS TenBenhNhan, 
+    bc.NoiDung, 
+    bc.LoaiBaoCao, 
+    bc.NgayTaoBaoCao
+FROM BenhNhan bn
+JOIN BaoCao bc ON bn.IdBenhNhan = bc.IdeBenhNhan;
+-- Bệnh nhân báo cáo nhiều nhất
+SELECT TOP 1 
+    bn.IdBenhNhan, 
+    bn.HoTen AS TenBenhNhan, 
+    COUNT(bc.IdBaoCao) AS SoLuotDaBaoCao
+FROM BenhNhan bn
+JOIN BaoCao bc ON bn.IdBenhNhan = bc.IdeBenhNhan
+GROUP BY bn.IdBenhNhan, bn.HoTen
+ORDER BY SoLuotDaBaoCao DESC;
 -------------------------------------------------------------FUNCTION---------------------------------------------------------------
 --1. fn_DinhDangSoDienThoai: Chuyển số điện thoại về định dạng chuẩn (vd: 090... -> +84...).
 IF OBJECT_ID('dbo.fn_DinhDangSoDienThoai', 'FN') IS NOT NULL
@@ -658,7 +653,7 @@ BEGIN
 END
 GO
 --chạy function 1
-SELECT dbo.fn_DinhDangSoDienThoai('0901234567') AS KetQua;
+SELECT idBenhNhan,SoDienThoai,dbo.fn_DinhDangSoDienThoai(SoDienThoai) AS KetQua From BenhNhan;
 --2. fn_TinhTrungBinhSao: Tính điểm đánh giá trung bình của 1 bác sĩ.
 IF OBJECT_ID('dbo.fn_TinhTrungBinhSao', 'FN') IS NOT NULL
     DROP FUNCTION dbo.fn_TinhTrungBinhSao;
@@ -678,7 +673,7 @@ BEGIN
 END
 --chạy function 2
 GO
-SELECT idBacSi,HoTen,dbo.fn_TinhTrungBinhSao(idBacSi) 
+SELECT idBacSi,HoTen,dbo.fn_TinhTrungBinhSao(idBacSi) AS KetQua
 FROM BacSi 
 --3. fn_DemBenhNhanTheoDoi: Đếm số lượng bệnh nhân đang theo dõi một bác sĩ cụ thể.
 IF OBJECT_ID('dbo.fn_DemBenhNhanTheoDoi', 'FN') IS NOT NULL
@@ -731,8 +726,8 @@ END
 --chạy function 4
 GO
 SELECT 
-    dbo.fn_KiemTraLichTrong(1, '2024-12-30', N'07:30 - 11:30') AS Sang,
-    dbo.fn_KiemTraLichTrong(1, '2024-12-30', N'13:30 - 17:00') AS Chieu;
+	bs.IdBacSi, l.NgayLamViec, l.KhungGio, dbo.fn_KiemTraLichTrong(bs.IdBacSi, l.NgayLamViec, l.KhungGio) AS Sang FROM BacSi bs JOIN LichLamViec l ON bs.IdBacSi = l.IdBacSi 
+	WHERE bs.IdBacSi = 1 AND l.NgayLamViec = '2024-12-30' AND l.KhungGio = N'07:30 - 11:30';
 --5. fn_LayDiaChiDayDuBacSi: Kết hợp Số nhà + Phường + Tỉnh thành thành 1 chuỗi.
 IF OBJECT_ID('dbo.fn_LayDiaChiDayDuBacSi', 'FN') IS NOT NULL
     DROP FUNCTION dbo.fn_LayDiaChiDayDuBacSi;
@@ -852,12 +847,12 @@ END;
 --chạy function 9: Đếm số thông báo mới của một Id người dùng.
 -----bacsi
 GO
-SELECT idBacSi,HoTen,dbo.fn_DemThongBaoChuaDoc(1,'BacSi') soThongBao
-FROM BacSi
+SELECT IdBacSi, HoTen, dbo.fn_DemThongBaoChuaDoc(IdBacSi, 'BacSi') AS SoThongBaoChuaDoc
+FROM BacSi;
 -----benhnhan
 GO
-SELECT idBenhNhan,HoTen,dbo.fn_DemThongBaoChuaDoc(1,'BenhNhan') soThongBao
-FROM BenhNhan
+SELECT IdBenhNhan, HoTen, dbo.fn_DemThongBaoChuaDoc(IdBenhNhan, 'BenhNhan') AS SoThongBaoChuaDoc
+FROM BenhNhan;
 -- 10. fn_TinhTyLePhanHoi: Tính % số thông báo đã xem trên tổng số thông báo nhận được (cho Bệnh nhân)
 GO
 CREATE FUNCTION fn_TinhTyLePhanHoi(@idBenhNhan INT)
@@ -920,14 +915,8 @@ BEGIN
     RETURN N'Không hợp lệ'
 END
 GO
-	SELECT 
-		'049205002552' AS SoNhapVao, dbo.fn_KiemTraCCCD('049205002552') AS KetQua -- Đúng 12 số
-	UNION ALL
-	SELECT 
-		'12345' AS SoNhapVao, dbo.fn_KiemTraCCCD('12345') AS KetQua -- Sai (thiếu độ dài)
-	UNION ALL
-	SELECT 
-		'04920500255A' AS SoNhapVao, dbo.fn_KiemTraCCCD('04920500255A') AS KetQua; -- Sai (chứa chữ)
+	SELECT IdBacSi, HoTen, CCCD, dbo.fn_KiemTraCCCD(CCCD) AS TrangThaiCCCD 
+	FROM BacSi;
 
 -- 13. fn_LocTuKhoaNhayCam: Kiểm tra nội dung DanhGia có chứa từ cấm không
 GO
@@ -941,11 +930,8 @@ BEGIN
     RETURN N'Hợp lệ'
 END
 GO
-	SELECT 
-		N'Bác sĩ rất tận tâm' AS NoiDung, dbo.fn_LocTuKhoaNhayCam(N'Bác sĩ rất tận tâm') AS KiemTra
-	UNION ALL
-	SELECT
-N'Dịch vụ quá tệ và lừa đảo' AS NoiDung, dbo.fn_LocTuKhoaNhayCam(N'Dịch vụ quá tệ và lừa đảo') AS KiemTra;
+	SELECT IdDanhGia, NoiDung, dbo.fn_LocTuKhoaNhayCam(NoiDung) AS TrangThaiKiemDuyet 
+	FROM DanhGia;
 
 -- 14. fn_DemSoCaKhamTrongNgay: Đếm tổng số ca làm việc của 1 bệnh viện trong ngày
 GO
@@ -988,9 +974,10 @@ BEGIN
     END
     RETURN @GioBatDau
 END
--- chạy function 15
 GO
-SELECT dbo.fn_LayGioBatDau('9:00-20:00') AS GioBatDau;
+-- chạy function 15 
+SELECT IdLichLamViec, KhungGio, dbo.fn_LayGioBatDau(KhungGio) AS GioBatDau 
+FROM LichLamViec;
 --16. fn_TinhThoiGianTheoDoi: Tính số ngày bệnh nhân đã theo dõi bác sĩ.
 GO
 CREATE FUNCTION fn_TinhThoiGianTheoDoi(@idBacSi INT,@idBenhNhan INT)
